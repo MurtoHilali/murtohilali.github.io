@@ -9,17 +9,14 @@ layout: default
     I'm a Biotechnology/Economics student @ UWaterloo,<br>
     interested in tech, compbio, proteins, & ML.<br>
     <p class="anilink">
-    <a href="{{ site.url }}{{ site.baseurl }}/tag/">👉categories</a>
+    <a href="{{ site.url }}{{ site.baseurl }}/tag/">✦ categories</a>
     <br>
-    <a href="{{ site.url }}{{ site.baseurl }}/notes/">👉all notes</a>
+    <a href="{{ site.url }}{{ site.baseurl }}/notes/">✦ notes</a>
     <br>
-    <a href="{{ site.url }}{{ site.baseurl }}/archive/">👉archives</a>
     </p>
-    Join my cult: <br>
-    <iframe src="https://murto.substack.com/embed" width="480" height="320" style="border:1px solid #EEE; background:white;" frameborder="0" scrolling="no"></iframe>
 </div>
 
-<h2 style="margin-bottom: 10px;">Featured</h2>
+<h2 style="margin-bottom: 10px;">Projects & Posts</h2>
 
 <div class="card-list oi" id="Blog">
     {% for post in site.posts limit:6 %}
@@ -33,7 +30,10 @@ layout: default
     </a>
     {% endfor %}
 </div>
-
+<div>
+  Join my cult: <br>
+  <iframe src="https://murto.substack.com/embed" width="480" height="150" style="border:1px solid #EEE; background:white;" frameborder="0" scrolling="no"></iframe>
+</div>
 <a class="soft-button" href="{{ site.url }}{{ site.baseurl }}/blog/" style="display: flex;align-items: center;">
     <span>See all posts</span>
     <svg xmlns="http://www.w3.org/2000/svg" style="height: 18px;margin-left: 7px;" fill="none" viewBox="0 0 24 24" stroke="var(--main-text-color)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
