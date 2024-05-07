@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How I Predicted the Effect of Mutations on Protein Interactions Using AlphaFold"
+title: "Predicting the Effect of Mutations on PPIs Using AlphaFold"
 tags: project bioinformatics ml
 image: /img/seo/xgboost-ppi-cover.jpg
 thumb: /img/thumb/xgboost-ppi-cover.webp
@@ -19,12 +19,12 @@ I used the machine learning framework XGBoost, cutting-edge deep learning softwa
 
 In this article, I'll walk through:
 
-- **The Background**: The research question and why we chose it.
-- **Data Acquisition & Processing**: How and why we acquired the protein data we did, along with preprocessing steps.
-- **The Machine Learning Model**: The approach for selecting a model and how I implemented it for protein data.
-- **Results, Model Accuracy, & Feature Importances**: Understanding the model's results and analyzing the important features, class by class.
-- **Case Studies on ASD-Related Proteins**: A deeper dive into two specific model results, focusing on autism spectrum disorder-related proteins.
-- **Final Thoughts and Lessons**: Conclusions, key takeaways, and future directions for this project.
+- [**The Background**](#background): The research question and why we chose it.
+- [**Data Acquisition & Processing**](#data-acquisition--processing): How and why we acquired the protein data we did, along with preprocessing steps.
+- [**The Machine Learning Model**](#the-machine-learning-model): The approach for selecting a model and how I implemented it for protein data.
+- [**Results, Model Accuracy, & Feature Importances**](#results-model-accuracy--feature-importances): Understanding the model's results and analyzing the important features, class by class.
+- [**Case Studies on ASD-Related Proteins**](#case-studies-asd-related-protein-complexes): A deeper dive into two specific model results, focusing on autism spectrum disorder-related proteins.
+- [**Final Thoughts and Lessons**](#final-thoughts-and-lessons): Conclusions, key takeaways, and future directions for this project.
 
 If you're involved in bioinformatics or molecular biology and want to start incorporating machine learning into your research—this article is for you.
 
@@ -245,10 +245,10 @@ Let's break it down:
 - To combat this, we can split our dataset into a number (k) of segments. Then, for k different models, we select one segment as our test set and combine the rest as our training data.
 - We repeat this for k segments, shuffling our data so we never overfit to just one training/testing split.
 
-![By MBanuelos22 from Wikimedia Commons | CC BY-SA 4.0](https://miro.medium.com/v2/resize:fit:1400/format:webp/0*ISa5nhMhVi3Rt5KJ)
+![By MBanuelos22 from Wikimedia Commons, CC BY-SA 4.0](https://miro.medium.com/v2/resize:fit:1400/format:webp/0*ISa5nhMhVi3Rt5KJ)
 
 
-*By [MBanuelos22](https://commons.wikimedia.org/w/index.php?title=User%3AMBanuelos22&action=edit&redlink=1) from Wikimedia Commons | CC BY-SA 4.0*
+*By [MBanuelos22](https://commons.wikimedia.org/w/index.php?title=User%3AMBanuelos22&action=edit&redlink=1) from Wikimedia Commons, CC BY-SA 4.0*
 
 We do this for every hyperparameter combination, ensuring we get the highest accuracy model possible.
 
