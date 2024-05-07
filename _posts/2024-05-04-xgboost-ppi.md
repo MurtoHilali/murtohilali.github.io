@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Predicting the Effect of Mutations on PPIs Using AlphaFold"
+description: How I used AlphaFold-Multimer, XGBoost, and 47,000 SLURM jobs to predict PPI outcomes with 91% AUC
 tags: project bioinformatics ml
 image: /img/seo/xgboost-ppi-cover.jpg
 thumb: /img/thumb/xgboost-ppi-cover.webp
@@ -168,21 +169,21 @@ Two examples of pathogenicity predictions I used:
 #### gnomAD frequencies
 gnomAD (the Genome Aggregation Database from the Broad Institute) contains population allele frequencies for several different groups and variants.
 
-Why (and how) I included frequencies:
+**Why (and how) I included frequencies:**
 - Variant frequency data could also help us learn whether common or rare variants are more prevalent in PPI-disrupting pathologies.
 - I found these values by converting the IntAct mutations into a VEP-readable format.
 
 #### Relative ratios
 I engineered simple ratio features, like the interface area / total surface area, the differences in feature x from the wildtype version, etc.
 
-Why I included relative ratios:
+**Why I included relative ratios:**
 - While an unsupervised algorithm could make these kinds of calculations without help, a supervised model like XGBoost benefits from these ratios.
 - Intuitively, we could also predict that if the ratio of interface area to total surface area falls, we're observing a weakened interaction. (This is just one example).
 
 #### Free energy
 Using [EvoEF2](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7144094/) (available under the MIT license), I obtained thermodynamic data on protein complexes, comparing 𝚫𝚫G (the difference in Gibbs energy of the folded and unfolded protein states) of the wildtype and mutant variants.
 
-Why free energy:
+**Why free energy:**
 - We'd expect higher free energy predictions from a complex with PPI-disturbing mutations, suggesting a more unstable interaction.
 
 By the end of it all, I had a tabular dataset that looked a bit like this:
@@ -209,6 +210,7 @@ XGBoost is a **gradient-boosted decision tree model**.
 **Decision trees** are graphs that split data at threshold-based nodes. Here's a simple model of deciding whether or not to play outside today:
 
 ![Decision tree diagram](https://miro.medium.com/v2/resize:fit:1146/format:webp/0*PNrBkZ9FlzrOk1dB.png)
+
 *Decision tree diagram*
 
 Chaining several of these trees together in sequence allows each one to correct on the error of the last one, building a much more robust model. This is what makes it '**gradient-boosted**.'
@@ -463,7 +465,7 @@ However, I'm quite proud of what I achieved and learned in this timeframe.
 
 I can't imagine many students are given free rein over such an exciting research question, access to world-class mentors, and one of Canada's largest compute clusters.
 
-But I did.
+**But I did.**
 
 So, I'm incredibly thankful to everyone involved (Dr. Brett Trost, Dr. Richard Wintle, and Dr. Steve Scherer, to name a few).
 
