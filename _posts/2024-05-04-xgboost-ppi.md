@@ -3,7 +3,7 @@ layout: post
 title: "How I Predicted the Effect of Mutations on Protein Interactions Using AlphaFold"
 tags: project bioinformatics ml
 image: /img/seo/xgboost-ppi-cover.jpg
-thumb: /img/seo/xgboost-ppi-cover.webp
+thumb: /img/thumb/xgboost-ppi-cover.webp
 ---
 
 ![](/murtohilali.github.io/img/seo/xgboost-ppi-cover.png)
@@ -36,7 +36,7 @@ In this section, I'll cover:
 - The research question under investigation.
 - The rationale for choosing this question.
 
-### Not So Hot Take: Protein-Protein Interactions are Important
+**Not so hot take: protein-protein interactions are important.**
 
 I might be biased because I studied them for eight months at [The Center for Applied Genomics](http://tcag.ca/index.html) at SickKids—but I've got good reason to think so:
 - PPIs are involved in countless metabolic processes.
@@ -48,7 +48,7 @@ So, if we can understand *how* and *why* a given mutation impacts PPIs, there's 
 
 With DeepMind's release of [AlphaFold-Multimer (AF-M)](https://www.biorxiv.org/content/10.1101/2021.10.04.463034v2), a version of AlphaFold trained with protein complexes in mind, came an opportunity and a question:
 
->Can AF-M capture the effect of missense variants on PPIs?
+>***Can AF-M capture the effect of missense variants on PPIs?***
 
 You might be wondering—why missense variants specifically? As opposed to other kinds of mutations?
 
@@ -246,7 +246,9 @@ Let's break it down:
 - We repeat this for k segments, shuffling our data so we never overfit to just one training/testing split.
 
 ![By MBanuelos22 from Wikimedia Commons | CC BY-SA 4.0](https://miro.medium.com/v2/resize:fit:1400/format:webp/0*ISa5nhMhVi3Rt5KJ)
-*By [MBanuelos22](https://commons.wikimedia.org/w/index.php?title=User%3AMBanuelos22&action=edit&redlink=1) from Wikimedia Commons | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)*
+
+
+*By [MBanuelos22](https://commons.wikimedia.org/w/index.php?title=User%3AMBanuelos22&action=edit&redlink=1) from Wikimedia Commons | CC BY-SA 4.0*
 
 We do this for every hyperparameter combination, ensuring we get the highest accuracy model possible.
 
@@ -371,8 +373,7 @@ In the following sections, I'll only call out a few features I found interesting
 - `iptm & iptm_ptm`: These values measure AlphaFold's confidence in the models. It seems to track that if two proteins 'make sense' in a complex (illustrated with a high iptm_ptm), they would have strong interactions. In the reverse case, if AlphaFold has low confidence in the structure, it could mean these proteins are unnatural in complexity, thus reducing the likelihood of class 2 prediction. However, it could also simply mean the 3D model is inaccurate and should be disregarded—I cannot make any solid conclusions.
 
 #### Class 3: No effect on interaction
-![Fig. 10](https://miro.medium.com/v2/resize:fit:1024/format:webp/0*pFkVnk59AWgdFFd3)
-![Fig. 11](https://miro.medium.com/v2/resize:fit:978/format:webp/0*uCR6DfjZwVhnKOSy)
+![Fig. 10](https://miro.medium.com/v2/resize:fit:1024/format:webp/0*pFkVnk59AWgdFFd3) ![Fig. 11](https://miro.medium.com/v2/resize:fit:978/format:webp/0*uCR6DfjZwVhnKOSy)
 
 - `AM_PATHOGENICITY`: This is a pathogenicity score from AlphaMissense based on conservation scores for every residue in the human proteome. It seems to be a relatively strong predictor of non-pathogenic mutations, with low pathogenicity scores associated with an increase in the likelihood of class 3 prediction.
 - `pDockQ`: A docking metric that measures (like sc) how well two proteins complex together in 3D space. A good docking score, as expected, seems to be a strong predictor of a non-perturbational variant.
