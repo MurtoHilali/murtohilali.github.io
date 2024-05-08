@@ -4,7 +4,7 @@ greetings: Hi 👋
 description: >-
   My digital garden & portfolio. I write about computational biology, tech, proteins, and more.
 lang: en
-image: https://res.cloudinary.com/notee/image/upload/v1640411291/notes/imgseo.jpg
+image: /murtohilali.github.io/img/share-card.png
 timezone:  Toronto
 repo: https://github.com/MurtoHilali/murtohilali.github.io # site repo [optional]
 data-theme: light # default theme "dark" | "light"
@@ -101,7 +101,7 @@ defaults:
     scope:
       path: ""
     values:
-      image: https://res.cloudinary.com/notee/image/upload/v1640411291/notes/imgseo.jpg
+      image: /murtohilali.github.io/img/share-card.png
   - 
     scope:
       path: ""
