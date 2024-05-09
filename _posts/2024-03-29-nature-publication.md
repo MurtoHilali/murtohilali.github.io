@@ -3,8 +3,8 @@ layout: post
 title: Nature Genetics publication
 description: Part of my work @ SickKids contributed to a research paper in Nature.
 tags: bioinformatics project
-image: /img/seo/supp-fig-3.jpg
-thumb: /img/thumb/supp-fig-3.webp
+image: /img/seo/nature-pub-cover.png
+thumb: /img/thumb/nature-pub-cover.webp
 ---
 
 ![Nature Paper Title and Screenshot](/murtohilali.github.io/img/articles/nature-paper.png){: width="100%"}
