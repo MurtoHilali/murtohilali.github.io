@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Nature Genetics publication
-description: Part of my work @ SickKids contributed to a research paper in Nature.
+description: Part of my work at SickKids contributed to a research paper in Nature.
 tags: bioinformatics project
 image: /img/seo/nature-pub-cover.png
 thumb: /img/thumb/nature-pub-cover.webp
