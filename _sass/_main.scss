@@ -1351,3 +1351,77 @@ applause-button.clap .sparkle circle {
     display: none;
   }
 }
+
+@media (min-width: 768px) {
+  .main-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .left-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .right-column {
+    flex: 2;
+    max-height: calc(100vh - 100px); /* Adjust based on header/footer height */
+    overflow-y: auto;
+  }
+
+  .card-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%; /* Ensure full width */
+    overflow-x: visible; /* Ensure no horizontal scrolling on desktop */
+  }
+
+  .card-wrapper {
+    flex: 1 1 calc(50% - 20px); /* Two cards per row with 20px gap */
+    box-sizing: border-box;
+    width: auto; /* Ensure auto width on desktop */
+    height: 355px; /* Adjust height as needed */
+  }
+
+  .soft-button {
+    margin-top: 20px;
+  }
+}
+
+/* Styles for mobile (default styles or additional adjustments) */
+@media (max-width: 767px) {
+  .main-container {
+    flex-direction: column;
+  }
+
+  .left-column {
+    order: 1;
+  }
+
+  .right-column {
+    order: 2;
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  iframe[src*="substack.com"] {
+    order: 3;
+  }
+
+  .card-list {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory; /* Optional: for better snapping on scroll */
+  }
+
+  .card-wrapper {
+    flex: 0 0 auto;
+    width: 80%; /* Adjust based on desired card width on mobile */
+    height: auto; /* Ensure auto height on mobile */
+  }
+}
