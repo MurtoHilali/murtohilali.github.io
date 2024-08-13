@@ -390,6 +390,7 @@ time {
 	font-size: 3rem;
 	margin-top: 3rem;
 	margin-bottom: 0;
+  line-height: normal;
 }
 
 .post > time {
@@ -893,9 +894,10 @@ $link-color: var(--link-color);
 	font-size: medium;
  }
  .post > h1.title {
-	font-size: xx-large;
+	font-size: 2.5rem;
 	margin-top: 3rem;
 	margin-bottom: 0;
+  line-height: normal;
  }
 }
 
