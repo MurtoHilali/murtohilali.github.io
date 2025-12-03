@@ -47,7 +47,7 @@ html.wf-loading * {
 
 html,
 html[data-theme="light"] {
-	--text-font: 'Inconsolata', monospace; /* New Body Font */
+	--text-font: 'Gabarito', monospace; /* New Body Font */
   --header-font: 'Instrument Serif', serif;   /* New Header Font */
 	--source-code-font: Source Code Pro;
 	--very-light-text-color: rgb(222, 222, 222);
@@ -114,8 +114,8 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-	--text-font: 'Space Mono', monospace; /* New Body Font */
-  --header-font: 'Bodoni Moda', serif;   /* New Header Font */
+	--text-font: 'Gabarito', monospace; /* New Body Font */
+  --header-font: 'Instrument Serif', serif;   /* New Header Font */
 	--source-code-font: Source Code Pro;
 	--very-light-text-color: #EEE;
 	--light-text-color: #c4bbf0;
@@ -292,15 +292,13 @@ h3,
 h4,
 h5 {
   font-family: var(--header-font);
-  font-weight: 600;
-  font-weight: 600;
+  font-weight: 800;
   margin-bottom: 1.5rem;
   font-size: 2rem;
-  font-family: var(--header-font);
 }
 
 h2 {
-  font-weight: 500;
+  font-weight: 800;
   font-size: 1.8rem;
   font-family: var(--header-font);
 }
@@ -977,6 +975,7 @@ $link-color: var(--link-color);
            z-index: 1;
 }
 .kepala .judul {
+           font-family: var(--header-font); 
            font-size: 30px;
            line-height: normal;
            color: white;
