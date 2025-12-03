@@ -1,11 +1,10 @@
 ---
 layout: post
-title: How to Win a Case Competition in 7 Hours
+title: "How to Win a Case Competition in 7 Hours"
 description: Competing in and winning my first ever business innovation case competition.
-author: aliif
 tags: project business
 image: /img/seo/fusion-conference.png
-thumb: /img/seo/fusion-conference.webp
+thumb: /img/thumb/fusion-conference.webp
 ---
 ![Holding winning cheque](/img/articles/fusion-conference/DSC_2835.JPG)
 Fusion Conference 2025 was my first case competition (ever). 
