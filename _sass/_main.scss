@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Instrument+Serif:ital@0;1&display=swap');
 @font-face {
   font-family: 'HuyAnh';
   src: url('../assets/fonts/HUYANH1T.TTF') format('truetype');
@@ -47,8 +47,8 @@ html.wf-loading * {
 
 html,
 html[data-theme="light"] {
-	--text-font: 'Space Mono', monospace; /* New Body Font */
-  --header-font: 'Bodoni Moda', serif;   /* New Header Font */
+	--text-font: 'Inconsolata', monospace; /* New Body Font */
+  --header-font: 'Instrument Serif', serif;   /* New Header Font */
 	--source-code-font: Source Code Pro;
 	--very-light-text-color: rgb(222, 222, 222);
 	--light-text-color: rgb(89, 183, 255);
