@@ -4,22 +4,36 @@ layout: default
 
 {% include prohead.html %}
 
-<div class="bio" style="width: 100%;">
-    <b>Hey there, I'm Murto.</b><br>
-    I'm a Biotech/Economics student @ UWaterloo
-    interested in tech, compbio, proteins, and ML.<br>
-    <br>
-    <p class="anilink">
-    <a href="{{ site.url }}{{ site.baseurl }}/about/">✦ about me</a>
-    <br>
-    <a href="{{ site.url }}{{ site.baseurl }}/blog/">✦ posts</a>
-    <br>
-    <a href="https://murto.co/proteinloop">✦ proteinloop</a>
-    <br>
-    <a href="https://records.murto.co/" target="_self">✦ records</a>
-    <br>
-    <a href="/murtohilali.github.io/Murto Hilali - Resume.pdf" target="_blank">✦ resume</a>
-    </p>
+<div class="bio-container">
+    <div class="bio-image">
+        <img src="{{ site.author.avatar }}" alt="{{ site.author.name }}">
+    </div>
+    
+    <div class="bio-text">
+        <h2 style="margin-top: 0;">Hey there, I'm Murto.</h2>
+        <p>
+            I'm a Biotech/Economics student @ UWaterloo
+            interested in tech, compbio, proteins, and ML.
+        </p>
+
+        <div class="bio-links">
+            <a href="{{ site.url }}{{ site.baseurl }}/about/" class="bio-btn">
+                <i class="fa fa-user"></i> About
+            </a>
+            <a href="{{ site.url }}{{ site.baseurl }}/blog/" class="bio-btn">
+                <i class="fa fa-pencil"></i> Posts
+            </a>
+            <a href="https://murto.co/proteinloop" class="bio-btn">
+                <i class="fa fa-link"></i> Proteinloop
+            </a>
+            <a href="https://records.murto.co/" target="_self" class="bio-btn">
+                <i class="fa fa-music"></i> Records
+            </a>
+            <a href="/murtohilali.github.io/Murto Hilali - Resume.pdf" target="_blank" class="bio-btn">
+                <i class="fa fa-file-text"></i> Resume
+            </a>
+        </div>
+    </div>
 </div>
 
 <h2 style="margin-bottom: 10px;">Projects & Posts</h2>
