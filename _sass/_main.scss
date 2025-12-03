@@ -43,6 +43,7 @@ html.wf-loading * {
 	padding: 0px;
 	appearance: none;
 	transform: scale(0.8);
+  margin-bottom: 8px;
 }
 
 html,
@@ -392,6 +393,8 @@ time {
 }
 
 .post > h1.title {
+  font-family: var(--header-font);
+  font-weight: bold;
 	font-size: 3rem;
 	margin-top: 3rem;
 	margin-bottom: 0;
