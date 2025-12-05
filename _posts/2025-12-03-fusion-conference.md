@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Benchmarking 4 Different AI Models on the Same Dataset"
+title: "How to Win a Case Competition in 7 Hours"
 description: Competing in and winning my first ever business innovation case competition.
 tags: project business
-image: /img/seo/<tbd>.png
-thumb: /img/thumb/<tbd>.webp
+image: /img/seo/fusion-conference.png
+thumb: /img/thumb/fusion-conference.webp
 ---
 ![Holding winning cheque](/img/articles/fusion-conference/DSC_2835.JPG)
 Fusion Conference 2025 was my first case competition (ever). 
