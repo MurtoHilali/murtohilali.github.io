@@ -1,36 +1,47 @@
 ---
 layout: default
-title: about
+title: About
 ---
 
 <section class="post">
-  <div class="flex-row-between">
+  <div class="flex-row-between" style="margin-bottom: 3rem;">
     <a href="{{ site.url }}{{ site.baseurl }}/"><i class="fa fa-home"></i> Home</a>
     <button title="Change theme" id="theme-toggle" onclick="modeSwitcher()">
       <div></div>
     </button>
   </div>
-</section>
 
-<section>
-    <h2>about me</h2>
-    <img src="/murtohilali.github.io/img/author/website-headshot.jpeg" width="90" height="90" class="img-index" alt="{{ site.title }}">
-    
-    <p><b>Hey! I'm Murto.</b></p>
-    <p>
-      I'm a 4A student at the University of Waterloo studying Biotechnology & Economics, with a focus on 
-      computational biology and data science. I'm passionate entrepreneurship and using biology as a technology to solve
-      real-world problems, and I'm always looking for opportunities to learn and grow in this field.
-    </p>
-    <p>
-    I'm currently working on a few projects, including:
-    <ul>
-      <li>a protein that prevents coffee from staining your teeth</li>
-      <li>an embryo micrograph classifier</li>
-    </ul>
-    I'm also working on a few side projects, including this blog and a newsletter.
-    </p>
-    <p>
-      In my spare time, I enjoy writing, staying fit, Muay Thai, and reading about the latest in tech and biotech.
-    </p>
+  <div class="bio-container">
+    <div class="bio-image">
+       <img src="/murtohilali.github.io/img/author/website-headshot.jpeg" alt="Murto Hilali">
+    </div>
+
+    <div class="bio-text">
+        <h2 style="margin-top: 0;">about me</h2>
+        <p>
+          <b>Hey! I'm Murto.</b>
+        </p>
+        <p>
+          I'm a final term student at the University of Waterloo studying <span class="hand-drawn">Biotechnology & Economics</span>, 
+          with a focus on computational biology and data science. 
+        </p>
+        <p>
+          I'm passionate about entrepreneurship and <span class="hand-drawn">using biology as a technology</span> to solve
+          real-world problems, so I'm always looking for opportunities to learn and grow in the world of compbio. I'm also
+          a huge travel enthusiast and love exploring new cities. I've been fortunate enough to visit over 
+          <span class="hand-drawn">10 countries</span> last year alone, and I can't wait to see more of the world.
+        </p>
+        
+        <p>I'm currently working on a few projects, including:</p>
+        <ul>
+          <li>a protein that <span class="hand-drawn">prevents coffee stains</span> on teeth</li>
+          <li>finding natural <span class="hand-drawn">alpha-glucosidase inhibitors</span> for diabetes treatment</li>
+          <li>developing a deep learning model to <span class="hand-drawn">predict peptide-IDP binding sites</span></li>
+        </ul>
+        
+        <p>
+          In my spare time, I enjoy writing, staying fit, Muay Thai, and reading about the latest in tech and biotech.
+        </p>
+    </div>
+  </div>
 </section>
