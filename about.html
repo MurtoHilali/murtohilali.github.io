@@ -3,6 +3,42 @@ layout: default
 title: About
 ---
 
+<style>
+  .about-container {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    align-items: flex-start;
+  }
+  
+  .about-image-wrapper {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .about-photo {
+    width: 100%; 
+    height: 500px; 
+    object-fit: cover; 
+    border-radius: 8px;
+  }
+
+  /* Mobile Rules: When screen is smaller than 768px */
+  @media (max-width: 768px) {
+    .about-container {
+      flex-direction: column; /* Stack vertically */
+      gap: 1.5rem;
+    }
+    .about-image-wrapper {
+      width: 100%;
+      min-width: 0;
+    }
+    .about-photo {
+      height: 350px; /* Slightly shorter on mobile so it fits the screen */
+    }
+  }
+</style>
+
 <section class="post">
   <div class="flex-row-between" style="margin-bottom: 3rem;">
     <a href="{{ site.url }}{{ site.baseurl }}/"><i class="fa fa-home"></i> Home</a>
@@ -11,12 +47,13 @@ title: About
     </button>
   </div>
 
-  <div style="display: flex; flex-direction: row; gap: 3rem; align-items: flex-start;">
+  <div class="about-container">
     
-    <div style="flex: 1; min-width: 300px;"> <img 
+    <div class="about-image-wrapper"> 
+       <img 
          src="/murtohilali.github.io/img/author/website-headshot.jpeg" 
          alt="Murto Hilali"
-         style="width: 100%; height: 500px; object-fit: cover; border-radius: 8px;"
+         class="about-photo"
        >
     </div>
 

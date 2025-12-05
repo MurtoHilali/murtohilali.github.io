@@ -62,7 +62,7 @@ layout: default
 <div class="card-list oi" id="Posts">
     {% assign blog_posts = site.posts | where_exp: "item", "item.tags contains 'post'" %}
     
-    {% for post in blog_posts limit:6 %}
+    {% for post in blog_posts limit:8 %}
     <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}" class="mr-20">
       <div class="card-wrapper">
         <div class="background"></div>
