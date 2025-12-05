@@ -2,7 +2,7 @@
 layout: post
 title: "Benchmarking 4 AI Models On A Custom PepPI Dataset"
 description: Assembling four different ML/DL models to compare performance on identifying peptide-protein binding sites.
-tags: ai bioinformatics
+tags: ai bioinformatics project
 image: /img/seo/benchmarking-peppi-models.png
 thumb: /img/thumb/benchmarking-peppi-models.webp
 ---
