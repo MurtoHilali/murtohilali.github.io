@@ -7,6 +7,8 @@ image: /img/seo/fusion-conference.png
 thumb: /img/thumb/fusion-conference.webp
 ---
 ![Holding winning cheque](/img/articles/fusion-conference/DSC_2835.JPG)
+*By the way, a version of this article was posted to UWaterloo's website, you can read it [here](https://uwaterloo.ca/science/news/how-win-case-competition-seven-hours).*
+
 Fusion Conference 2025 was my first case competition (ever). 
 
 Don’t make my mistake and wait until your final term to participate. 

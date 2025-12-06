@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Talking to UWaterloo Science & Business About Internationl Co-op"
-description: Got do a profile for my University department about doing computational chemistry research in Singapore.
+title: "Interview with UWaterloo About Internationl Co-op"
+description: Got to do a profile for my University Science & Business department about doing computational chemistry research in Singapore.
 tags: bioinformatics post
 image: /img/seo/uwaterloo-singapore-coop.png
 thumb: /img/thumb/uwaterloo-singapore-coop.webp
