@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Interview with UWaterloo About Internationl Co-op"
+title: "Interview with UWaterloo About International Co-op"
 description: Got to do a profile for my University Science & Business department about doing computational chemistry research in Singapore.
 tags: bioinformatics post
 image: /img/seo/uwaterloo-singapore-coop.png
