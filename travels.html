@@ -109,8 +109,7 @@ title: Travels
 </div>
 
 <script>
-    // 1. Prepare Data
-    // We explicitly check if site.data.travels exists to prevent crashes
+    /* 1. Prepare Data */
     const visitedData = [
         {% if site.data.travels %}
             {% for trip in site.data.travels %}
@@ -135,8 +134,7 @@ title: Travels
 
     const visitedMap = new Map(visitedData.map(d => [d.id, d]));
 
-    // 2. Init Globe
-    // Wait for container to exist
+    /* 2. Init Globe */
     document.addEventListener('DOMContentLoaded', () => {
         const globeContainer = document.getElementById('globe-viz');
         
@@ -147,27 +145,27 @@ title: Travels
                 const world = Globe()
                     (globeContainer)
                     .backgroundColor('#ffffff')
-                    .globeImageUrl(null) // No texture = clean white globe
+                    .globeImageUrl(null) /* No texture = clean white globe */
                     .width(globeContainer.clientWidth)
                     .height(globeContainer.clientHeight)
                     
-                    // Polygons
+                    /* Polygons */
                     .polygonsData(countries.features)
                     .polygonCapColor(d => {
                         const data = visitedMap.get(d.properties.ISO_A3);
-                        return data ? data.color : '#f0f0f0'; // Light grey for unvisited
+                        return data ? data.color : '#f0f0f0'; /* Light grey for unvisited */
                     })
                     .polygonSideColor(() => 'rgba(0,0,0,0.05)')
-                    .polygonStrokeColor(() => '#111') // Black borders
+                    .polygonStrokeColor(() => '#111') /* Black borders */
                     .polygonAltitude(0.01)
 
-                    // Events
+                    /* Events */
                     .onPolygonClick(d => {
                         const iso = d.properties.ISO_A3;
                         const data = visitedMap.get(iso);
                         if (data) {
                             renderPanel(data);
-                            // Point camera at country
+                            /* Point camera at country */
                              world.pointOfView({ lat: d.bbox ? (d.bbox[1]+d.bbox[3])/2 : 0, lng: d.bbox ? (d.bbox[0]+d.bbox[2])/2 : 0, altitude: 1.5 }, 1000);
                         }
                     })
@@ -175,12 +173,12 @@ title: Travels
                         globeContainer.style.cursor = (d && visitedMap.has(d.properties.ISO_A3)) ? 'pointer' : 'default';
                     });
 
-                // Controls
+                /* Controls */
                 world.controls().autoRotate = true;
                 world.controls().autoRotateSpeed = 0.5;
                 world.controls().enableZoom = true;
 
-                // Responsive Resize
+                /* Responsive Resize */
                 window.addEventListener('resize', () => {
                     world.width(globeContainer.clientWidth);
                     world.height(globeContainer.clientHeight);
