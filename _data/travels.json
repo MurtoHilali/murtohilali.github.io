@@ -1,0 +1,132 @@
+[
+  {
+    "id": "KHM",
+    "country": "Cambodia",
+    "color": "#ff5555",
+    "posts": [
+      {
+        "title": "Tokyo Drift",
+        "type": "TikTok",
+        "url": "#",
+        "icon": "fa-music"
+      }
+    ]
+  },
+  {
+    "id": "SIN",
+    "country": "Singapore",
+    "color": "#ffaa55",
+    "posts": [
+      {
+        "title": "City in a Garden",
+        "type": "Blog",
+        "url": "#",
+        "icon": "fa-globe"
+      }
+    ]
+  },
+  {
+    "id": "MYS",
+    "country": "Malaysia",
+    "color": "#55ff55",
+    "posts": [
+      {
+        "title": "Island Hopping in Langkawi",
+        "type": "YouTube",
+        "url": "#",
+        "icon": "fa-video"
+      }
+    ]
+  },
+  {
+    "id": "THA",
+    "country": "Thailand",
+    "color": "#5555ff",
+    "posts": [
+      {
+        "title": "Bangkok Street Food Tour",
+        "type": "Instagram",
+        "url": "#",
+        "icon": "fa-camera"
+      }
+    ]
+  },
+  {
+    "id": "IDN",
+    "country": "Indonesia",
+    "color": "#ff55ff",
+    "posts": [
+      {
+        "title": "Bali Adventure Vlog",
+        "type": "YouTube",
+        "url": "#",
+        "icon": "fa-video"
+      }
+    ]
+  },
+  {
+    "id": "PRT",
+    "country": "Portugal",
+    "color": "#ffaaee",
+    "posts": [
+      {
+        "title": "Rome Historical Tour",
+        "type": "TikTok",
+        "url": "#",
+        "icon": "fa-music"
+      }
+    ]
+  },
+  {
+    "id": "ESP",
+    "country": "Spain",
+    "color": "#aaff55",
+    "posts": [
+      {
+        "title": "Barcelona Beach Day",
+        "type": "Instagram",
+        "url": "#",
+        "icon": "fa-camera"
+      }
+    ]
+  },
+  {
+    "id": "GBR",
+    "country": "England",
+    "color": "#ffaa55",
+    "posts": [
+      {
+        "title": "Venice Gondola Ride",
+        "type": "YouTube",
+        "url": "#",
+        "icon": "fa-video"
+      }
+    ]
+  },
+  {
+    "id": "FRA",
+    "country": "France",
+    "color": "#55aaff",
+    "posts": [
+      {
+        "title": "Paris City Lights",
+        "type": "Blog",
+        "url": "#",
+        "icon": "fa-globe"
+      }
+    ]
+  },
+  {
+    "id": "TUR",
+    "country": "Turkey",
+    "color": "#ff5555",
+    "posts": [
+      {
+        "title": "Swiss Alps Hiking",
+        "type": "Instagram",
+        "url": "#",
+        "icon": "fa-camera"
+      }
+    ]
+  }
+]

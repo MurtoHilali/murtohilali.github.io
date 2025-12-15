@@ -2,322 +2,333 @@
 layout: clean
 title: Travels
 ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travels</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="_sass/_main.scss">
+    <script src="https://unpkg.com/globe.gl"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="//unpkg.com/globe.gl"></script>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow: hidden;
+            background: #f4f4f4;
+        }
 
-<style>
-    /* Force a hard reset to override any theme defaults */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
 
-    /* Ensure the app takes the full screen available in the 'clean' layout */
-    .app-container {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        width: 100vw;
-        background: #f4f4f4;
-    }
+        .app-header {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            z-index: 10;
+            border-bottom: 1px solid #ddd;
+            flex-shrink: 0;
+        }
 
-    .app-header {
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #fff;
-        z-index: 10;
-        border-bottom: 1px solid #ddd;
-        flex-shrink: 0;
-    }
+        .home-link {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #333;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
 
-    .home-link {
-        font-weight: bold;
-        font-size: 1.2rem;
-        color: #333;
-        text-decoration: none;
-        transition: color 0.2s;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
+        .home-link:hover {
+            color: #0066cc;
+        }
 
-    .home-link:hover {
-        color: #0066cc;
-    }
-
-    .split-view {
-        display: flex;
-        flex: 1;
-        overflow: hidden;
-        min-height: 0; /* Crucial for nested flex scrolling */
-    }
-
-    .info-panel {
-        width: 400px;
-        background: #fff;
-        border-right: 1px solid #ddd;
-        overflow-y: auto;
-        padding: 2rem;
-        flex-shrink: 0;
-        z-index: 5;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
-
-    .globe-panel {
-        flex: 1;
-        position: relative;
-        background: #f4f4f4;
-        min-width: 0;
-        min-height: 0;
-    }
-
-    #globe-viz {
-        width: 100%;
-        height: 100%;
-        cursor: grab;
-    }
-
-    #globe-viz:active {
-        cursor: grabbing;
-    }
-
-    .placeholder {
-        text-align: center;
-        margin-top: 40%;
-        opacity: 0.6;
-        color: #555;
-    }
-
-    .placeholder h3 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
-
-    .think-card {
-        background: #f9f9f9;
-        border: 1px solid #ddd;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        transition: all 0.2s;
-        color: #333;
-        text-decoration: none;
-    }
-
-    .think-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        border-color: #0066cc;
-    }
-
-    .card-icon {
-        font-size: 1.5em;
-        width: 30px;
-        text-align: center;
-    }
-
-    .card-content {
-        flex: 1;
-    }
-
-    .card-title {
-        font-weight: bold;
-        margin-bottom: 0.25rem;
-    }
-
-    .card-type {
-        font-size: 0.8em;
-        opacity: 0.7;
-    }
-
-    .card-arrow {
-        margin-left: auto;
-        opacity: 0.3;
-    }
-
-    .country-header h1 {
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .country-accent {
-        height: 4px;
-        width: 60px;
-        border-radius: 2px;
-        margin-bottom: 2rem;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .fade-in {
-        animation: fadeIn 0.3s ease;
-    }
-
-    @media (max-width: 768px) {
         .split-view {
-            flex-direction: column-reverse;
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            min-height: 0;
         }
+
         .info-panel {
-            width: 100%;
-            height: 40vh;
-            border-right: none;
-            border-top: 1px solid #ddd;
+            width: 400px;
+            background: #fff;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+            padding: 2rem;
+            flex-shrink: 0;
+            z-index: 5;
         }
-    }
-</style>
 
-<div class="app-container">
-    <div class="app-header">
-        <a href="{{ site.url }}{{ site.baseurl }}/" class="home-link">
-            <i class="fa fa-arrow-left"></i> Home
-        </a>
+        .globe-panel {
+            flex: 1;
+            position: relative;
+            background: #f4f4f4;
+            min-width: 0;
+            min-height: 0;
+        }
+
+        #globe-viz {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+
+        #globe-viz:active {
+            cursor: grabbing;
+        }
+
+        .placeholder {
+            text-align: center;
+            margin-top: 40%;
+            opacity: 0.6;
+            color: #555;
+        }
+
+        .placeholder h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .think-card {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.2s;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .think-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-color: #0066cc;
+        }
+
+        .card-icon {
+            font-size: 1.5em;
+            width: 30px;
+            text-align: center;
+        }
+
+        .card-content {
+            flex: 1;
+        }
+
+        .card-title {
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-type {
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+
+        .card-arrow {
+            margin-left: auto;
+            opacity: 0.3;
+        }
+
+        .country-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .country-accent {
+            height: 4px;
+            width: 60px;
+            border-radius: 2px;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .split-view {
+                flex-direction: column-reverse;
+            }
+            .info-panel {
+                width: 100%;
+                height: 40vh;
+                border-right: none;
+                border-top: 1px solid #ddd;
+            }
+            .globe-panel {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="app-header">
+            <a href="/" class="home-link">
+                <i class="fa fa-arrow-left"></i> Home
+            </a>
         </div>
 
-    <div class="split-view">
-        <div class="info-panel" id="info-panel">
-            <div class="placeholder">
-                <h3>🌍</h3>
-                <p>Spin the globe.<br>Click a highlighted country to view field notes.</p>
+        <div class="split-view">
+            <div class="info-panel" id="info-panel">
+                <div class="placeholder">
+                    <h3>🌍</h3>
+                    <p>Spin the globe.<br>Click a highlighted country to view field notes.</p>
+                </div>
             </div>
-        </div>
 
-        <div class="globe-panel">
-            <div id="globe-viz"></div>
+            <div class="globe-panel">
+                <div id="globe-viz"></div>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    /* 1. Inject Jekyll Data into the script */
-    const visitedData = [
-        {% if site.data.travels %}
-            {% for trip in site.data.travels %}
-            {
-                id: "{{ trip.id }}",
-                country: "{{ trip.country }}",
-                color: "{{ trip.color }}",
-                posts: [
-                    {% for post in trip.posts %}
-                    {
-                        title: "{{ post.title }}",
-                        type: "{{ post.type }}",
-                        url: "{{ post.url }}",
-                        /* Use 'fa' class base plus the icon string from YAML */
-                        icon: "{{ post.icon | default: 'fa-link' }}"
-                    },
-                    {% endfor %}
-                ]
-            },
-            {% endfor %}
-        {% endif %}
-    ];
+    <script>
+        let visitedData = [];
+        let visitedMap = new Map();
 
-    const visitedMap = new Map(visitedData.map(d => [d.id, d]));
-
-    /* 2. Initialize Globe */
-    const globeContainer = document.getElementById('globe-viz');
-    
-    fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson')
-        .then(res => res.json())
-        .then(countries => {
-            const world = Globe()
-                (globeContainer)
-                .backgroundColor('#f4f4f4')
-                .globeImageUrl(null)
-                .showAtmosphere(false)
-                .showGraticules(false)
-                
-                .width(globeContainer.offsetWidth)
-                .height(globeContainer.offsetHeight)
-                
-                .polygonsData(countries.features)
-                .polygonCapColor(d => {
-                    const data = visitedMap.get(d.properties.ISO_A3);
-                    return data ? data.color : '#ffffff';
-                })
-                .polygonSideColor(() => '#dddddd')
-                .polygonStrokeColor(() => '#000000')
-                .polygonAltitude(0.01)
-                
-                .onPolygonClick(d => {
-                    const iso = d.properties.ISO_A3;
-                    const data = visitedMap.get(iso);
-                    if (data) {
-                        renderPanel(data);
-                        const centroid = getCentroid(d.geometry);
-                        world.pointOfView({ 
-                            lat: centroid[1], 
-                            lng: centroid[0], 
-                            altitude: 1.8 
-                        }, 1000);
-                    }
-                })
-                .onPolygonHover(d => {
-                    globeContainer.style.cursor = 
-                        (d && visitedMap.has(d.properties.ISO_A3)) ? 'pointer' : 'grab';
-                });
-
-            world.controls().autoRotate = true;
-            world.controls().autoRotateSpeed = 0.5;
-            world.controls().enableZoom = true;
-            world.pointOfView({ altitude: 2.5 });
-
-            window.addEventListener('resize', () => {
-                world.width(globeContainer.offsetWidth);
-                world.height(globeContainer.offsetHeight);
+        // Fetch travels data from external JSON file
+        fetch('/_data/travels.json')  // Adjust path as needed for your repo structure
+            .then(res => res.json())
+            .then(data => {
+                visitedData = data;
+                visitedMap = new Map(visitedData.map(d => [d.id, d]));
+                console.log('Loaded countries:', visitedData.map(d => `${d.country} (${d.id})`));
+                initGlobe();
+            })
+            .catch(err => {
+                console.error("Failed to load travels data:", err);
+                document.getElementById('globe-viz').innerHTML = 
+                    '<div style="padding: 2rem; text-align: center;">Unable to load travel data. Please check the path to travels.json</div>';
             });
-        })
-        .catch(err => {
-            console.error("Globe Data Error:", err);
-            globeContainer.innerHTML = '<div style="padding: 2rem; text-align: center;">Unable to load globe. Please refresh the page.</div>';
-        });
 
-    function renderPanel(data) {
-        const panel = document.getElementById('info-panel');
-        
-        const cards = data.posts && data.posts.length > 0 
-            ? data.posts.map(post => `
-                <a href="${post.url}" target="_blank" class="think-card">
-                    <i class="fa ${post.icon} card-icon" style="color: ${data.color}"></i>
-                    <div class="card-content">
-                        <div class="card-title">${post.title}</div>
-                        <div class="card-type">${post.type}</div>
+        function initGlobe() {
+            const globeContainer = document.getElementById('globe-viz');
+            
+            fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson')
+                .then(res => res.json())
+                .then(countries => {
+                    // Debug: Check what ISO codes are available for problematic countries
+                    const franceData = countries.features.find(f => f.properties.NAME === 'France' || f.properties.ADMIN === 'France');
+                    const singaporeData = countries.features.find(f => f.properties.NAME === 'Singapore' || f.properties.ADMIN === 'Singapore');
+                    console.log('France ISO code in GeoJSON:', franceData?.properties.ISO_A3);
+                    console.log('Singapore ISO code in GeoJSON:', singaporeData?.properties.ISO_A3);
+                    
+                    const world = Globe()
+                        (globeContainer)
+                        .backgroundColor('#f4f4f4')
+                        .globeImageUrl(null)
+                        .showAtmosphere(false)
+                        .showGraticules(false)
+                        
+                        .width(globeContainer.offsetWidth)
+                        .height(globeContainer.offsetHeight)
+                        
+                        .polygonsData(countries.features)
+                        .polygonCapColor(d => {
+                            const data = visitedMap.get(d.properties.ISO_A3);
+                            return data ? data.color : '#ffffff';
+                        })
+                        .polygonSideColor(() => '#dddddd')
+                        .polygonStrokeColor(() => '#000000')
+                        .polygonAltitude(0.01)
+                        
+                        .onPolygonClick(d => {
+                            const iso = d.properties.ISO_A3;
+                            const data = visitedMap.get(iso);
+                            if (data) {
+                                renderPanel(data);
+                                const centroid = getCentroid(d.geometry);
+                                world.pointOfView({ 
+                                    lat: centroid[1], 
+                                    lng: centroid[0], 
+                                    altitude: 1.8 
+                                }, 1000);
+                            }
+                        })
+                        .onPolygonHover(d => {
+                            globeContainer.style.cursor = 
+                                (d && visitedMap.has(d.properties.ISO_A3)) ? 'pointer' : 'grab';
+                        });
+
+                    world.controls().autoRotate = true;
+                    world.controls().autoRotateSpeed = 0.5;
+                    world.controls().enableZoom = true;
+                    world.pointOfView({ altitude: 2.5 });
+
+                    window.addEventListener('resize', () => {
+                        world.width(globeContainer.offsetWidth);
+                        world.height(globeContainer.offsetHeight);
+                    });
+                })
+                .catch(err => {
+                    console.error("Globe Data Error:", err);
+                    globeContainer.innerHTML = '<div style="padding: 2rem; text-align: center;">Unable to load globe. Please refresh the page.</div>';
+                });
+        }
+
+        function renderPanel(data) {
+            const panel = document.getElementById('info-panel');
+            
+            const cards = data.posts && data.posts.length > 0 
+                ? data.posts.map(post => `
+                    <a href="${post.url}" target="_blank" class="think-card">
+                        <i class="fa ${post.icon} card-icon" style="color: ${data.color}"></i>
+                        <div class="card-content">
+                            <div class="card-title">${post.title}</div>
+                            <div class="card-type">${post.type}</div>
+                        </div>
+                        <div class="card-arrow"><i class="fa fa-external-link"></i></div>
+                    </a>
+                `).join('')
+                : `<p style="opacity:0.5; font-style:italic;">No notes added yet.</p>`;
+
+            panel.innerHTML = `
+                <div class="fade-in">
+                    <div class="country-header">
+                        <h1>${data.country}</h1>
+                        <div class="country-accent" style="background: ${data.color};"></div>
                     </div>
-                    <div class="card-arrow"><i class="fa fa-external-link"></i></div>
-                </a>
-            `).join('')
-            : `<p style="opacity:0.5; font-style:italic;">No notes added yet.</p>`;
-
-        panel.innerHTML = `
-            <div class="fade-in">
-                <div class="country-header">
-                    <h1>${data.country}</h1>
-                    <div class="country-accent" style="background: ${data.color};"></div>
+                    ${cards}
                 </div>
-                ${cards}
-            </div>
-        `;
-    }
+            `;
+        }
 
-    function getCentroid(geometry) {
-        let coords = geometry.coordinates[0];
-        if (geometry.type === 'MultiPolygon') coords = coords[0];
-        
-        let minX = 180, maxX = -180, minY = 90, maxY = -90;
-        coords.forEach(pt => {
-            if (pt[0] < minX) minX = pt[0];
-            if (pt[0] > maxX) maxX = pt[0];
-            if (pt[1] < minY) minY = pt[1];
-            if (pt[1] > maxY) maxY = pt[1];
-        });
-        return [(minX + maxX) / 2, (minY + maxY) / 2];
-    }
-</script>
+        function getCentroid(geometry) {
+            let coords = geometry.coordinates[0];
+            if (geometry.type === 'MultiPolygon') coords = coords[0];
+            
+            let minX = 180, maxX = -180, minY = 90, maxY = -90;
+            coords.forEach(pt => {
+                if (pt[0] < minX) minX = pt[0];
+                if (pt[0] > maxX) maxX = pt[0];
+                if (pt[1] < minY) minY = pt[1];
+                if (pt[1] > maxY) maxY = pt[1];
+            });
+            return [(minX + maxX) / 2, (minY + maxY) / 2];
+        }
+    </script>
+</body>
+</html>
