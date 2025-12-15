@@ -1,4 +1,4 @@
-{% include head.html %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +10,9 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+        @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Instrument+Serif:ital@0;1&display=swap');
         body {
+            font-family: 'Inconsolata', monospace;
             overflow: hidden;
             background: #f4f4f4;
         }
@@ -139,6 +140,7 @@
         }
 
         .country-header h1 {
+            font-family: 'Instrument Serif', serif;
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
         }
@@ -335,6 +337,45 @@
                         "type": "Instagram",
                         "url": "#",
                         "icon": "fa-camera"
+                    }
+                ]
+            },
+            {
+                "id": "USA",
+                "country": "United States",
+                "color": "#55aaff",
+                "posts": [
+                    {
+                        "title": "New York City Marathon",
+                        "type": "TikTok",
+                        "url": "#",
+                        "icon": "fa-music"
+                    }
+                ]
+            },
+            {
+                "id": "CAN",
+                "country": "Canada",
+                "color": "#55ffaa",
+                "posts": [
+                    {
+                        "title": "Rocky Mountains Road Trip",
+                        "type": "YouTube",
+                        "url": "#",
+                        "icon": "fa-video"
+                    }
+                ]
+            },
+            {
+                "id": "BRA",
+                "country": "Brazil",
+                "color": "#ffaa55",
+                "posts": [
+                    {
+                        "title": "Rio Carnival Experience",
+                        "type": "Blog",
+                        "url": "#",
+                        "icon": "fa-globe"
                     }
                 ]
             }
