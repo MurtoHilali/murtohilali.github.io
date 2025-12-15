@@ -48,9 +48,13 @@ layout: compress
       }
     }
   </script>
-	
+
   <main>
-    {% include anchor_headings.html html=content anchorBody="#" %}
+    {% if page.no_anchors %}
+      {{ content }}
+    {% else %}
+      {% include anchor_headings.html html=content anchorBody="#" %}
+    {% endif %}
   </main>
 
 </body>
