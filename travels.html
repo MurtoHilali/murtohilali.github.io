@@ -1,304 +1,384 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travels (of Murto Polo)</title>
 
-{% include head.html %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://unpkg.com/globe.gl"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Gabarito', sans-serif;
+            background: #f4f4f4;
+            color: #333;
+            overflow: hidden;
+        }
+
+        h1, h2, h3, .serif-font { font-family: 'Instrument Serif', serif; }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .app-header {
+            height: 60px;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            z-index: 20;
+            position: relative;
+        }
+
+        .home-link {
+            font-size: 1.5rem;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .split-view {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 60px);
+        }
+
+        .info-panel {
+            width: 400px;
+            background: #fff;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+            padding: 2rem;
+            z-index: 10;
+        }
+
+        .globe-panel {
+            flex: 1;
+            position: relative;
+            background: #f4f4f4;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        #globe-viz {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        #globe-viz canvas { pointer-events: auto; }
+
+        .placeholder {
+            text-align: center;
+            margin-top: 40%;
+            opacity: 0.6;
+        }
+
+        .placeholder h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .country-header h1 {
+            font-size: 3.5rem;
+            line-height: 1;
+            margin: 0;
+        }
+
+        .country-accent {
+            height: 4px;
+            width: 60px;
+            margin: 1rem 0 1.25rem 0;
+            border-radius: 2px;
+        }
+
+        /* description box */
+        .country-desc {
+            background: #fbfbfb;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.4;
+            font-size: 0.98rem;
+            opacity: 0.95;
+        }
+
+        .think-card {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #333;
+            transition: 0.2s;
+        }
+
+        .think-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-color: #0066cc;
+        }
+
+        .card-icon { font-size: 1.5em; width: 30px; text-align: center; }
+        .card-content { flex: 1; }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.2rem;
+        }
+
+        .card-type {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.6;
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .split-view { flex-direction: column-reverse; }
+            .info-panel {
+                width: 100%;
+                height: 40vh;
+                border-right: none;
+                border-top: 1px solid #ddd;
+            }
+        }
+    </style>
+</head>
 
 <body>
-    <div class="app-container">
-        <div class="app-header">
-            <a href="/" class="home-link">
-                <i class="fa fa-arrow-left"></i> Home
-            </a>
+<div class="app-container">
+    <div class="app-header">
+        <a href="/" class="home-link serif-font">
+            <i class="fa fa-arrow-left" style="font-size:1rem;"></i> Home
+        </a>
+    </div>
+
+    <div class="split-view">
+        <div class="info-panel" id="info-panel">
+            <div class="placeholder">
+                <h3>Spin the globe!</h3>
+                <h3>🌍</h3>
+                <p>Click a highlighted country to view my field notes.</p>
+            </div>
         </div>
 
-        <div class="split-view">
-            <div class="info-panel" id="info-panel">
-                <div class="placeholder">
-                    <h3>🌍</h3>
-                    <p>Spin the globe.<br>Click a highlighted country to view field notes.</p>
-                </div>
-            </div>
-
-            <div class="globe-panel">
-                <div id="globe-viz"></div>
-            </div>
+        <div class="globe-panel">
+            <div id="globe-viz"></div>
         </div>
     </div>
-    <script>
-        const visitedData = [
-            {
-                "id": "KHM",
-                "country": "Cambodia",
-                "color": "#ff5555",
-                "posts": [
-                    {
-                        "title": "Tokyo Drift",
-                        "type": "TikTok",
-                        "url": "#",
-                        "icon": "fa-music"
-                    }
-                ]
-            },
-            {
-                "id": "SIN",
-                "country": "Singapore",
-                "color": "#ffaa55",
-                "posts": [
-                    {
-                        "title": "City in a Garden",
-                        "type": "Blog",
-                        "url": "#",
-                        "icon": "fa-globe"
-                    }
-                ]
-            },
-            {
-                "id": "MYS",
-                "country": "Malaysia",
-                "color": "#55ff55",
-                "posts": [
-                    {
-                        "title": "Island Hopping in Langkawi",
-                        "type": "YouTube",
-                        "url": "#",
-                        "icon": "fa-video"
-                    }
-                ]
-            },
-            {
-                "id": "THA",
-                "country": "Thailand",
-                "color": "#5555ff",
-                "posts": [
-                    {
-                        "title": "Bangkok Street Food Tour",
-                        "type": "Instagram",
-                        "url": "#",
-                        "icon": "fa-camera"
-                    }
-                ]
-            },
-            {
-                "id": "IDN",
-                "country": "Indonesia",
-                "color": "#ff55ff",
-                "posts": [
-                    {
-                        "title": "Bali Adventure Vlog",
-                        "type": "YouTube",
-                        "url": "#",
-                        "icon": "fa-video"
-                    }
-                ]
-            },
-            {
-                "id": "PRT",
-                "country": "Portugal",
-                "color": "#ffaaee",
-                "posts": [
-                    {
-                        "title": "Rome Historical Tour",
-                        "type": "TikTok",
-                        "url": "#",
-                        "icon": "fa-music"
-                    }
-                ]
-            },
-            {
-                "id": "ESP",
-                "country": "Spain",
-                "color": "#aaff55",
-                "posts": [
-                    {
-                        "title": "Barcelona Beach Day",
-                        "type": "Instagram",
-                        "url": "#",
-                        "icon": "fa-camera"
-                    }
-                ]
-            },
-            {
-                "id": "GBR",
-                "country": "England",
-                "color": "#ffaa55",
-                "posts": [
-                    {
-                        "title": "Venice Gondola Ride",
-                        "type": "YouTube",
-                        "url": "#",
-                        "icon": "fa-video"
-                    }
-                ]
-            },
-            {
-                "id": "FRA",
-                "country": "France",
-                "color": "#ff5555",
-                "posts": [
-                    {
-                        "title": "Paris City Lights",
-                        "type": "Blog",
-                        "url": "#",
-                        "icon": "fa-globe"
-                    }
-                ]
-            },
-            {
-                "id": "TUR",
-                "country": "Turkey",
-                "color": "#ff5555",
-                "posts": [
-                    {
-                        "title": "Swiss Alps Hiking",
-                        "type": "Instagram",
-                        "url": "#",
-                        "icon": "fa-camera"
-                    }
-                ]
-            },
-            {
-                "id": "USA",
-                "country": "United States",
-                "color": "#55aaff",
-                "posts": [
-                    {
-                        "title": "New York City Marathon",
-                        "type": "TikTok",
-                        "url": "#",
-                        "icon": "fa-music"
-                    }
-                ]
-            },
-            {
-                "id": "CAN",
-                "country": "Canada",
-                "color": "#55ffaa",
-                "posts": [
-                    {
-                        "title": "Rocky Mountains Road Trip",
-                        "type": "YouTube",
-                        "url": "#",
-                        "icon": "fa-video"
-                    }
-                ]
-            },
-            {
-                "id": "BRA",
-                "country": "Brazil",
-                "color": "#ffaa55",
-                "posts": [
-                    {
-                        "title": "Rio Carnival Experience",
-                        "type": "Blog",
-                        "url": "#",
-                        "icon": "fa-globe"
-                    }
-                ]
+</div>
+
+<script>
+const BLANK_TEXTURE =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/ax8p9cAAAAASUVORK5CYII=';
+
+const visitedData = [
+    { id: "KHM", country: "Cambodia", color: "#ff5555",
+      description: "Phnom Penh and Angkor Wat. This trip opened my eyes to so much history and culture.\n\nThe people were incredibly warm and welcoming, and the adventure was unforgettable.",
+      posts: 
+        [
+            { title: "A weekend in Phnom Penh", type: "TikTok", url: "https://vt.tiktok.com/ZSPy7Qgek/", icon: "fa-brands fa-tiktok" },
+            { title: "Exploring Cambodia", type: "Instagram", url: "https://www.instagram.com/murtohilali/p/CU6YI7lxy1qFLgUN9s2jjeX3ywqmbJ7WWlodiM0/", icon: "fa-brands fa-instagram" },
+            { title: "Ancient tombs and private rooms", type: "Substack", url: "#", icon: "fa-bookmark" }
+        ] 
+    },
+
+    { id: "SGP", country: "Singapore", color: "#ffaa55",
+      description: "Lived here for a few months while interning at a drug discovery startup.\n\nI fell in love with the city's food, planning, and sights.",
+      posts: 
+        [
+            { title: "Interview w/ UWaterloo About My Experience", type: "Blog", url: "https://murto.co/uwaterloo-singapore-coop/", icon: "fa-globe" },
+            { title: "Moving to Singapore", type: "TikTok", url: "https://vt.tiktok.com/ZSPyvj7ox/", icon: "fa-brands fa-tiktok" }
+        ] 
+    },
+
+    { id: "THA", country: "Thailand", color: "#55ffaa", 
+      description: "My trip was with friends from my university — and set of total strangers, who would later become friends as well!\n\nMy travels took me to Phuket and its surrounding islands, but I'd love to go back and explore Bangkok and Chiang Mai sometime soon.",
+      posts: 
+        [
+            { title: "Spend a weekend in Phuket with me", type: "TikTok", url: "https://www.tiktok.com/@murtohilali/video/7466944566025932037", icon: "fa-brands fa-tiktok" },
+            { title: "Thailand Highlights", type: "Instagram", url: "https://www.instagram.com/p/DFoSSuVREUWk56g_df2wMql5dEnSoiaGWdtp_k0/", icon: "fa-brands fa-instagram" }
+        ] 
+    },
+
+    { id: "MYS", country: "Malaysia", color: "#ffaa55", description: "",
+      posts: [{ title: "Kuala Lumpur Vibes", type: "Twitter", url: "#", icon: "fa-brands fa-twitter" }] },
+
+    { id: "IDN", country: "Indonesia", color: "#55aaff", 
+      description: "Like most 20-somethings, my time in Indonesia was spent partying, exploring nature, and surfing.\n\nBali is an incredible place, and I can't wait to return one day.",
+      posts: 
+        [   
+            { title: "48 Hours in Bali", type: "TikTok", url: "https://www.tiktok.com/@murtohilali/video/7455784770891517190", icon: "fa-brands fa-tiktok" },
+            { title: "Bali snapshot", type: "Instagram", url: "https://www.instagram.com/murtohilali/p/DNlkF4gx2iCFLgUN9s2jjeX3ywqmbJ7WWlodiM0/", icon: "fa-brands fa-instagram" }
+        ] 
+    },
+    { id: "FRA", country: "France", color: "#aa55ff", description: "",
+      posts: [{ title: "Eiffel Tower Views", type: "Facebook", url: "#", icon: "fa-brands fa-facebook" }] },
+
+    { id: "ESP", country: "Spain", color: "#ff55aa", description: "",
+      posts: [{ title: "Barcelona Beaches", type: "LinkedIn", url: "#", icon: "fa-brands fa-linkedin" }] },
+
+    { id: "PRT", country: "Portugal", color: "#55ffaa", description: "",
+      posts: [{ title: "Lisbon Lights", type: "Reddit", url: "#", icon: "fa-brands fa-reddit" }] },
+
+    { id: "GBR", country: "United Kingdom", color: "#ffaa55", description: "",
+      posts: [{ title: "London Calling", type: "Pinterest", url: "#", icon: "fa-brands fa-pinterest" }] },
+
+    { id: "TUR", country: "Turkey", color: "#55aaff", 
+      description: "Without a doubt, one of my favorite countries I've visited so far.\n\nIstanbul is a city like no other, Cappadocias landscape's (and the hot air balloons) are breathtaking, and Fethiye offers some of the best beaches in the world.",
+      posts: [{ title: "Istanbul Insights", type: "Snapchat", url: "#", icon: "fa-brands fa-snapchat" }] },
+
+    { id: "BRA", country: "Brazil", color: "#aa55ff", description: "",
+      posts: [{ title: "Rio de Janeiro", type: "TikTok", url: "#", icon: "fa-music" }] },
+
+    { id: "USA", country: "United States", color: "#ff55aa", description: "",
+      posts: [{ title: "New York Minute", type: "YouTube", url: "#", icon: "fa-brands fa-youtube" }] },
+
+    { id: "CAN", country: "Canada", color: "#55ffaa", description: "",
+      posts: [{ title: "Toronto Tales", type: "Blog", url: "#", icon: "fa-globe" }] }
+];
+
+const visitedMap = new Map(visitedData.map(d => [d.id, d]));
+const globeContainer = document.getElementById('globe-viz');
+
+fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson')
+    .then(res => res.json())
+    .then(countries => {
+
+        countries.features.forEach(f => {
+            if (f.properties.ISO_A3 === '-99') {
+                f.properties.ISO_A3 = f.properties.ADM0_A3;
             }
-        ];
+        });
 
-        const visitedMap = new Map(visitedData.map(d => [d.id, d]));
+        const world = Globe()(globeContainer)
+            .backgroundColor('#f4f4f4')
+            .globeImageUrl(BLANK_TEXTURE)
+            .showAtmosphere(false)
+            .showGraticules(false)
+            .enablePointerInteraction(true)
 
-        // Initialize Globe
-        const globeContainer = document.getElementById('globe-viz');
+            .width(globeContainer.clientWidth)
+            .height(globeContainer.clientHeight)
 
-        fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson')
-            .then(res => res.json())
-            .then(countries => {
-                const world = Globe()
-                    (globeContainer)
-                    .backgroundColor('#f4f4f4')
-                    .globeImageUrl(null)
-                    .showAtmosphere(false)
-                    .showGraticules(false)
-
-                    .width(globeContainer.offsetWidth)
-                    .height(globeContainer.offsetHeight)
-
-                    .polygonsData(countries.features)
-                    .polygonCapColor(d => {
-                        const data = visitedMap.get(d.properties.ISO_A3);
-                        return data ? data.color : '#ffffff';
-                    })
-                    .polygonSideColor(() => '#dddddd')
-                    .polygonStrokeColor(() => '#000000')
-                    .polygonAltitude(0.01)
-
-                    .onPolygonClick(d => {
-                        const iso = d.properties.ISO_A3;
-                        const data = visitedMap.get(iso);
-                        if (data) {
-                            renderPanel(data);
-                            const centroid = getCentroid(d.geometry);
-                            world.pointOfView({
-                                lat: centroid[1],
-                                lng: centroid[0],
-                                altitude: 1.8
-                            }, 1000);
-                        }
-                    })
-                    .onPolygonHover(d => {
-                        globeContainer.style.cursor =
-                            (d && visitedMap.has(d.properties.ISO_A3)) ? 'pointer' : 'grab';
-                    });
-
-                world.controls().autoRotate = true;
-                world.controls().autoRotateSpeed = 0.5;
-                world.controls().enableZoom = true;
-                world.pointOfView({ altitude: 2.5 });
-
-                window.addEventListener('resize', () => {
-                    world.width(globeContainer.offsetWidth);
-                    world.height(globeContainer.offsetHeight);
-                });
+            .polygonsData(countries.features)
+            .polygonCapColor(d => {
+                const data = visitedMap.get(d.properties.ISO_A3);
+                return data ? data.color : '#ffffff';
             })
-            .catch(err => {
-                console.error("Globe Data Error:", err);
-                globeContainer.innerHTML = '<div style="padding: 2rem; text-align: center;">Unable to load globe. Please refresh the page.</div>';
+            .polygonSideColor(() => '#cccccc')
+            .polygonStrokeColor(() => '#000')
+            .polygonAltitude(0.01)
+
+            .onPolygonClick(d => {
+                const data = visitedMap.get(d.properties.ISO_A3);
+                if (data) {
+                    renderPanel(data);
+                    const c = getLargestPolygonCentroid(d.geometry);
+                    world.pointOfView({ lat: c[1], lng: c[0], altitude: 1.8 }, 1000);
+                }
+            })
+            .onPolygonHover(d => {
+                globeContainer.style.cursor =
+                    d && visitedMap.has(d.properties.ISO_A3) ? 'pointer' : 'grab';
             });
 
-        function renderPanel(data) {
-            const panel = document.getElementById('info-panel');
+        world.controls().autoRotate = true;
+        world.controls().autoRotateSpeed = 0.5;
+        world.pointOfView({ altitude: 2.5 });
 
-            const cards = data.posts && data.posts.length > 0
-                ? data.posts.map(post => `
-                    <a href="${post.url}" target="_blank" class="think-card">
-                        <i class="fa ${post.icon} card-icon" style="color: ${data.color}"></i>
-                        <div class="card-content">
-                            <div class="card-title">${post.title}</div>
-                            <div class="card-type">${post.type}</div>
-                        </div>
-                        <div class="card-arrow"><i class="fa fa-external-link"></i></div>
-                    </a>
-                `).join('')
-                : `<p style="opacity:0.5; font-style:italic;">No notes added yet.</p>`;
+        window.addEventListener('resize', () => {
+            world.width(globeContainer.clientWidth);
+            world.height(globeContainer.clientHeight);
+        });
+    });
 
-            panel.innerHTML = `
-                <div class="fade-in">
-                    <div class="country-header">
-                        <h1>${data.country}</h1>
-                        <div class="country-accent" style="background: ${data.color};"></div>
+function escapeHtml(str) {
+  return (str || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function renderDescription(text) {
+  const cleaned = (text || "").trim();
+  if (!cleaned) return "";
+  // escape HTML, then convert newlines to <br>
+  const safe = escapeHtml(cleaned).replace(/\n/g, "<br>");
+  return `<div class="country-desc">${safe}</div>`;
+}
+
+function renderPanel(data) {
+    const panel = document.getElementById('info-panel');
+    const descHtml = renderDescription(data.description);
+
+    panel.innerHTML = `
+        <div class="fade-in">
+            <div class="country-header">
+                <h1>${data.country}</h1>
+                <div class="country-accent" style="background:${data.color};"></div>
+            </div>
+
+            ${descHtml}
+
+            ${data.posts.map(p => `
+                <a class="think-card" href="${p.url}" target="_blank">
+                    <i class="fa ${p.icon} card-icon" style="color:${data.color}"></i>
+                    <div class="card-content">
+                        <div class="card-title serif-font">${p.title}</div>
+                        <div class="card-type">${p.type}</div>
                     </div>
-                    ${cards}
-                </div>
-            `;
-        }
+                    <i class="fa fa-external-link"></i>
+                </a>
+            `).join('')}
+        </div>
+    `;
+}
 
-        function getCentroid(geometry) {
-            let coords = geometry.coordinates[0];
-            if (geometry.type === 'MultiPolygon') coords = coords[0];
+function getLargestPolygonCentroid(geometry) {
+    let coords = geometry.type === 'MultiPolygon'
+        ? geometry.coordinates.reduce((a, b) => b[0].length > a[0].length ? b : a)[0]
+        : geometry.coordinates[0];
 
-            let minX = 180, maxX = -180, minY = 90, maxY = -90;
-            coords.forEach(pt => {
-                if (pt[0] < minX) minX = pt[0];
-                if (pt[0] > maxX) maxX = pt[0];
-                if (pt[1] < minY) minY = pt[1];
-                if (pt[1] > maxY) maxY = pt[1];
-            });
-            return [(minX + maxX) / 2, (minY + maxY) / 2];
-        }
-    </script>
+    let minX = 180, maxX = -180, minY = 90, maxY = -90;
+    coords.forEach(([x, y]) => {
+        minX = Math.min(minX, x);
+        maxX = Math.max(maxX, x);
+        minY = Math.min(minY, y);
+        maxY = Math.max(maxY, y);
+    });
+    return [(minX + maxX) / 2, (minY + maxY) / 2];
+}
+</script>
 </body>
-
 </html>
