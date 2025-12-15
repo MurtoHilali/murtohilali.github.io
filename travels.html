@@ -3,119 +3,200 @@ layout: clean
 title: Travels
 ---
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="//unpkg.com/globe.gl"></script>
 
 <style>
-  /* Page Structure */
-  .app-container {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      width: 100vw;
-      background: var(--code-bg-color);
-  }
+    /* Force a hard reset to override any theme defaults */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-  /* Header / Nav */
-  .app-header {
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-shrink: 0;
-      background: #fff; /* Ensure header has background */
-      z-index: 10;
-      border-bottom: 1px solid var(--soft-border-color);
-  }
+    /* Ensure the app takes the full screen available in the 'clean' layout */
+    .app-container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100vw;
+        background: #f4f4f4;
+    }
 
-  /* Main Split View */
-  .split-view {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-      position: relative;
-  }
+    .app-header {
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+        z-index: 10;
+        border-bottom: 1px solid #ddd;
+        flex-shrink: 0;
+    }
 
-  /* LEFT PANEL: Info & Links */
-  .info-panel {
-      width: 400px;
-      background: #fff;
-      border-right: 1px solid var(--soft-border-color);
-      overflow-y: auto;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0; 
-      z-index: 5;
-  }
+    .home-link {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #333;
+        text-decoration: none;
+        transition: color 0.2s;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
 
-  /* RIGHT PANEL: Globe Container */
-  .globe-panel {
-      flex: 1; 
-      position: relative;
-      background: #f4f4f4; /* CHANGED: Light grey background to contrast with white globe */
-      cursor: grab;
-      overflow: hidden; /* Prevent canvas scrollbars */
-  }
-  
-  .globe-panel:active {
-      cursor: grabbing;
-  }
+    .home-link:hover {
+        color: #0066cc;
+    }
 
-  /* Cards */
-  .think-card {
-      background: #f9f9f9;
-      border: 1px solid #ddd;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      transition: 0.2s;
-      color: #333;
-      text-decoration: none;
-  }
-  .think-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      border-color: var(--link-color);
-  }
+    .split-view {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+        min-height: 0; /* Crucial for nested flex scrolling */
+    }
 
-  /* Mobile */
-  @media (max-width: 768px) {
-      .split-view { flex-direction: column-reverse; }
-      .info-panel { width: 100%; height: 40vh; border-right: none; border-top: 1px solid #ccc; }
-      .globe-panel { flex: 1; }
-  }
+    .info-panel {
+        width: 400px;
+        background: #fff;
+        border-right: 1px solid #ddd;
+        overflow-y: auto;
+        padding: 2rem;
+        flex-shrink: 0;
+        z-index: 5;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .globe-panel {
+        flex: 1;
+        position: relative;
+        background: #f4f4f4;
+        min-width: 0;
+        min-height: 0;
+    }
+
+    #globe-viz {
+        width: 100%;
+        height: 100%;
+        cursor: grab;
+    }
+
+    #globe-viz:active {
+        cursor: grabbing;
+    }
+
+    .placeholder {
+        text-align: center;
+        margin-top: 40%;
+        opacity: 0.6;
+        color: #555;
+    }
+
+    .placeholder h3 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .think-card {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: all 0.2s;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .think-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        border-color: #0066cc;
+    }
+
+    .card-icon {
+        font-size: 1.5em;
+        width: 30px;
+        text-align: center;
+    }
+
+    .card-content {
+        flex: 1;
+    }
+
+    .card-title {
+        font-weight: bold;
+        margin-bottom: 0.25rem;
+    }
+
+    .card-type {
+        font-size: 0.8em;
+        opacity: 0.7;
+    }
+
+    .card-arrow {
+        margin-left: auto;
+        opacity: 0.3;
+    }
+
+    .country-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .country-accent {
+        height: 4px;
+        width: 60px;
+        border-radius: 2px;
+        margin-bottom: 2rem;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+        animation: fadeIn 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+        .split-view {
+            flex-direction: column-reverse;
+        }
+        .info-panel {
+            width: 100%;
+            height: 40vh;
+            border-right: none;
+            border-top: 1px solid #ddd;
+        }
+    }
 </style>
 
 <div class="app-container">
-    
     <div class="app-header">
-        <a href="{{ site.url }}{{ site.baseurl }}/" style="font-weight: bold; font-family: sans-serif; font-size: 1.2rem; color: #333; text-decoration: none;">
+        <a href="{{ site.url }}{{ site.baseurl }}/" class="home-link">
             <i class="fa fa-arrow-left"></i> Home
         </a>
-        <button title="Change theme" id="theme-toggle" onclick="modeSwitcher()" style="background:none; border:none; cursor:pointer;">
-             <div></div>
-        </button>
-    </div>
+        </div>
 
     <div class="split-view">
-        
         <div class="info-panel" id="info-panel">
-            <div style="text-align: center; margin-top: 40%; opacity: 0.6; color: #555;">
-                <h3 style="font-size: 2rem; margin-bottom: 1rem;">🌍</h3>
+            <div class="placeholder">
+                <h3>🌍</h3>
                 <p>Spin the globe.<br>Click a highlighted country to view field notes.</p>
             </div>
         </div>
 
-        <div class="globe-panel" id="globe-viz"></div>
-
+        <div class="globe-panel">
+            <div id="globe-viz"></div>
+        </div>
     </div>
 </div>
 
 <script>
-    /* 1. Prepare Data */
+    /* 1. Inject Jekyll Data into the script */
     const visitedData = [
         {% if site.data.travels %}
             {% for trip in site.data.travels %}
@@ -129,6 +210,7 @@ title: Travels
                         title: "{{ post.title }}",
                         type: "{{ post.type }}",
                         url: "{{ post.url }}",
+                        /* Use 'fa' class base plus the icon string from YAML */
                         icon: "{{ post.icon | default: 'fa-link' }}"
                     },
                     {% endfor %}
@@ -140,101 +222,93 @@ title: Travels
 
     const visitedMap = new Map(visitedData.map(d => [d.id, d]));
 
-    /* 2. Init Globe */
-    document.addEventListener('DOMContentLoaded', () => {
-        const globeContainer = document.getElementById('globe-viz');
-        
-        /* Debug: Ensure container has size before loading */
-        console.log("Container Size:", globeContainer.clientWidth, globeContainer.clientHeight);
-
-        fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson')
-            .then(res => res.json())
-            .then(countries => {
+    /* 2. Initialize Globe */
+    const globeContainer = document.getElementById('globe-viz');
+    
+    fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson')
+        .then(res => res.json())
+        .then(countries => {
+            const world = Globe()
+                (globeContainer)
+                .backgroundColor('#f4f4f4')
+                .globeImageUrl(null)
+                .showAtmosphere(false)
+                .showGraticules(false)
                 
-                const world = Globe()
-                    (globeContainer)
-                    .backgroundColor('#f4f4f4') /* Match CSS background */
-                    .globeImageUrl(null)        /* No texture = White Material */
-                    .showAtmosphere(false)      /* FIX: Remove glow to prevent washout */
-                    
-                    /* Dimensions */
-                    .width(globeContainer.clientWidth)
-                    .height(globeContainer.clientHeight)
-                    
-                    /* Polygons */
-                    .polygonsData(countries.features)
-                    .polygonCapColor(d => {
-                        const data = visitedMap.get(d.properties.ISO_A3);
-                        return data ? data.color : '#ffffff'; /* White for unvisited */
-                    })
-                    .polygonSideColor(() => '#cccccc')
-                    .polygonStrokeColor(() => '#111111') /* Black Borders */
-                    .polygonStrokeWidth(0.5)             /* FIX: Make sure borders are thick enough */
-                    .polygonAltitude(0.01)
-
-                    /* Events */
-                    .onPolygonClick(d => {
-                        const iso = d.properties.ISO_A3;
-                        const data = visitedMap.get(iso);
-                        if (data) {
-                            renderPanel(data);
-                            
-                            /* Smooth Fly to location */
-                            const centroid = getCentroid(d.geometry);
-                            world.pointOfView({ lat: centroid[1], lng: centroid[0], altitude: 1.8 }, 1000);
-                        }
-                    })
-                    .onPolygonHover(d => {
-                        globeContainer.style.cursor = (d && visitedMap.has(d.properties.ISO_A3)) ? 'pointer' : 'grab';
-                    });
-
-                /* Controls */
-                world.controls().autoRotate = true;
-                world.controls().autoRotateSpeed = 0.5;
-                world.controls().enableZoom = true;
+                .width(globeContainer.offsetWidth)
+                .height(globeContainer.offsetHeight)
                 
-                /* Set initial view distance */
-                world.pointOfView({ altitude: 2.5 });
-
-                /* Responsive Resize */
-                window.addEventListener('resize', () => {
-                    world.width(globeContainer.clientWidth);
-                    world.height(globeContainer.clientHeight);
+                .polygonsData(countries.features)
+                .polygonCapColor(d => {
+                    const data = visitedMap.get(d.properties.ISO_A3);
+                    return data ? data.color : '#ffffff';
+                })
+                .polygonSideColor(() => '#dddddd')
+                .polygonStrokeColor(() => '#000000')
+                .polygonAltitude(0.01)
+                
+                .onPolygonClick(d => {
+                    const iso = d.properties.ISO_A3;
+                    const data = visitedMap.get(iso);
+                    if (data) {
+                        renderPanel(data);
+                        const centroid = getCentroid(d.geometry);
+                        world.pointOfView({ 
+                            lat: centroid[1], 
+                            lng: centroid[0], 
+                            altitude: 1.8 
+                        }, 1000);
+                    }
+                })
+                .onPolygonHover(d => {
+                    globeContainer.style.cursor = 
+                        (d && visitedMap.has(d.properties.ISO_A3)) ? 'pointer' : 'grab';
                 });
-            })
-            .catch(err => console.error("Globe Data Error:", err));
-    });
+
+            world.controls().autoRotate = true;
+            world.controls().autoRotateSpeed = 0.5;
+            world.controls().enableZoom = true;
+            world.pointOfView({ altitude: 2.5 });
+
+            window.addEventListener('resize', () => {
+                world.width(globeContainer.offsetWidth);
+                world.height(globeContainer.offsetHeight);
+            });
+        })
+        .catch(err => {
+            console.error("Globe Data Error:", err);
+            globeContainer.innerHTML = '<div style="padding: 2rem; text-align: center;">Unable to load globe. Please refresh the page.</div>';
+        });
 
     function renderPanel(data) {
         const panel = document.getElementById('info-panel');
         
-        /* Check if posts exist */
         const cards = data.posts && data.posts.length > 0 
             ? data.posts.map(post => `
                 <a href="${post.url}" target="_blank" class="think-card">
-                    <i class="fa ${post.icon}" style="font-size: 1.5em; width: 30px; text-align: center; color: ${data.color}"></i>
-                    <div>
-                        <div style="font-weight: bold;">${post.title}</div>
-                        <div style="font-size: 0.8em; opacity: 0.7;">${post.type}</div>
+                    <i class="fa ${post.icon} card-icon" style="color: ${data.color}"></i>
+                    <div class="card-content">
+                        <div class="card-title">${post.title}</div>
+                        <div class="card-type">${post.type}</div>
                     </div>
-                    <div style="margin-left: auto; opacity: 0.3;"><i class="fa fa-external-link"></i></div>
+                    <div class="card-arrow"><i class="fa fa-external-link"></i></div>
                 </a>
             `).join('')
             : `<p style="opacity:0.5; font-style:italic;">No notes added yet.</p>`;
 
         panel.innerHTML = `
-            <div style="animation: fadeIn 0.3s ease;">
-                <h1 style="font-family: sans-serif; font-size: 2.5rem; margin-bottom: 0;">${data.country}</h1>
-                <div style="height: 4px; width: 60px; background: ${data.color}; margin-bottom: 2rem; border-radius: 2px;"></div>
+            <div class="fade-in">
+                <div class="country-header">
+                    <h1>${data.country}</h1>
+                    <div class="country-accent" style="background: ${data.color};"></div>
+                </div>
                 ${cards}
             </div>
         `;
     }
 
-    /* Helper: Calculate center of polygon for camera */
     function getCentroid(geometry) {
         let coords = geometry.coordinates[0];
-        /* Handle MultiPolygon by taking the first ring of the first polygon */
         if (geometry.type === 'MultiPolygon') coords = coords[0];
         
         let minX = 180, maxX = -180, minY = 90, maxY = -90;
