@@ -1,251 +1,209 @@
 ---
-layout: default
+layout: clean
 title: Travels
-no_anchors: true
 ---
 
 <script src="//unpkg.com/globe.gl"></script>
-<script src="//unpkg.com/d3"></script>
 
 <style>
-  /* --- Layout Styles --- */
-  /* Remove default margins/padding from main container to maximize space */
-  .post {
-      max-width: 100% !important;
-      padding: 0 !important;
-      margin: 0 !important;
-  }
-
-  /* Full screen split layout */
-  .travels-container {
-      display: flex;
-      flex-direction: row;
-      height: 85vh; /* Takes up most of the screen */
-      width: 100%;
-      overflow: hidden;
-      margin-top: 1rem;
-      border: 1px solid var(--soft-border-color);
-      border-radius: 12px;
-  }
-
-  /* LEFT SIDE: Info Panel */
-  .travels-info {
-      flex: 1;
-      padding: 2rem;
-      overflow-y: auto;
-      background: var(--code-bg-color);
+  /* Page Structure */
+  .app-container {
       display: flex;
       flex-direction: column;
+      height: 100vh; /* Force full viewport height */
+      width: 100vw;
+      background: var(--code-bg-color);
+  }
+
+  /* Header / Nav */
+  .app-header {
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0; /* Prevent header from shrinking */
+  }
+
+  /* Main Split View */
+  .split-view {
+      display: flex;
+      flex: 1; /* Take up remaining height */
+      overflow: hidden;
+      border-top: 1px solid var(--soft-border-color);
+  }
+
+  /* LEFT PANEL: Info & Links */
+  .info-panel {
+      width: 400px; /* Fixed width for consistency */
+      background: var(--code-bg-color);
       border-right: 1px solid var(--soft-border-color);
-      min-width: 300px;
-      max-width: 400px;
-      transition: all 0.3s ease;
+      overflow-y: auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0; 
   }
 
-  /* RIGHT SIDE: Globe */
-  .travels-globe {
-      flex: 2;
+  /* RIGHT PANEL: Globe */
+  .globe-panel {
+      flex: 1; /* Takes all remaining width */
       position: relative;
-      background: #ffffff; /* White background for the area behind globe */
-      cursor: move;
+      background: #ffffff; /* Globe background */
+      cursor: grab;
+  }
+  
+  .globe-panel:active {
+      cursor: grabbing;
   }
 
-  /* Card Styles */
+  /* Cards */
   .think-card {
       background: var(--ilgb-bg-color);
       border: 1px solid var(--soft-border-color);
       padding: 1rem;
       margin-bottom: 1rem;
       border-radius: 8px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 12px;
-  }
-
-  .think-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-
-  .card-icon {
-      font-size: 1.2rem;
-      width: 30px;
-      text-align: center;
-      color: var(--link-color);
-  }
-
-  .card-content {
-      display: flex;
-      flex-direction: column;
-  }
-  
-  .card-title {
-      font-weight: bold;
-      font-size: 1rem;
+      gap: 15px;
+      transition: 0.2s;
       color: var(--main-text-color);
   }
-
-  .card-type {
-      font-size: 0.8rem;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-  }
-  
-  /* Initial State Message */
-  .empty-state {
-      text-align: center;
-      margin-top: 50%;
-      transform: translateY(-50%);
-      color: var(--medium-text-color);
+  .think-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      border-color: var(--link-color);
   }
 
-  /* Mobile Responsive: Stack them */
+  /* Mobile */
   @media (max-width: 768px) {
-      .travels-container {
-          flex-direction: column-reverse;
-          height: auto;
-      }
-      .travels-globe {
-          height: 50vh;
-      }
-      .travels-info {
-          height: 40vh;
-          max-width: 100%;
-          border-right: none;
-          border-top: 1px solid var(--soft-border-color);
-      }
+      .split-view { flex-direction: column-reverse; }
+      .info-panel { width: 100%; height: 40vh; border-right: none; border-top: 1px solid var(--soft-border-color); }
+      .globe-panel { flex: 1; }
   }
 </style>
 
-<div class="flex-row-between" style="padding: 1rem 2rem 0;">
-    <a href="{{ site.url }}{{ site.baseurl }}/" style="font-weight: bold; font-family: var(--header-font); font-size: 1.2rem;">
-        <i class="fa fa-arrow-left"></i> Home
-    </a>
-    <button title="Change theme" id="theme-toggle" onclick="modeSwitcher()">
-      <div></div>
-    </button>
-</div>
-
-<div class="travels-container">
+<div class="app-container">
     
-    <div class="travels-info" id="info-panel">
-        <div class="empty-state">
-            <h3>🌍 Spin the Globe</h3>
-            <p>Click on a colored country to see my field notes.</p>
-        </div>
+    <div class="app-header">
+        <a href="{{ site.url }}{{ site.baseurl }}/" style="font-weight: bold; font-family: var(--header-font); font-size: 1.2rem;">
+            <i class="fa fa-arrow-left"></i> Home
+        </a>
+        <button title="Change theme" id="theme-toggle" onclick="modeSwitcher()" style="background:none; border:none; cursor:pointer;">
+             <div></div>
+        </button>
     </div>
 
-    <div class="travels-globe" id="globe-viz"></div>
+    <div class="split-view">
+        
+        <div class="info-panel" id="info-panel">
+            <div style="text-align: center; margin-top: 40%; opacity: 0.6;">
+                <h3>🌍</h3>
+                <p>Select a highlighted country<br>to view notes.</p>
+            </div>
+        </div>
+
+        <div class="globe-panel" id="globe-viz"></div>
+
+    </div>
 </div>
 
 <script>
-    // 1. Inject Jekyll Data into JavaScript
+    // 1. Prepare Data
+    // We explicitly check if site.data.travels exists to prevent crashes
     const visitedData = [
-        {% for trip in site.data.travels %}
-        {
-            id: "{{ trip.id }}",
-            country: "{{ trip.country }}",
-            color: "{{ trip.color }}",
-            posts: [
-                {% for post in trip.posts %}
-                {
-                    title: "{{ post.title }}",
-                    type: "{{ post.type }}",
-                    url: "{{ post.url }}",
-                    icon: "{{ post.icon | default: 'fa-link' }}"
-                },
-                {% endfor %}
-            ]
-        },
-        {% endfor %}
+        {% if site.data.travels %}
+            {% for trip in site.data.travels %}
+            {
+                id: "{{ trip.id }}",
+                country: "{{ trip.country }}",
+                color: "{{ trip.color }}",
+                posts: [
+                    {% for post in trip.posts %}
+                    {
+                        title: "{{ post.title }}",
+                        type: "{{ post.type }}",
+                        url: "{{ post.url }}",
+                        icon: "{{ post.icon | default: 'fa-link' }}"
+                    },
+                    {% endfor %}
+                ]
+            },
+            {% endfor %}
+        {% endif %}
     ];
 
-    // Create a lookup map for faster access
     const visitedMap = new Map(visitedData.map(d => [d.id, d]));
 
-    // 2. Initialize Globe
-    const globeContainer = document.getElementById('globe-viz');
-    
-    // Fetch world map polygon data
-    fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson')
-      .then(res => res.json())
-      .then(countries => {
-
-        const world = Globe()
-          (globeContainer)
-          .backgroundColor('#ffffff') // White background
-          .globeImageUrl(null)        // No Earth texture (makes it white)
-          .width(globeContainer.clientWidth)
-          .height(globeContainer.clientHeight)
-          
-          // Polygon (Country) Styling
-          .polygonsData(countries.features)
-          .polygonCapColor(d => {
-              // If visited, use defined color, else white
-              const data = visitedMap.get(d.properties.ISO_A3);
-              return data ? data.color : '#ffffff';
-          })
-          .polygonSideColor(() => '#cccccc') // Thin side color
-          .polygonStrokeColor(() => '#111111') // Black borders
-          .polygonAltitude(0.01) // Slight elevation for depth
-          
-          // Interaction
-          .onPolygonClick(d => {
-              const iso = d.properties.ISO_A3;
-              const data = visitedMap.get(iso);
-              if (data) {
-                  updateInfoPanel(data);
-                  
-                  // Optional: Focus camera on clicked country
-                  world.pointOfView({ lat: d.bbox ? (d.bbox[1]+d.bbox[3])/2 : 0, lng: d.bbox ? (d.bbox[0]+d.bbox[2])/2 : 0, altitude: 1.5 }, 1000);
-              }
-          })
-          .onPolygonHover(d => {
-              // Change cursor to pointer if hovering over visited country
-              globeContainer.style.cursor = (d && visitedMap.has(d.properties.ISO_A3)) ? 'pointer' : 'default';
-          });
-
-        // Auto-rotate
-        world.controls().autoRotate = true;
-        world.controls().autoRotateSpeed = 0.5;
-
-        // Handle Window Resize
-        window.addEventListener('resize', () => {
-            world.width(globeContainer.clientWidth);
-            world.height(globeContainer.clientHeight);
-        });
-      });
-
-    // 3. Info Panel Logic
-    function updateInfoPanel(data) {
-        const panel = document.getElementById('info-panel');
+    // 2. Init Globe
+    // Wait for container to exist
+    document.addEventListener('DOMContentLoaded', () => {
+        const globeContainer = document.getElementById('globe-viz');
         
-        // Generate Cards HTML
-        const cardsHtml = data.posts.map(post => `
+        fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson')
+            .then(res => res.json())
+            .then(countries => {
+                
+                const world = Globe()
+                    (globeContainer)
+                    .backgroundColor('#ffffff')
+                    .globeImageUrl(null) // No texture = clean white globe
+                    .width(globeContainer.clientWidth)
+                    .height(globeContainer.clientHeight)
+                    
+                    // Polygons
+                    .polygonsData(countries.features)
+                    .polygonCapColor(d => {
+                        const data = visitedMap.get(d.properties.ISO_A3);
+                        return data ? data.color : '#f0f0f0'; // Light grey for unvisited
+                    })
+                    .polygonSideColor(() => 'rgba(0,0,0,0.05)')
+                    .polygonStrokeColor(() => '#111') // Black borders
+                    .polygonAltitude(0.01)
+
+                    // Events
+                    .onPolygonClick(d => {
+                        const iso = d.properties.ISO_A3;
+                        const data = visitedMap.get(iso);
+                        if (data) {
+                            renderPanel(data);
+                            // Point camera at country
+                             world.pointOfView({ lat: d.bbox ? (d.bbox[1]+d.bbox[3])/2 : 0, lng: d.bbox ? (d.bbox[0]+d.bbox[2])/2 : 0, altitude: 1.5 }, 1000);
+                        }
+                    })
+                    .onPolygonHover(d => {
+                        globeContainer.style.cursor = (d && visitedMap.has(d.properties.ISO_A3)) ? 'pointer' : 'default';
+                    });
+
+                // Controls
+                world.controls().autoRotate = true;
+                world.controls().autoRotateSpeed = 0.5;
+                world.controls().enableZoom = true;
+
+                // Responsive Resize
+                window.addEventListener('resize', () => {
+                    world.width(globeContainer.clientWidth);
+                    world.height(globeContainer.clientHeight);
+                });
+            });
+    });
+
+    function renderPanel(data) {
+        const panel = document.getElementById('info-panel');
+        const cards = data.posts.map(post => `
             <a href="${post.url}" target="_blank" class="think-card">
-                <div class="card-icon">
-                    <i class="fa ${post.icon}"></i>
-                </div>
-                <div class="card-content">
-                    <span class="card-title">${post.title}</span>
-                    <span class="card-type">${post.type}</span>
-                </div>
-                <div style="margin-left: auto;">
-                    <i class="fa fa-external-link" style="font-size: 0.8rem; opacity: 0.5;"></i>
+                <i class="fa ${post.icon}" style="font-size: 1.5em; width: 30px; text-align: center;"></i>
+                <div>
+                    <div style="font-weight: bold;">${post.title}</div>
+                    <div style="font-size: 0.8em; opacity: 0.7;">${post.type}</div>
                 </div>
             </a>
         `).join('');
 
-        // Update DOM
         panel.innerHTML = `
-            <h2 style="margin-bottom: 0.5rem; font-family: var(--header-font);">${data.country}</h2>
-            <div style="width: 50px; height: 4px; background: ${data.color}; margin-bottom: 1.5rem;"></div>
-            <div class="cards-list">
-                ${cardsHtml}
-            </div>
+            <h1 style="font-family: var(--header-font); font-size: 2.5rem; margin-bottom: 0;">${data.country}</h1>
+            <div style="height: 4px; width: 50px; background: ${data.color}; margin-bottom: 2rem;"></div>
+            ${cards}
         `;
     }
 </script>

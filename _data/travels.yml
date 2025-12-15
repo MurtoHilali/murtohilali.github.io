@@ -1,8 +1,107 @@
-- country: "Japan"
-  id: "JPN"
-  color: "#ff5555"
+- country: "Cambodia"
+  id: "KHM"   # Must match ISO 3166-1 alpha-3 code
+  color: "#ff5555" # The color to highlight this country with
   posts:
     - title: "Tokyo Drift"
       type: "TikTok"
-      url: "https://tiktok.com/..."
+      url: "#"
+      icon: "fa-music" # FontAwesome icon class
+
+- country: "Singapore"
+  id: "SGP"
+  color: "#ffaa55"
+  posts:
+    - title: "City in a Garden"
+      type: "Blog"
+      url: "#"
+      icon: "fa-globe"
+
+- country: "Thailand"
+  id: "THA"
+  color: "#55ffaa"
+  posts:
+    - title: "Bangkok Street Food"
+      type: "YouTube"
+      url: "#"
+      icon: "fa-youtube"
+
+- country: "Malaysia"
+  id: "MYS"
+  color: "#ffaa55"
+  posts:
+    - title: "Kuala Lumpur Vibes"
+      type: "Twitter"
+      url: "#"
+      icon: "fa-twitter"
+
+- country: "Indonesia"
+  id: "IDN"
+  color: "#55aaff"
+  posts:
+    - title: "Bali Nights"
+      type: "Instagram"
+      url: "#"
+      icon: "fa-instagram"
+
+- country: "France"
+  id: "FRA"
+  color: "#aa55ff"
+  posts:
+    - title: "Eiffel Tower Views"
+      type: "Facebook"
+      url: "#"
+      icon: "fa-facebook"
+
+- country: "Spain"
+  id: "ESP"
+  color: "#ff55aa"
+  posts:
+    - title: "Barcelona Beaches"
+      type: "LinkedIn"
+      url: "#"
+      icon: "fa-linkedin"
+
+- country: "Portugal"
+  id: "PRT"
+  color: "#55ffaa"
+  posts:
+    - title: "Lisbon Lights"
+      type: "Reddit"
+      url: "#"
+      icon: "fa-reddit"
+
+- country: "England"
+  id: "GBR"
+  color: "#ffaa55"
+  posts:
+    - title: "London Calling"
+      type: "Pinterest"
+      url: "https://pinterest.com/pin/..."
+      icon: "fa-pinterest"
+
+- country: "Turkey"
+  id: "TUR"
+  color: "#55aaff"
+  posts:
+    - title: "Istanbul Insights"
+      type: "Snapchat"
+      url: "#"
+      icon: "fa-snapchat"
+
+- country: "Brazil"
+  id: "BRA"
+  color: "#aa55ff"
+  posts:
+    - title: "Rio de Janeiro"
+      type: "TikTok"
+      url: "#"
       icon: "fa-music"
+
+- country: "United States"
+  id: "USA"
+  color: "#ff55aa"
+  posts:
+    - title: "New York Minute"
+      type: "YouTube"
+      url: "#"
+      icon: "fa-youtube"
