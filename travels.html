@@ -9,7 +9,7 @@ title: Travels
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travels</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="_sass/_main.scss">
+    <link rel="stylesheet" href="/murtohilali.github.io/_sass/_main.scss">
     <script src="https://unpkg.com/globe.gl"></script>
     <style>
         * {
@@ -210,7 +210,7 @@ title: Travels
         let visitedMap = new Map();
 
         // Fetch travels data from external JSON file
-        fetch('/_data/travels.json')  // Adjust path as needed for your repo structure
+        fetch('/murtohilali.github.io/_data/travels.json') 
             .then(res => res.json())
             .then(data => {
                 visitedData = data;
