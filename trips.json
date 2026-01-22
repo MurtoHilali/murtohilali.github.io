@@ -1,0 +1,164 @@
+[
+  {
+    "id": "KHM",
+    "country": "Cambodia",
+    "color": "#ff5555",
+    "posts": [
+      {
+        "title": "Tokyo Drift",
+        "type": "TikTok",
+        "url": "#",
+        "icon": "fa-music"
+      },
+      {
+        "title": "Angkor Wat Adventure",
+        "type": "Instagram",
+        "url": "#",
+        "icon": "fa-brands fa-instagram"
+      }
+    ]
+  },
+  {
+    "id": "SGP",
+    "country": "Singapore",
+    "color": "#ffaa55",
+    "posts": [
+      {
+        "title": "City in a Garden",
+        "type": "Blog",
+        "url": "#",
+        "icon": "fa-globe"
+      }
+    ]
+  },
+  {
+    "id": "THA",
+    "country": "Thailand",
+    "color": "#55ffaa",
+    "posts": [
+      {
+        "title": "Bangkok Street Food",
+        "type": "YouTube",
+        "url": "#",
+        "icon": "fa-brands fa-youtube"
+      }
+    ]
+  },
+  {
+    "id": "MYS",
+    "country": "Malaysia",
+    "color": "#ffaa55",
+    "posts": [
+      {
+        "title": "Kuala Lumpur Vibes",
+        "type": "Twitter",
+        "url": "#",
+        "icon": "fa-brands fa-twitter"
+      }
+    ]
+  },
+  {
+    "id": "IDN",
+    "country": "Indonesia",
+    "color": "#55aaff",
+    "posts": [
+      {
+        "title": "Bali Nights",
+        "type": "Instagram",
+        "url": "#",
+        "icon": "fa-brands fa-instagram"
+      }
+    ]
+  },
+  {
+    "id": "FRA",
+    "country": "France",
+    "color": "#aa55ff",
+    "posts": [
+      {
+        "title": "Eiffel Tower Views",
+        "type": "Facebook",
+        "url": "#",
+        "icon": "fa-brands fa-facebook"
+      }
+    ]
+  },
+  {
+    "id": "ESP",
+    "country": "Spain",
+    "color": "#ff55aa",
+    "posts": [
+      {
+        "title": "Barcelona Beaches",
+        "type": "LinkedIn",
+        "url": "#",
+        "icon": "fa-brands fa-linkedin"
+      }
+    ]
+  },
+  {
+    "id": "PRT",
+    "country": "Portugal",
+    "color": "#55ffaa",
+    "posts": [
+      {
+        "title": "Lisbon Lights",
+        "type": "Reddit",
+        "url": "#",
+        "icon": "fa-brands fa-reddit"
+      }
+    ]
+  },
+  {
+    "id": "GBR",
+    "country": "United Kingdom",
+    "color": "#ffaa55",
+    "posts": [
+      {
+        "title": "London Calling",
+        "type": "Pinterest",
+        "url": "#",
+        "icon": "fa-brands fa-pinterest"
+      }
+    ]
+  },
+  {
+    "id": "TUR",
+    "country": "Turkey",
+    "color": "#55aaff",
+    "posts": [
+      {
+        "title": "Istanbul Insights",
+        "type": "Snapchat",
+        "url": "#",
+        "icon": "fa-brands fa-snapchat"
+      }
+    ]
+  },
+  {
+    "id": "BRA",
+    "country": "Brazil",
+    "color": "#aa55ff",
+    "posts": [
+      {
+        "title": "Rio de Janeiro",
+        "type": "TikTok",
+        "url": "#",
+        "icon": "fa-music"
+      }
+    ]
+  },
+  {
+    "id": "USA",
+    "country": "United States",
+    "color": "#ff55aa",
+    "posts": [
+      {
+        "title": "New York Minute",
+        "type": "YouTube",
+        "url": "#",
+        "icon": "fa-brands fa-youtube"
+      }
+    ]
+  }
+]

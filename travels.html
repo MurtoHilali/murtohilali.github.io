@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travels (of Murto Polo)</title>
+    <title>Travels</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script src="https://unpkg.com/globe.gl"></script>
 
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Gabarito', sans-serif;
@@ -22,7 +29,12 @@
             overflow: hidden;
         }
 
-        h1, h2, h3, .serif-font { font-family: 'Instrument Serif', serif; }
+        h1,
+        h2,
+        h3,
+        .serif-font {
+            font-family: 'Instrument Serif', serif;
+        }
 
         .app-container {
             display: flex;
@@ -80,7 +92,9 @@
             display: block;
         }
 
-        #globe-viz canvas { pointer-events: auto; }
+        #globe-viz canvas {
+            pointer-events: auto;
+        }
 
         .placeholder {
             text-align: center;
@@ -134,12 +148,19 @@
 
         .think-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border-color: #0066cc;
         }
 
-        .card-icon { font-size: 1.5em; width: 30px; text-align: center; }
-        .card-content { flex: 1; }
+        .card-icon {
+            font-size: 1.5em;
+            width: 30px;
+            text-align: center;
+        }
+
+        .card-content {
+            flex: 1;
+        }
 
         .card-title {
             font-size: 1.2rem;
@@ -154,15 +175,78 @@
             opacity: 0.6;
         }
 
-        .fade-in { animation: fadeIn 0.4s ease; }
+        .fade-in {
+            animation: fadeIn 0.4s ease;
+        }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* List View Styles */
+        .country-list-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .country-list-item:hover {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transform: translateX(5px);
+            border-color: #ddd;
+        }
+
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .item-arrow {
+            color: #999;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 1rem;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #555;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #e0e0e0;
+            color: #333;
         }
 
         @media (max-width: 768px) {
-            .split-view { flex-direction: column-reverse; }
+            .split-view {
+                flex-direction: column-reverse;
+            }
+
             .info-panel {
                 width: 100%;
                 height: 40vh;
@@ -174,176 +258,178 @@
 </head>
 
 <body>
-<div class="app-container">
-    <div class="app-header">
-        <a href="/" class="home-link serif-font">
-            <i class="fa fa-arrow-left" style="font-size:1rem;"></i> Home
-        </a>
-    </div>
+    <div class="app-container">
+        <div class="app-header">
+            <a href="/" class="home-link serif-font">
+                <i class="fa fa-arrow-left" style="font-size:1rem;"></i> Murto Polo
+            </a>
+        </div>
 
-    <div class="split-view">
-        <div class="info-panel" id="info-panel">
-            <div class="placeholder">
-                <h3>Spin the globe!</h3>
-                <h3>🌍</h3>
-                <p>Click a highlighted country to view my field notes.</p>
+        <div class="split-view">
+            <div class="info-panel" id="info-panel">
+                <div class="placeholder">
+                    <h3>Spin the globe!</h3>
+                    <h3>🌍</h3>
+                    <p>Click a highlighted country to view my field notes.</p>
+                </div>
+            </div>
+
+            <div class="globe-panel">
+                <div id="globe-viz"></div>
             </div>
         </div>
-
-        <div class="globe-panel">
-            <div id="globe-viz"></div>
-        </div>
     </div>
-</div>
 
-<script>
-const BLANK_TEXTURE =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/ax8p9cAAAAASUVORK5CYII=';
+    <script>
+        const BLANK_TEXTURE =
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/ax8p9cAAAAASUVORK5CYII=';
 
-const visitedData = [
-    { id: "KHM", country: "Cambodia", color: "#ff5555",
-      description: "Phnom Penh and Angkor Wat. This trip opened my eyes to so much history and culture.\n\nThe people were incredibly warm and welcoming, and the adventure was unforgettable.",
-      posts: 
-        [
-            { title: "A weekend in Phnom Penh", type: "TikTok", url: "https://vt.tiktok.com/ZSPy7Qgek/", icon: "fa-brands fa-tiktok" },
-            { title: "Exploring Cambodia", type: "Instagram", url: "https://www.instagram.com/murtohilali/p/CU6YI7lxy1qFLgUN9s2jjeX3ywqmbJ7WWlodiM0/", icon: "fa-brands fa-instagram" },
-            { title: "Ancient tombs and private rooms", type: "Substack", url: "#", icon: "fa-bookmark" }
-        ] 
-    },
+        // Hardcoded rich data to merge
+        const hardcodedDescriptions = {
+            "KHM": "Phnom Penh and Angkor Wat. This trip opened my eyes to so much history and culture.\n\nThe people were incredibly warm and welcoming, and the adventure was unforgettable.",
+            "SGP": "Lived here for a few months while interning at a drug discovery startup.\n\nI fell in love with the city's food, planning, and sights.",
+            "THA": "My trip was with friends from my university — and set of total strangers, who would later become friends as well!\n\nMy travels took me to Phuket and its surrounding islands, but I'd love to go back and explore Bangkok and Chiang Mai sometime soon.",
+            "IDN": "Like most 20-somethings, my time in Indonesia was spent partying, exploring nature, and surfing.\n\nBali is an incredible place, and I can't wait to return one day.",
+            "TUR": "Without a doubt, one of my favorite countries I've visited so far.\n\nIstanbul is a city like no other, Cappadocias landscape's (and the hot air balloons) are breathtaking, and Fethiye offers some of the best beaches in the world.",
+            "CAN": "I live here!",
+            "BGD": "While I was born in Canada, my family hails from Bangladesh."
+        };
 
-    { id: "SGP", country: "Singapore", color: "#ffaa55",
-      description: "Lived here for a few months while interning at a drug discovery startup.\n\nI fell in love with the city's food, planning, and sights.",
-      posts: 
-        [
-            { title: "Interview w/ UWaterloo About My Experience", type: "Blog", url: "https://murto.co/uwaterloo-singapore-coop/", icon: "fa-globe" },
-            { title: "Moving to Singapore", type: "TikTok", url: "https://vt.tiktok.com/ZSPyvj7ox/", icon: "fa-brands fa-tiktok" }
-        ] 
-    },
+        let visitedData = [];
+        let visitedMap = new Map();
+        let world; // Exposed for sidebar interaction
+        let countriesFeatures = []; // Exposed for finding centroids
+        const globeContainer = document.getElementById('globe-viz');
 
-    { id: "THA", country: "Thailand", color: "#55ffaa", 
-      description: "My trip was with friends from my university — and set of total strangers, who would later become friends as well!\n\nMy travels took me to Phuket and its surrounding islands, but I'd love to go back and explore Bangkok and Chiang Mai sometime soon.",
-      posts: 
-        [
-            { title: "Spend a weekend in Phuket with me", type: "TikTok", url: "https://www.tiktok.com/@murtohilali/video/7466944566025932037", icon: "fa-brands fa-tiktok" },
-            { title: "Thailand Highlights", type: "Instagram", url: "https://www.instagram.com/p/DFoSSuVREUWk56g_df2wMql5dEnSoiaGWdtp_k0/", icon: "fa-brands fa-instagram" }
-        ] 
-    },
+        // Fetch geojson first, then data
+        Promise.all([
+            fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson').then(res => res.json()),
+            fetch('trips.json').then(res => res.json())
+        ]).then(([countries, trips]) => {
 
-    { id: "MYS", country: "Malaysia", color: "#ffaa55", description: "",
-      posts: [{ title: "Kuala Lumpur Vibes", type: "Twitter", url: "#", icon: "fa-brands fa-twitter" }] },
+            countriesFeatures = countries.features;
 
-    { id: "IDN", country: "Indonesia", color: "#55aaff", 
-      description: "Like most 20-somethings, my time in Indonesia was spent partying, exploring nature, and surfing.\n\nBali is an incredible place, and I can't wait to return one day.",
-      posts: 
-        [   
-            { title: "48 Hours in Bali", type: "TikTok", url: "https://www.tiktok.com/@murtohilali/video/7455784770891517190", icon: "fa-brands fa-tiktok" },
-            { title: "Bali snapshot", type: "Instagram", url: "https://www.instagram.com/murtohilali/p/DNlkF4gx2iCFLgUN9s2jjeX3ywqmbJ7WWlodiM0/", icon: "fa-brands fa-instagram" }
-        ] 
-    },
-    { id: "FRA", country: "France", color: "#aa55ff", description: "",
-      posts: [{ title: "Eiffel Tower Views", type: "Facebook", url: "#", icon: "fa-brands fa-facebook" }] },
+            // Merge trips with hardcoded descriptions
+            visitedData = trips.map(t => ({
+                ...t,
+                description: hardcodedDescriptions[t.id] || ""
+            }));
+            visitedMap = new Map(visitedData.map(d => [d.id, d]));
 
-    { id: "ESP", country: "Spain", color: "#ff55aa", description: "",
-      posts: [{ title: "Barcelona Beaches", type: "LinkedIn", url: "#", icon: "fa-brands fa-linkedin" }] },
+            // Render original list
+            renderList();
 
-    { id: "PRT", country: "Portugal", color: "#55ffaa", description: "",
-      posts: [{ title: "Lisbon Lights", type: "Reddit", url: "#", icon: "fa-brands fa-reddit" }] },
-
-    { id: "GBR", country: "United Kingdom", color: "#ffaa55", description: "",
-      posts: [{ title: "London Calling", type: "Pinterest", url: "#", icon: "fa-brands fa-pinterest" }] },
-
-    { id: "TUR", country: "Turkey", color: "#55aaff", 
-      description: "Without a doubt, one of my favorite countries I've visited so far.\n\nIstanbul is a city like no other, Cappadocias landscape's (and the hot air balloons) are breathtaking, and Fethiye offers some of the best beaches in the world.",
-      posts: [{ title: "Istanbul Insights", type: "Snapchat", url: "#", icon: "fa-brands fa-snapchat" }] },
-
-    { id: "BRA", country: "Brazil", color: "#aa55ff", description: "",
-      posts: [{ title: "Rio de Janeiro", type: "TikTok", url: "#", icon: "fa-music" }] },
-
-    { id: "USA", country: "United States", color: "#ff55aa", description: "",
-      posts: [{ title: "New York Minute", type: "YouTube", url: "#", icon: "fa-brands fa-youtube" }] },
-
-    { id: "CAN", country: "Canada", color: "#55ffaa", description: "",
-      posts: [{ title: "Toronto Tales", type: "Blog", url: "#", icon: "fa-globe" }] }
-];
-
-const visitedMap = new Map(visitedData.map(d => [d.id, d]));
-const globeContainer = document.getElementById('globe-viz');
-
-fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson')
-    .then(res => res.json())
-    .then(countries => {
-
-        countries.features.forEach(f => {
-            if (f.properties.ISO_A3 === '-99') {
-                f.properties.ISO_A3 = f.properties.ADM0_A3;
-            }
-        });
-
-        const world = Globe()(globeContainer)
-            .backgroundColor('#f4f4f4')
-            .globeImageUrl(BLANK_TEXTURE)
-            .showAtmosphere(false)
-            .showGraticules(false)
-            .enablePointerInteraction(true)
-
-            .width(globeContainer.clientWidth)
-            .height(globeContainer.clientHeight)
-
-            .polygonsData(countries.features)
-            .polygonCapColor(d => {
-                const data = visitedMap.get(d.properties.ISO_A3);
-                return data ? data.color : '#ffffff';
-            })
-            .polygonSideColor(() => '#cccccc')
-            .polygonStrokeColor(() => '#000')
-            .polygonAltitude(0.01)
-
-            .onPolygonClick(d => {
-                const data = visitedMap.get(d.properties.ISO_A3);
-                if (data) {
-                    renderPanel(data);
-                    const c = getLargestPolygonCentroid(d.geometry);
-                    world.pointOfView({ lat: c[1], lng: c[0], altitude: 1.8 }, 1000);
+            // Globe setup
+            countriesFeatures.forEach(f => {
+                if (f.properties.ISO_A3 === '-99') {
+                    f.properties.ISO_A3 = f.properties.ADM0_A3;
                 }
-            })
-            .onPolygonHover(d => {
-                globeContainer.style.cursor =
-                    d && visitedMap.has(d.properties.ISO_A3) ? 'pointer' : 'grab';
             });
 
-        world.controls().autoRotate = true;
-        world.controls().autoRotateSpeed = 0.5;
-        world.pointOfView({ altitude: 2.5 });
+            world = Globe()(globeContainer)
+                .backgroundColor('#f4f4f4')
+                .globeImageUrl(BLANK_TEXTURE)
+                .showAtmosphere(false)
+                .showGraticules(false)
+                .enablePointerInteraction(true)
 
-        window.addEventListener('resize', () => {
-            world.width(globeContainer.clientWidth);
-            world.height(globeContainer.clientHeight);
+                .width(globeContainer.clientWidth)
+                .height(globeContainer.clientHeight)
+
+                .polygonsData(countries.features)
+                .polygonCapColor(d => {
+                    const data = visitedMap.get(d.properties.ISO_A3);
+                    return data ? data.color : '#ffffff';
+                })
+                .polygonSideColor(() => '#cccccc')
+                .polygonStrokeColor(() => '#000')
+                .polygonAltitude(0.01)
+
+                .onPolygonClick(d => {
+                    const data = visitedMap.get(d.properties.ISO_A3);
+                    if (data) {
+                        renderPanel(data);
+                        const c = getLargestPolygonCentroid(d.geometry);
+                        world.pointOfView({ lat: c[1], lng: c[0], altitude: 1.8 }, 1000);
+                    }
+                })
+                .onPolygonHover(d => {
+                    globeContainer.style.cursor =
+                        d && visitedMap.has(d.properties.ISO_A3) ? 'pointer' : 'grab';
+                });
+
+            world.controls().autoRotate = true;
+            world.controls().autoRotateSpeed = 0.5;
+            world.pointOfView({ altitude: 2.5 });
+
+            window.addEventListener('resize', () => {
+                world.width(globeContainer.clientWidth);
+                world.height(globeContainer.clientHeight);
+            });
         });
-    });
 
-function escapeHtml(str) {
-  return (str || "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
+        function escapeHtml(str) {
+            return (str || "")
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
 
-function renderDescription(text) {
-  const cleaned = (text || "").trim();
-  if (!cleaned) return "";
-  // escape HTML, then convert newlines to <br>
-  const safe = escapeHtml(cleaned).replace(/\n/g, "<br>");
-  return `<div class="country-desc">${safe}</div>`;
-}
+        function renderDescription(text) {
+            const cleaned = (text || "").trim();
+            if (!cleaned) return "";
+            // escape HTML, then convert newlines to <br>
+            const safe = escapeHtml(cleaned).replace(/\n/g, "<br>");
+            return `<div class="country-desc">${safe}</div>`;
+        }
 
-function renderPanel(data) {
-    const panel = document.getElementById('info-panel');
-    const descHtml = renderDescription(data.description);
-
-    panel.innerHTML = `
+        function renderList() {
+            const panel = document.getElementById('info-panel');
+            panel.innerHTML = `
         <div class="fade-in">
+             <div class="placeholder" style="margin-top: 1rem; margin-bottom: 2rem; text-align: left; opacity: 1;">
+                <h3>My Travels</h3>
+                <p>Click a country to view notes.</p>
+            </div>
+            ${visitedData.map(d => `
+                <div class="country-list-item" onclick="renderPanelById('${d.id}')">
+                    <div class="item-name">
+                        <span style="color:${d.color}; margin-right:8px;">●</span> ${d.country}
+                    </div>
+                    <div class="item-arrow"><i class="fa fa-chevron-right"></i></div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+        }
+
+        function renderPanelById(id) {
+            const data = visitedMap.get(id);
+            if (data) {
+                renderPanel(data);
+
+                // Find geometry for this country to zoom in
+                // Match ID with ISO_A3
+                const feature = countriesFeatures.find(f => f.properties.ISO_A3 === id);
+                if (feature && world) {
+                    const c = getLargestPolygonCentroid(feature.geometry);
+                    world.pointOfView({ lat: c[1], lng: c[0], altitude: 1.8 }, 1000);
+                }
+            }
+        }
+
+        function renderPanel(data) {
+            const panel = document.getElementById('info-panel');
+            const descHtml = renderDescription(data.description);
+
+            panel.innerHTML = `
+        <div class="fade-in">
+            <button class="back-btn" onclick="renderList()">
+                <i class="fa fa-arrow-left"></i> Back
+            </button>
+
             <div class="country-header">
                 <h1>${data.country}</h1>
                 <div class="country-accent" style="background:${data.color};"></div>
@@ -363,22 +449,23 @@ function renderPanel(data) {
             `).join('')}
         </div>
     `;
-}
+        }
 
-function getLargestPolygonCentroid(geometry) {
-    let coords = geometry.type === 'MultiPolygon'
-        ? geometry.coordinates.reduce((a, b) => b[0].length > a[0].length ? b : a)[0]
-        : geometry.coordinates[0];
+        function getLargestPolygonCentroid(geometry) {
+            let coords = geometry.type === 'MultiPolygon'
+                ? geometry.coordinates.reduce((a, b) => b[0].length > a[0].length ? b : a)[0]
+                : geometry.coordinates[0];
 
-    let minX = 180, maxX = -180, minY = 90, maxY = -90;
-    coords.forEach(([x, y]) => {
-        minX = Math.min(minX, x);
-        maxX = Math.max(maxX, x);
-        minY = Math.min(minY, y);
-        maxY = Math.max(maxY, y);
-    });
-    return [(minX + maxX) / 2, (minY + maxY) / 2];
-}
-</script>
+            let minX = 180, maxX = -180, minY = 90, maxY = -90;
+            coords.forEach(([x, y]) => {
+                minX = Math.min(minX, x);
+                maxX = Math.max(maxX, x);
+                minY = Math.min(minY, y);
+                maxY = Math.max(maxY, y);
+            });
+            return [(minX + maxX) / 2, (minY + maxY) / 2];
+        }
+    </script>
 </body>
+
 </html>
