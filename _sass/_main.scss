@@ -664,3 +664,38 @@ applause-button svg {
   margin: 20%;
   fill: var(--text-main);
 }
+
+/* FOOTER STYLES (New Addition) */
+.social-footer {
+  padding: 3rem 1.5rem;
+  margin-top: 4rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.social-footer-icons {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.social-footer-icons a {
+  color: var(--text-light);
+  font-size: 1.25rem;
+  transition: color 0.2s;
+}
+
+.social-footer-icons a:hover {
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.social-footer p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin: 0;
+  font-family: var(--font-mono);
+}

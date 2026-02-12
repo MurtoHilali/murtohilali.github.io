@@ -3,44 +3,44 @@ layout: compress
 ---
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 {% include head.html %}
- <!-- buat skrip analitik -->
-<script src="https://afarkas.github.io/lazysizes/lazysizes.min.js" async=""></script>
-
-
-
 
 <body>
-	
+  <!-- Lazysizes script should be in body or head -->
+  <script src="https://afarkas.github.io/lazysizes/lazysizes.min.js" async=""></script>
+  
   <script>
     function setTheme(theme) {
       try {
-	       if (theme === "dark") {
-		document.documentElement.setAttribute('data-theme', 'dark');
-		window.localStorage.setItem('theme', 'dark');
-		document.getElementById("theme-toggle").classList.add('sun');
-		document.getElementById("theme-toggle").classList.remove('moon');
-	      } else {
-		document.documentElement.setAttribute('data-theme', 'light');
-		window.localStorage.setItem('theme', 'light');
-		document.getElementById("theme-toggle").classList.add('moon');
-		document.getElementById("theme-toggle").classList.remove('sun');
-	      }
+         if (theme === "dark") {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            window.localStorage.setItem('theme', 'dark');
+            var toggle = document.getElementById("theme-toggle");
+            if(toggle) {
+                toggle.classList.add('sun');
+                toggle.classList.remove('moon');
+            }
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            window.localStorage.setItem('theme', 'light');
+            var toggle = document.getElementById("theme-toggle");
+            if(toggle) {
+                toggle.classList.add('moon');
+                toggle.classList.remove('sun');
+            }
+        }
       } catch (error) {
-	      console.log('%c Welcone to CNotes 👋', 'font-family: sans-serif;color: white;background: black;font-size: 2rem;font-weight: bold;')
+        console.log('Theme error', error);
       }
     }
 
     let theme = localStorage.getItem('theme');
-
     theme = theme || (window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' : 'light');
-
     setTheme(theme);
 
     function modeSwitcher() {
       let currentMode = document.documentElement.getAttribute('data-theme');
-
       if (currentMode === "dark") {
         setTheme('light');
       } else {
@@ -57,12 +57,12 @@ layout: compress
     {% endif %}
   </main>
 
+  <!-- Footer moved INSIDE body -->
+  {% include footer.html %}
+
+  {% if page.url == '/archive/' or page.url == '/notes/' %}
+   <script src="{{ site.url }}{{ site.baseurl }}/assets/js/custom-search.js"></script>
+  {% endif %}
+
 </body>
-
-{% include footer.html %}
- 
- {% if page.url == '/archive/' or page.url == '/notes/' %}
-	<script src="{{ site.url }}{{ site.baseurl }}/assets/js/custom-search.js"></script>
- {% endif %}
-
 </html>
