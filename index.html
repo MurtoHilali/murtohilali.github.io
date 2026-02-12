@@ -4,86 +4,132 @@ layout: default
 
 {% include prohead.html %}
 
-<div class="bio-container">
-    <div class="bio-image">
-        <img src="/murtohilali.github.io/img/author/website-headshot.jpeg" alt="{{ site.author.name }}">
-    </div>
-    
-    <div class="bio-text">
-        <h2 style="margin-top: 0;">Hey there, I'm Murto.</h2>
-        <p>
-            I'm a Biotech/Economics student @ UWaterloo
-            interested in tech, compbio, proteins, and ML.
+<!-- HERO SECTION -->
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">
+            Hey there,<br>
+            <span>I'm {{ site.author.name }}.</span>
+        </h1>
+        
+        <p class="hero-bio">
+            Biotech/Economics student @ UWaterloo interested in tech, compbio, proteins, and ML. Building tools for the future of biology.
         </p>
 
-        <div class="bio-links">
-            <a href="{{ site.url }}{{ site.baseurl }}/about/" class="bio-btn">
-                <i class="fa fa-user"></i> About
-            </a>
-            <a href="{{ site.url }}{{ site.baseurl }}/blog/" class="bio-btn">
-                <i class="fa fa-pencil"></i> Posts
-            </a>
-            <a href="https://murto.co/proteinloop" class="bio-btn">
-                <i class="fa fa-link"></i> Proteinloop
-            </a>
-            <a href="https://records.murto.co/" target="_self" class="bio-btn">
-                <i class="fa fa-music"></i> Records
-            </a>
-            <a href="/murtohilali.github.io/Murto Hilali Resume ATS - Bioinformatics 2025.docx.pdf" target="_blank" class="bio-btn">
-                <i class="fa fa-file-text"></i> Resume
-            </a>
-            <a href="https://murto.co/travels" class="bio-btn">
-                <i class="fa fa-plane"></i> Travels
-            </a>
+        <!-- BENTO GRID LINKS -->
+        <div class="bento-links-container">
+            <div class="bento-grid">
+                <a href="{{ site.url }}{{ site.baseurl }}/about/" class="bento-btn">
+                    <i class="fa fa-user"></i> About
+                </a>
+                <a href="{{ site.url }}{{ site.baseurl }}/blog/" class="bento-btn">
+                    <i class="fa fa-pencil"></i> Posts
+                </a>
+                <a href="https://murto.co/proteinloop" class="bento-btn">
+                    <i class="fa fa-link"></i> Proteinloop
+                </a>
+                <a href="https://records.murto.co/" target="_self" class="bento-btn">
+                    <i class="fa fa-music"></i> Records
+                </a>
+                <a href="/murtohilali.github.io/Murto Hilali Resume ATS - Bioinformatics 2025.docx.pdf" target="_blank" class="bento-btn">
+                    <i class="fa fa-file-text"></i> Resume
+                </a>
+                <a href="https://murto.co/travels" class="bento-btn">
+                    <i class="fa fa-plane"></i> Travels
+                </a>
+            </div>
         </div>
+    </div>
+
+    <!-- TILTED IMAGE -->
+    <div class="hero-image-wrapper">
+        <div class="hero-bg-tilt"></div>
+        <img src="/murtohilali.github.io/img/author/website-headshot.jpeg" alt="{{ site.author.name }}" class="hero-img">
     </div>
 </div>
 
-<h2 style="margin-bottom: 10px;">Projects</h2>
+<!-- PROJECTS CAROUSEL -->
+<div class="section-header">
+    <h2>Selected Works</h2>
+    <div class="scroll-hint">
+        SCROLL <i class="fa fa-arrow-right"></i>
+    </div>
+</div>
 
-<div class="card-list oi" id="Projects">
+<div class="project-carousel" id="Projects">
     {% assign projects = site.posts | where_exp: "item", "item.tags contains 'project'" %}
     
     {% for post in projects limit:6 %}
-    <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}" class="mr-20">
-      <div class="card-wrapper">
-        <div class="background"></div>
-        <img class="image lazyload" src="{{ site.url }}{{ site.baseurl }}/img/placeholder.svg" data-src="{% if post.thumb %} {{ site.url }}{{ site.baseurl }}{{ post.thumb }} {% else %} {{ site.default-thumb }} {% endif %}"  alt="{{ post.title }}">
-        <div class="kepala p-24"><h1 class="judul">{{ post.title }}</h1><p>{{ post.description }}</p></div>
-        <div class="footer p-24">{% assign minute=post.content | number_of_words | divided_by: 265 | plus: 1 %}<small datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b, %y" }}</small></div>
-      </div>
-    </a>
+        <!-- Cycle gradients for visual variety -->
+        <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}" class="project-card-link">
+            <article class="project-card {% cycle 'grad-1', 'grad-2', 'grad-3', 'grad-4' %}">
+                <div class="noise-overlay"></div>
+                
+                <div class="project-content">
+                    <div class="project-meta">
+                        <span>{{ post.date | date: "%b %Y" }}</span>
+                        <!-- Logic to find a tag that isn't 'project' -->
+                        {% for tag in post.tags %}
+                            {% if tag != 'project' %}
+                                <span class="project-tag">{{ tag }}</span>
+                                {% break %} 
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="project-info">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.description }}</p>
+                        <div class="read-more">
+                            Read Case Study <i class="fa fa-chevron-right" style="font-size: 0.8em;"></i>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </a>
     {% else %}
-    <p style="padding-left: 20px;">No projects yet.</p>
+        <p>No projects found.</p>
     {% endfor %}
+    <!-- Spacer for right padding visual -->
+    <div style="min-width: 1px;"></div>
 </div>
 
-<br>
+<br><br>
 
-<h2 style="margin-bottom: 10px;">Posts</h2>
+<!-- POSTS LIST -->
+<div class="section-header">
+    <h2>Writing</h2>
+    <a href="{{ site.url }}{{ site.baseurl }}/blog/" style="font-size: 0.9rem; font-weight: 500;">View Archive</a>
+</div>
 
-<div class="card-list oi" id="Posts">
+<div class="post-list" id="Posts">
     {% assign blog_posts = site.posts | where_exp: "item", "item.tags contains 'post'" %}
     
-    {% for post in blog_posts limit:6 %}
-    <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}" class="mr-20">
-      <div class="card-wrapper">
-        <div class="background"></div>
-        <img class="image lazyload" src="{{ site.url }}{{ site.baseurl }}/img/placeholder.svg" data-src="{% if post.thumb %} {{ site.url }}{{ site.baseurl }}{{ post.thumb }} {% else %} {{ site.default-thumb }} {% endif %}"  alt="{{ post.title }}">
-        <div class="kepala p-24"><h1 class="judul">{{ post.title }}</h1><p>{{ post.description }}</p></div>
-        <div class="footer p-24">{% assign minute=post.content | number_of_words | divided_by: 265 | plus: 1 %}<small datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b, %y" }} - {{ minute }} min Read</small></div>
-      </div>
+    {% for post in blog_posts limit:8 %}
+    <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}" class="post-item">
+        <div class="post-meta-group">
+            <span class="post-date">{{ post.date | date: "%b %d, %Y" }}</span>
+            <span class="post-title">{{ post.title }}</span>
+        </div>
+        
+        <div style="display: flex; align-items: center;">
+            <!-- Optional: Show Tag -->
+             {% for tag in post.tags %}
+                {% if tag != 'post' %}
+                    <span class="post-tag-badge hide-on-mobile">{{ tag }}</span>
+                    {% break %}
+                {% endif %}
+            {% endfor %}
+            <i class="fa fa-arrow-right post-arrow"></i>
+        </div>
     </a>
     {% endfor %}
 </div>
 
-<a class="soft-button" href="{{ site.url }}{{ site.baseurl }}/blog/" style="display: flex;align-items: center;">
-    <span>See all posts</span>
-    <svg xmlns="http://www.w3.org/2000/svg" style="height: 18px;margin-left: 7px;" fill="none" viewBox="0 0 24 24" stroke="var(--main-text-color)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-</a>
+<br><br>
 
-<br>
-
-<h2 style="margin-bottom: 10px;">Join my cult:</h2>
-
-<iframe src="https://murto.substack.com/embed" height="320" style="border:1px solid #EEE; background:white; width: 100%; border-radius: 8px;" frameborder="0" scrolling="no"></iframe>
+<!-- NEWSLETTER / FOOTER AREA -->
+<div class="section-header">
+    <h2>Join my cult:</h2>
+</div>
+<iframe src="https://murto.substack.com/embed" height="320" style="border:1px solid var(--border-color); background: var(--card-bg); width: 100%; border-radius: 8px;" frameborder="0" scrolling="no"></iframe>
