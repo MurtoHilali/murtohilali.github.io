@@ -65,7 +65,6 @@ html[data-theme="light"] {
   --header-font: var(--font-header);
   --source-code-font: var(--font-mono);
   
-  /* Toggle Icon Colors (Legacy) */
   --theme-ui-colors-toggleIcon: #2d3748;
   --theme-ui-colors-transparent: transparent;
 
@@ -432,6 +431,15 @@ blockquote {
 /* =========================================
    6. OTHER COMPONENTS
    ========================================= */
+
+/* HEADER & TOP NAV SPACING */
+.flex-row-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem; /* Added heavy bottom margin for spacing */
+}
 
 /* Hero Section */
 .hero-section {
