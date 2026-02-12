@@ -12,7 +12,7 @@ layout: default
     <div class="bio-text">
         <h2 style="margin-top: 0;">Hey there, I'm Murto.</h2>
         <p>
-            I'm a Biotech/Economics student @ UWaterloo
+            I'm studied Biotech/Economics @ UWaterloo
             interested in tech, compbio, proteins, and ML.
         </p>
 
@@ -39,33 +39,14 @@ layout: default
     </div>
 </div>
 
-<h2 style="margin-bottom: 10px;">Projects</h2>
-
-<div class="card-list oi" id="Projects">
-    {% assign projects = site.posts | where_exp: "item", "item.tags contains 'project'" %}
-    
-    {% for post in projects limit:6 %}
-    <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}" class="mr-20">
-      <div class="card-wrapper">
-        <div class="background"></div>
-        <img class="image lazyload" src="{{ site.url }}{{ site.baseurl }}/img/placeholder.svg" data-src="{% if post.thumb %} {{ site.url }}{{ site.baseurl }}{{ post.thumb }} {% else %} {{ site.default-thumb }} {% endif %}"  alt="{{ post.title }}">
-        <div class="kepala p-24"><h1 class="judul">{{ post.title }}</h1><p>{{ post.description }}</p></div>
-        <div class="footer p-24">{% assign minute=post.content | number_of_words | divided_by: 265 | plus: 1 %}<small datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b, %y" }}</small></div>
-      </div>
-    </a>
-    {% else %}
-    <p style="padding-left: 20px;">No projects yet.</p>
-    {% endfor %}
-</div>
-
-<br>
+<br>0
 
 <h2 style="margin-bottom: 10px;">Posts</h2>
 
 <div class="card-list oi" id="Posts">
     {% assign blog_posts = site.posts | where_exp: "item", "item.tags contains 'post'" %}
     
-    {% for post in blog_posts limit:6 %}
+    {% for post in blog_posts limit:8 %}
     <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}" class="mr-20">
       <div class="card-wrapper">
         <div class="background"></div>
