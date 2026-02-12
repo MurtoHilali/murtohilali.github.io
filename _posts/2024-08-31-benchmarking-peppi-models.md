@@ -132,7 +132,8 @@ As you can see, the high accuracy is largely thanks to the high volume of true p
 
 Here’s the code for you to play around with yourself:
 
-```## randomforest.py
+```
+## randomforest.py
 
 import pandas as pd
 import numpy as np
@@ -228,6 +229,7 @@ for i in range(3):
 print("Graphs saved as PNG images.")
 print('\033[1mCompleted.\033[0m')
 ```
+
 As you can see in the code above, one of the coolest parts of RandomForest is seeing the trees themselves:
 
 ![](https://miro.medium.com/v2/resize:fit:2000/format:webp/1*TvJg-O1UWYySbc2Ar9PFMA.png)
