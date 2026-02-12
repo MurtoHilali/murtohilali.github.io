@@ -6,17 +6,27 @@ tags: bioinformatics drug-discovery virtual-screening project
 image: /img/seo/aadd.png
 thumb: /img/thumb/aadd.webp
 ---
-[![](https://substackcdn.com/image/fetch/$s_!Yu60!,w_2400,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9ac0f9d4-1c03-4370-87c7-f888ef6e0474_960x540.png)](https://substackcdn.com/image/fetch/$s_!Yu60!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9ac0f9d4-1c03-4370-87c7-f888ef6e0474_960x540.png)By Author | Not random images either, there’s a chance you find the compounds in all of these organisms.
+[![](https://substackcdn.com/image/fetch/$s_!Yu60!,w_2400,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9ac0f9d4-1c03-4370-87c7-f888ef6e0474_960x540.png)](https://substackcdn.com/image/fetch/$s_!Yu60!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9ac0f9d4-1c03-4370-87c7-f888ef6e0474_960x540.png)
+By Author — Not random images either, there’s a chance you find the compounds in all of these organisms.
 
 [![Static Badge](https://img.shields.io/badge/github-repo-blue?logo=github)](https://github.com/MurtoHilali/Acarbose-Alternative-Drug-Discovery/tree/main)
 
-Flavonoids are a large, diverse group of secondary plant metabolites that play a role in pigmentation, UV protection, and insecticidal activity. Specifically, **some anthocyanins (a subclass) can** **inhibit insect digestive enzymes** , preventing nutrient uptake and development, serving as a defence mechanism against predators.
+## Table of Contents
 
-Obviously, there’s potential here for bug Ozempic (or insecticides, you pick). But research on _Allium mongolicum_ flowers has also revealed that their **flavonoids may inhibit** _ **human**_ **digestive enzymes** , including our very own starch-metabolizing **α-glucosidase**. These compounds could be used to treat diabetes, as inhibiting starch breakdown reduces postprandial blood glucose levels ([Li et al., 2025](https://link.springer.com/article/10.1007/s11130-025-01422-8)).
+1. **[Exploratory Data Analysis for COCONUT](#1-exploratory-data-analysis-for-coconut)** — Profiling ~100K natural products to understand drug-likeness, physicochemical space, and screening viability.
+2. **[Chemical Similarity Search](#2-chemical-similarity-search)** — Fingerprint-based filtering (ECFP, MACCS, pharmacophore, USRCAT) to reduce the database to high-similarity candidates.
+3. **[Protein Model Selection, Cleanup, and Preprocessing](#3-protein-model-selection-cleanup-and-preprocessing)** — Selecting acarbose-bound crystal structures and preparing them for docking.
+3. **[Protein–Ligand Docking & Assessment](#4-protein-ligand-docking--assessment)** — Running GNINA-based virtual screening and scoring with CNN-VS.
+4. **[Lead Validation and Controls](#5-lead-validation-and-controls)** — Decoys, redocking replicates, statistical filtering, and stability analysis to remove false positives.
+5. **[Candidate Overview & Key Takeaways](#candidate-overview--key-takeaways)** — Final shortlist by target protein and reflections on the workflow.
 
-Initial docking analysis revealed that _A. mongolicum_ -derived **isoquercetin** (already in clinical trials) can inhibit α-glucosidase (AGI) activity with an effect similar to that of **acarbose** , a common AGI derived from _Actinoplanes_ bacteria. Chemical similarity search revealed that **troxerutin** (aka vitamin P4, a flavonoid you can buy over the counter) shares some substructural motifs with isoquercetin, _and_ its docking analysis showed similar binding affinity.
+Flavonoids are a large, diverse group of secondary plant metabolites that play a role in pigmentation, UV protection, and insecticidal activity. Specifically, **some anthocyanins (a subclass) can** **inhibit insect digestive enzymes**, preventing nutrient uptake and development, serving as a defence mechanism against predators.
 
-[![](https://substackcdn.com/image/fetch/$s_!jfor!,w_2400,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0346ecbb-5683-459b-bd35-5f382e251d54_1327x744.png)](https://substackcdn.com/image/fetch/$s_!jfor!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0346ecbb-5683-459b-bd35-5f382e251d54_1327x744.png)Docking results from DiffDock-Pocket
+Obviously, there’s potential here for bug Ozempic (or insecticides, you pick). But research on _Allium mongolicum_ flowers has also revealed that their **flavonoids may inhibit** _**human**_ **digestive enzymes**, including our very own starch-metabolizing **α-glucosidase**. These compounds could be used to treat diabetes, as inhibiting starch breakdown reduces postprandial blood glucose levels ([Li et al., 2025](https://link.springer.com/article/10.1007/s11130-025-01422-8)).
+
+Initial docking analysis revealed that _A. mongolicum_-derived **isoquercetin** (already in clinical trials) can inhibit α-glucosidase (AGI) activity with an effect similar to that of **acarbose** , a common AGI derived from _Actinoplanes_ bacteria. Chemical similarity search revealed that **troxerutin** (aka vitamin P4, a flavonoid you can buy over the counter) shares some substructural motifs with isoquercetin, _and_ its docking analysis showed similar binding affinity.
+
+[![](https://substackcdn.com/image/fetch/$s_!jfor!,w_2400,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0346ecbb-5683-459b-bd35-5f382e251d54_1327x744.png)](https://substackcdn.com/image/fetch/$s_!jfor!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0346ecbb-5683-459b-bd35-5f382e251d54_1327x744.png)Docking results from DiffDock-Pocket.
 
 >  **Note** : troxerutin’s slightly higher affinity may be attributed to steric interactions introduced by the moieties found on the larger molecule.
 
@@ -24,7 +34,7 @@ Initial docking analysis revealed that _A. mongolicum_ -derived **isoquercetin**
 
 Here’s my overall process:
 
-  1.  **Exploratory data analysis of[COCONUT](https://coconut.naturalproducts.net/)**, a natural products database.
+  1.  **Exploratory data analysis of [COCONUT](https://coconut.naturalproducts.net/)**, a natural products database.
 
   2.  **Chemical similarity search** of acarbose against COCONUT to find structurally similar NPs.
 
@@ -39,9 +49,7 @@ Here’s my overall process:
 
 You can see all the code (in progress) [here](https://github.com/MurtoHilali/Acarbose-Alternative-Drug-Discovery/tree/main).
 
-[![](https://substackcdn.com/image/fetch/$s_!FE0O!,w_2400,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff3580a2c-51f5-4731-ac22-c51910f44289_1462x530.png)](https://substackcdn.com/image/fetch/$s_!FE0O!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff3580a2c-51f5-4731-ac22-c51910f44289_1462x530.png)Workflow diagram
-
-* * *
+[![](https://substackcdn.com/image/fetch/$s_!FE0O!,w_2400,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff3580a2c-51f5-4731-ac22-c51910f44289_1462x530.png)](https://substackcdn.com/image/fetch/$s_!FE0O!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff3580a2c-51f5-4731-ac22-c51910f44289_1462x530.png) Workflow diagram
 
 ## 1\. Exploratory data analysis for COCONUT
 
@@ -107,13 +115,8 @@ Here, I take the ratio of both in the dataset. Two populations emerge: many NPs 
  **Takeaways** :
 
   * COCONUT offers a relatively diverse search space
-
   * There appears to be drug-like potential amongst several NPs
 
-
-
-
-* * *
 
 ## 2\. Chemical similarity search
 
@@ -147,8 +150,6 @@ To trim the dataset down, I used the following cutoffs for Tanimoto similarity:
 
 This gave me a dataset of 10,341 high-similarity candidate molecules to explore. Ligands were generated using RDKit and converted to `.pdbqt `using OpenBabel.
 
-* * *
-
 ## 3\. Protein model selection, cleanup, and preprocessing
 
 Acarbose is a bit of a rolling stone, it can’t be tied down — by which I mean it **interacts with multiple proteins**. To be thorough, I wanted to explore this virtual screening process across all of its protein targets at once. In hindsight, this made it much harder to keep track of (I’ll take it one target at a time from now on).
@@ -156,19 +157,15 @@ Acarbose is a bit of a rolling stone, it can’t be tied down — by which I mea
 I made my selections based on protein targets listed in [DrugBank](https://go.drugbank.com/drugs/DB00284) and the resolution of the corresponding protein model. **I also specifically selected PDB entries of the target protein** _ **in complex with acarbose**_ so I’d a) have a defined binding pocket and b) have an experimental reference point for future validations. Finally, all proteins were put through [PDB-redo](https://pdb-redo.eu/) before being converted to `.pdbqt `for docking:
 
   1.  **[2QMJ](https://www.rcsb.org/structure/2QMJ)** : The N-terminal subunit of human maltase-glucoamylase in complex with acarbose. As you can see from the PDB page, there’s room for growth in model quality, but PDB-redo led to some minor improvements. (Gene: MGAM).
-
   2.  **[3BAJ](https://www.rcsb.org/structure/3BAJ)** : Human pancreatic alpha-amylase in complex with nitrate and acarbose. PDB-redo led to more significant improvements here. (Gene: AMY2A).
-
   3.  **[5NN8](https://www.rcsb.org/structure/5NN8)** : Human lysosomal acid-alpha-glucosidase in complex with acarbose (Gene: GAA).
-
-
 
 
 Below, **acarbose is designated in light green** with binding residues (within 4 Å of acarbose) in red. All other observed elements are ions and ligands, which are removed for docking.
 
-[![](https://substackcdn.com/image/fetch/$s_!gvGx!,w_2400,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdfda8e44-577e-4df3-8306-ac86226edf20_1285x516.png)](https://substackcdn.com/image/fetch/$s_!gvGx!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdfda8e44-577e-4df3-8306-ac86226edf20_1285x516.png)Note: one of the highlighted light green ligands in 5NN8 is an acarbose-derived trisaccharide; the other binding pocket (containing true alpha-acarbose) is used for docking configuration | Images generated via [The Protein Imager](https://academic.oup.com/bioinformatics/article/36/9/2909/5701652). 
+[![](https://substackcdn.com/image/fetch/$s_!gvGx!,w_2400,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdfda8e44-577e-4df3-8306-ac86226edf20_1285x516.png)](https://substackcdn.com/image/fetch/$s_!gvGx!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdfda8e44-577e-4df3-8306-ac86226edf20_1285x516.png)
+Note: one of the highlighted light green ligands in 5NN8 is an acarbose-derived trisaccharide; the other binding pocket (containing true alpha-acarbose) is used for docking configuration — Images generated via [The Protein Imager](https://academic.oup.com/bioinformatics/article/36/9/2909/5701652). 
 
-* * *
 
 ## 4\. Protein-ligand docking & assessment
 
@@ -179,8 +176,6 @@ Below, **acarbose is designated in light green** with binding residues (within 4
 Since we know where acarbose is supposed to bind (the protein models include acarbose), we can **guide the docking process by setting an autobox** (basically a mini 3D search space) around its coordinates. In the diagrams above, I’ve indicated the autobox GNINA draws around the ligands (4 Å outward from the farthest corners of the molecule) in red.
 
 While it may be the most computationally expensive step, this stage of the project was actually the easiest. I ran GNINA on an HPC cluster in parallel fashion to save time — although GNINA wasn’t designed specifically for high-throughput virtual screening[1](https://offbase.substack.com/p/how-i-found-71-natural-alternatives#footnote-1-187562974), this step was completed in approximately one day.
-
-* * *
 
 ## 5\. Lead validation and controls
 
@@ -354,8 +349,6 @@ This plot becomes more useful if we expand our initial redocking set to include 
 
 A companion to IQR vs. CNN-VS. A snapshot of pose stability.
 
-* * *
-
 Taking all of this into account, my final filtration process was to subset to the leads that scored CNN-VS > 6.30 in 5 out of 6 replicates, then rank them by the median CNN-VS-to-interquartile range ratio. That meant the top 3 candidates for each protein were as follows:
 
  **2QMJ** :
@@ -426,8 +419,6 @@ I’m still not sure why this might be, so please let me know if you have an exp
 Also, out of curiosity, I determined pairwise Tanimoto similarity across all leads[2](https://offbase.substack.com/p/how-i-found-71-natural-alternatives#footnote-2-187562974). There seems to be clustering among some 3BAJ leads, which may merit further investigation.
 
 Some of the lead ligands for 3BAJ, such as CNP0146238.29, appear to share binding behaviours with other leads, such as CNP0156494 — this may be something worth further investigation.
-
-* * *
 
 ## Candidate overview & key takeaways
 
