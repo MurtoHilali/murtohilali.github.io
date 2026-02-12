@@ -40,7 +40,7 @@ html[data-theme="light"] {
   /* NEW Palette (Stone-50) */
   --bg-color: #fafaf9; 
   --text-main: #292524; /* Stone-800 */
-  --text-muted: #57534e; /* Stone-600 - Darkened for better readability */
+  --text-muted: #57534e; /* Stone-600 */
   --text-light: #a8a29e; /* Stone-400 */
   
   --border-color: #e7e5e4; /* Stone-200 */
@@ -49,7 +49,6 @@ html[data-theme="light"] {
   --card-bg: #ffffff;
   --accent-color: #ea580c; /* Orange-600 */
   
-  /* LINK COLOR FIX: Blue as requested */
   --link-color: rgb(50, 87, 209); 
   
   --code-bg: #f5f5f4;
@@ -66,7 +65,57 @@ html[data-theme="light"] {
   --header-font: var(--font-header);
   --source-code-font: var(--font-mono);
   
+  /* Toggle Icon Colors (Legacy) */
   --theme-ui-colors-toggleIcon: #2d3748;
+  --theme-ui-colors-transparent: transparent;
+
+  /* THEME TOGGLE STYLES (LIGHT MODE) */
+  #theme-toggle div {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--theme-ui-colors-transparent, transparent);
+    transform: scale(1);
+    transition: all 0.45s ease 0s;
+    overflow: hidden;
+    box-shadow: inset 8px -8px 0px 0px var(--theme-ui-colors-toggleIcon, #2d3748);
+  }
+
+  #theme-toggle div::before {
+    content: "";
+    position: absolute;
+    right: -9px;
+    top: -9px;
+    height: 24px;
+    width: 24px;
+    border: none;
+    border-radius: 50%;
+    transform: translate(0px, 0px);
+    opacity: 1;
+    transition: transform 0.45s ease 0s;
+  }
+
+  #theme-toggle div::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: -4px 0px 0px -4px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0 -23px 0 var(--theme-ui-colors-toggleIcon, #2d3748),
+      0 23px 0 var(--theme-ui-colors-toggleIcon, #2d3748), 23px 0 0 var(--theme-ui-colors-toggleIcon, #2d3748),
+      -23px 0 0 var(--theme-ui-colors-toggleIcon, #2d3748),
+      15px 15px 0 var(--theme-ui-colors-toggleIcon, #2d3748),
+      -15px 15px 0 var(--theme-ui-colors-toggleIcon, #2d3748),
+      15px -15px 0 var(--theme-ui-colors-toggleIcon, #2d3748),
+      -15px -15px 0 var(--theme-ui-colors-toggleIcon, #2d3748);
+    transform: scale(0);
+    transition: all 0.35s ease 0s;
+  }
 }
 
 html[data-theme="dark"] {
@@ -82,7 +131,6 @@ html[data-theme="dark"] {
   --card-bg: #292524;
   --accent-color: #fb923c; /* Orange-400 */
   
-  /* LINK COLOR FIX: Lighter Blue for Dark Mode */
   --link-color: #60a5fa; 
 
   --code-bg: #292524;
@@ -100,13 +148,61 @@ html[data-theme="dark"] {
   --source-code-font: var(--font-mono);
 
   --theme-ui-colors-toggleIcon: #cbd5e0;
+
+  /* THEME TOGGLE STYLES (DARK MODE) */
+  #theme-toggle div {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 4px solid var(--theme-ui-colors-toggleIcon, #cbd5e0);
+    background-color: var(--theme-ui-colors-toggleIcon, #cbd5e0);
+    transform: scale(0.55);
+    transition: all 0.45s ease 0s;
+    overflow: visible;
+    box-shadow: none;
+  }
+
+  #theme-toggle div::before {
+    content: "";
+    position: absolute;
+    right: -9px;
+    top: -9px;
+    height: 24px;
+    width: 24px;
+    border: 2px solid var(--theme-ui-colors-toggleIcon, #cbd5e0);
+    border-radius: 50%;
+    transform: translate(14px, -14px);
+    opacity: 0;
+    transition: transform 0.45s ease 0s;
+  }
+
+  #theme-toggle div::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: -4px 0px 0px -4px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0 -23px 0 var(--theme-ui-colors-toggleIcon, #cbd5e0),
+      0 23px 0 var(--theme-ui-colors-toggleIcon, #cbd5e0), 23px 0 0 var(--theme-ui-colors-toggleIcon, #cbd5e0),
+      -23px 0 0 var(--theme-ui-colors-toggleIcon, #cbd5e0),
+      15px 15px 0 var(--theme-ui-colors-toggleIcon, #cbd5e0),
+      -15px 15px 0 var(--theme-ui-colors-toggleIcon, #cbd5e0),
+      15px -15px 0 var(--theme-ui-colors-toggleIcon, #cbd5e0),
+      -15px -15px 0 var(--theme-ui-colors-toggleIcon, #cbd5e0);
+    transform: scale(1);
+    transition: all 0.35s ease 0s;
+  }
 }
 
 body {
   background-color: var(--bg-color);
   color: var(--text-main);
   font-family: var(--font-body);
-  line-height: 1.75; /* Increased slightly for readability */
+  line-height: 1.75;
   text-rendering: optimizeLegibility;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -127,21 +223,20 @@ a:hover {
    4. LAYOUT & TYPOGRAPHY
    ========================================= */
 main {
-  max-width: 64rem; /* Tightened margins by increasing width (was 50rem) */
+  max-width: 64rem;
   margin: 0 auto;
   padding: 4rem 1.5rem;
   display: flex;
   flex-direction: column;
 }
 
-/* HEADING SPACING FIX */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-header);
   font-weight: 400; 
   color: var(--text-main);
   line-height: 1.2;
-  margin-top: 2.5rem;   /* Added top space */
-  margin-bottom: 1.5rem; /* Increased bottom space */
+  margin-top: 2.5rem;   
+  margin-bottom: 1.5rem; 
 }
 
 h1 { font-size: 3rem; }
@@ -192,10 +287,9 @@ blockquote {
 }
 
 /* =========================================
-   5. BENTO & CARD STYLES (Modernized Legacy)
+   5. BENTO & CARD STYLES
    ========================================= */
 
-/* Main Grid Layout for Cards */
 .card-list {
   display: grid;
   grid-template-columns: 1fr;
@@ -244,7 +338,7 @@ blockquote {
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  margin: 0; /* Override general img margin */
+  margin: 0;
   border-radius: 0;
   transition: transform 0.5s ease;
 }
@@ -264,7 +358,7 @@ blockquote {
   background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
 }
 
-/* PROJECT TAGS (NEW) */
+/* PROJECT TAGS */
 .card-tags {
   position: absolute;
   top: 1.25rem;
@@ -302,7 +396,7 @@ blockquote {
   font-size: 1.75rem;
   line-height: 1.1;
   color: #fff;
-  margin: 0 0 0.5rem 0; /* Reset margins for card title */
+  margin: 0 0 0.5rem 0;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
@@ -385,7 +479,7 @@ blockquote {
   border-color: var(--border-hover);
   color: var(--text-main);
   transform: translateY(-1px);
-  text-decoration: none; /* No underline on buttons */
+  text-decoration: none;
 }
 
 /* Hero Image Tilt */
@@ -416,7 +510,7 @@ blockquote {
   filter: grayscale(20%);
   transition: filter 0.5s ease;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  margin: 0; /* Reset global img margin */
+  margin: 0;
 }
 .hero-image-wrapper:hover .hero-img { filter: grayscale(0%); }
 
@@ -508,7 +602,7 @@ blockquote {
   padding: 1rem 0;
   border-bottom: 1px solid var(--code-bg);
 }
-.post-item:hover { text-decoration: none; } /* Handle hover inside item */
+.post-item:hover { text-decoration: none; }
 @media (min-width: 640px) {
   .post-item {
     flex-direction: row;
@@ -526,7 +620,7 @@ blockquote {
   .post-meta-group {
     flex-direction: row;
     align-items: baseline;
-    gap: 4rem; /* Increased gap to widen spacing between Date and Title */
+    gap: 4rem; 
   }
 }
 
@@ -534,7 +628,7 @@ blockquote {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   color: var(--text-light);
-  width: 8rem; /* Increased fixed width to push title further */
+  width: 8rem;
   flex-shrink: 0;
 }
 .post-title { font-size: 1.1rem; color: var(--text-main); }
@@ -571,12 +665,13 @@ blockquote {
   transform: translateX(0);
 }
 
-/* Theme Toggle */
+/* Theme Toggle Button Container */
 #theme-toggle {
   opacity: 0.65;
   border: none;
   background: none;
   cursor: pointer;
+  padding: 0; /* Important for alignment */
 }
 
 /* Code Blocks */
@@ -665,7 +760,7 @@ applause-button svg {
   fill: var(--text-main);
 }
 
-/* FOOTER STYLES (New Addition) */
+/* FOOTER STYLES */
 .social-footer {
   padding: 3rem 1.5rem;
   margin-top: 4rem;
