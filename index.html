@@ -46,7 +46,7 @@ layout: default
     </div>
 </div>
 
-<!-- PROJECTS SECTION (Using your Image Card Style) -->
+<!-- PROJECTS SECTION -->
 <div class="section-header">
     <h2>Selected Works</h2>
     <div class="scroll-hint">
@@ -63,6 +63,15 @@ layout: default
           <!-- Using card-wrapper logic inside carousel -->
           <div class="card-wrapper" style="width: 300px; height: 460px; flex-shrink: 0;">
             <div class="background"></div>
+            
+            <!-- Tags Overlay on Cover -->
+            <div class="card-tags">
+                {% for tag in post.tags %}
+                    {% if tag != 'project' %}
+                        <span class="card-tag">{{ tag }}</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
             
             <img class="image lazyload" 
                  src="{{ site.url }}{{ site.baseurl }}/img/placeholder.svg" 
@@ -91,7 +100,7 @@ layout: default
 
 <br><br>
 
-<!-- WRITING LIST (Minimalist List Style) -->
+<!-- WRITING LIST -->
 <div class="section-header">
     <h2>Writing</h2>
     <a href="{{ site.url }}{{ site.baseurl }}/blog/" style="font-size: 0.9rem; font-weight: 500;">View Archive</a>
@@ -108,6 +117,13 @@ layout: default
         </div>
         
         <div style="display: flex; align-items: center;">
+            <!-- Hover Tag Logic -->
+            {% for tag in post.tags %}
+                {% if tag != 'post' %}
+                    <span class="post-hover-tag">{{ tag }}</span>
+                    {% break %}
+                {% endif %}
+            {% endfor %}
             <i class="fa fa-arrow-right post-arrow"></i>
         </div>
     </a>
