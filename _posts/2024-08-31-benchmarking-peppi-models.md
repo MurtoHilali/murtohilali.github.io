@@ -253,6 +253,7 @@ Heartbroken is an understatement. While our sensitivity (recall) has gone up, we
 *Confusion matrix for the XGBoost classifier’s performance | By Author*
 
 Here’s the code for your own exploration:
+
 ```
 ## xgboostmodel.py
 
@@ -325,6 +326,7 @@ best_xgb.save_model(model_path)
 
 print('\033[1mCompleted.\033[0m')
 ```
+
 ### Challenger #3: The Inimitatable IsolationForest
 ![](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*fpm4iFYwDxrgDgRSBvp7RQ.png)
 - **Type**: An anomaly detection algorithm also based on decision tree ensembles.
@@ -347,6 +349,7 @@ Stunningly poor! This isn’t very surprising given what we know about the natur
 Here’s the code for you to experiment with. IsoForest doesn’t have binary outputs, so we map them to 1 and 0 here.
 
 (Note: this leads to an inflated custom F1 score that still needs debugging.)
+
 ```
 import pandas as pd
 import numpy as np
@@ -445,6 +448,7 @@ plt.close()
 print("Graphs saved as PNG images.")
 print('\033[1mCompleted.\033[0m')
 ```
+
 ### Challenger #4: The Clamouring Convolutional Neural Network
 ![](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*CW2aIrrvtR7c5clTPvV9aQ.png)
 - **Type**: A neural network that uses deep learning to classify images.
