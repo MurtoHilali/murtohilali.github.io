@@ -58,7 +58,7 @@ layout: default
 <div class="project-carousel" id="Projects">
     {% assign projects = site.posts | where_exp: "item", "item.tags contains 'project'" %}
     
-    {% for post in projects limit:8 %}
+    {% for post in projects limit:6 %}
         <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}" class="card-wrapper">
             <div class="image-container">
                 <!-- Portrait/Default Image -->
@@ -86,15 +86,16 @@ layout: default
             </div>
             
             <!-- Content Layer -->
+            <!-- NOTE: Moved footer OUTSIDE of .kepala to span full width -->
             <div class="kepala">
                 <h1 class="judul">{{ post.title }}</h1>
                 <p>{{ post.description }}</p>
-                
-                <div class="footer">
-                    {% assign minute=post.content | number_of_words | divided_by: 265 | plus: 1 %}
-                    <small>{{ post.date | date: "%d %b, %y" }}</small>
-                    <small>Read ({% if post.minute %} {{ post.minute }} {% else %} {{ minute }} {% endif %} min)</small>
-                </div>
+            </div>
+            
+            <div class="footer">
+                {% assign minute=post.content | number_of_words | divided_by: 265 | plus: 1 %}
+                <small>{{ post.date | date: "%d %b, %y" }}</small>
+                <small>Read ({% if post.minute %} {{ post.minute }} {% else %} {{ minute }} {% endif %} min)</small>
             </div>
         </a>
     {% else %}
