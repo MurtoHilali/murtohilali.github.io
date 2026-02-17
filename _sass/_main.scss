@@ -315,7 +315,7 @@ blockquote {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* Push text to bottom */
+  justify-content: space-between; /* Ensures content pushes to top/bottom edges */
   height: 460px;
   width: 300px; /* Default Width */
   flex-shrink: 0;
@@ -324,11 +324,9 @@ blockquote {
   overflow: hidden;
   background-color: var(--card-bg);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
-  /* Expansion Transition */
-  transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
-              box-shadow 0.3s ease;
+  /* Expansion Transition - SLOWER */
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
+              box-shadow 0.5s ease;
   
   cursor: pointer;
   text-decoration: none;
@@ -350,7 +348,7 @@ blockquote {
   z-index: 0;
   margin: 0;
   border-radius: 0;
-  transition: transform 0.5s ease;
+  transition: transform 0.8s ease, opacity 0.8s ease; /* Match transition speed */
 }
 
 /* Default Image: Visible initially */
@@ -417,6 +415,7 @@ blockquote {
   position: relative;
   z-index: 4;
   padding: 1.5rem;
+  /* Push to bottom of available space before footer */
   margin-top: auto; 
   min-width: 300px;
   box-sizing: border-box;
@@ -448,18 +447,26 @@ blockquote {
 /* Footer Content (Legacy 'footer') */
 .footer {
   position: relative;
-  z-index: 2;
-  padding-top: 1rem;
+  z-index: 4; /* Ensure z-index is sufficient */
+  
+  /* Make full width and attach to bottom */
+  width: 100%;
+  padding: 1rem 1.5rem;
   border-top: 1px solid rgba(255,255,255,0.15);
+  
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: rgba(255,255,255,0.8);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: transparent; /* Changed from blur bg to transparent since overlay handles contrast */
-  backdrop-filter: blur(5px);
-  width: 100%;
+  
+  /* The blur effect behind the footer */
+  background: rgba(0, 0, 0, 0.2); /* Slight tint to ensure readability */
+  backdrop-filter: blur(10px);
+  
+  /* Reset margins */
+  margin: 0;
 }
 
 .p-24 { padding: 1.5rem !important; }
