@@ -40,7 +40,7 @@ html[data-theme="light"] {
   /* NEW Palette (Stone-50) */
   --bg-color: #fafaf9; 
   --text-main: #292524; /* Stone-800 */
-  --text-muted: #57534e; /* Stone-600 */
+  --text-muted: #57534e; /* Stone-600 - Darkened for better readability */
   --text-light: #a8a29e; /* Stone-400 */
   
   --border-color: #e7e5e4; /* Stone-200 */
@@ -131,6 +131,7 @@ html[data-theme="dark"] {
   --card-bg: #292524;
   --accent-color: #fb923c; /* Orange-400 */
   
+  /* LINK COLOR FIX: Lighter Blue for Dark Mode */
   --link-color: #60a5fa; 
 
   --code-bg: #292524;
@@ -290,7 +291,6 @@ blockquote {
    5. BENTO & CARD STYLES
    ========================================= */
 
-/* Main Grid Layout for Cards (used in blog.html) */
 .card-list {
   display: grid;
   grid-template-columns: 1fr;
@@ -310,7 +310,7 @@ blockquote {
   }
 }
 
-/* Card Wrapper (Updated for Expansion) */
+/* Card Wrapper */
 .card-wrapper {
   position: relative;
   display: flex;
@@ -324,6 +324,7 @@ blockquote {
   overflow: hidden;
   background-color: var(--card-bg);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   
   /* Expansion Transition */
   transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
@@ -333,32 +334,24 @@ blockquote {
   text-decoration: none;
 }
 
-/* HOVER STATE: Expand Only */
 .card-wrapper:hover {
+  /* REMOVED: transform: translateY(-5px); as requested earlier */
   width: 500px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
-/* IMAGES */
-.image-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-
-.card-image {
+/* Background Image in Card */
+.card-wrapper .image {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 0.5s ease, transform 6s ease;
-  margin: 0; /* Reset global margin */
-  border-radius: 0; /* Reset global border-radius */
+  z-index: 0;
+  margin: 0;
+  border-radius: 0;
+  transition: transform 0.5s ease;
 }
 
 /* Default Image: Visible initially */
@@ -391,7 +384,6 @@ blockquote {
   width: 100%;
   height: 100%;
   z-index: 3;
-  /* Adjusted gradient to start fading in earlier to ensure text contrast */
   background: linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,0.9) 100%);
   pointer-events: none;
 }
@@ -426,8 +418,8 @@ blockquote {
   position: relative;
   z-index: 4;
   padding: 1.5rem;
-  /* Keep content width stable during expansion so text doesn't reflow wildly */
-  min-width: 300px; 
+  margin-top: auto; 
+  min-width: 300px;
   box-sizing: border-box;
 }
 
@@ -436,36 +428,37 @@ blockquote {
   font-size: 1.75rem;
   line-height: 1.1;
   color: #fff;
-  margin: 0 0 0.75rem 0;
+  margin: 0 0 0.5rem 0;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  white-space: nowrap; 
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* FIX: Allow title to wrap normally */
+  white-space: normal;
 }
 
 .kepala p {
   font-size: 0.95rem;
   color: rgba(255,255,255,0.9);
-  line-height: 1.5;
+  line-height: 1.4;
   margin: 0 0 1.25rem 0;
+  /* FIX: Ensure description is 3 lines max */
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
 /* Footer Content (Legacy 'footer') */
 .footer {
-  /* Using padding/border top relative to .kepala instead of absolute positioning */
+  position: relative;
+  z-index: 2;
   padding-top: 1rem;
-  border-top: 1px solid rgba(255,255,255,0.2);
-  margin-top: 0;
+  border-top: 1px solid rgba(255,255,255,0.15);
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: rgba(255,255,255,0.8);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: transparent; /* Changed from blur bg to transparent since overlay handles contrast */
   backdrop-filter: blur(5px);
   width: 100%;
 }
@@ -481,7 +474,13 @@ blockquote {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: center; /* Ensures vertical center alignment */
+  margin-bottom: 3rem; 
+}
+
+/* Ensure containers have relative positioning */
+.hero-section, .project-carousel, .section-header {
+  position: relative;
 }
 
 /* Hero Section */
@@ -723,6 +722,11 @@ blockquote {
   background: none;
   cursor: pointer;
   padding: 0; /* Important for alignment */
+  
+  /* FIX: Ensure it aligns with flex container properly */
+  display: flex; 
+  align-items: center;
+  justify-content: center;
 }
 
 /* Code Blocks */
