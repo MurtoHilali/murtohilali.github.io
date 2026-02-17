@@ -457,25 +457,25 @@ blockquote {
   /* Make full width and attach to bottom */
   width: 100%;
   padding: 1rem 1.5rem;
-  border-top: 1px solid rgba(255,255,255,0.15);
+  border-top: 1px solid rgba(255,255,255,0.25); /* Slightly lighter border */
   
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: #ffffff; /* Bright white text */
-  font-weight: 500; /* Bolder for visibility */
+  font-weight: 600; /* Bolder for visibility */
   display: flex;
   justify-content: space-between;
   align-items: center;
   
   /* The blur effect behind the footer */
-  background: rgba(0, 0, 0, 0.4); /* Darker tint for high contrast */
+  background: rgba(0, 0, 0, 0.35); /* Even darker tint for high contrast */
   backdrop-filter: blur(10px);
   
   /* Reset margins */
   margin: 0;
   
   /* Add shadow to text for readability on any background */
-  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9);
 }
 
 .p-24 { padding: 1.5rem !important; }
@@ -841,6 +841,84 @@ blockquote {
 .blog-item:hover .blog-read-more {
   opacity: 1;
   transform: translateX(0);
+}
+
+/* MINIMALIST POST NAVIGATION */
+.post-nav-minimal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 3rem 0;
+  margin-top: 4rem;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-link-minimal {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  text-decoration: none;
+  color: var(--text-main);
+  transition: opacity 0.3s ease;
+  max-width: 45%;
+}
+
+.nav-link-minimal:hover {
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+.minimal-arrow {
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+.minimal-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.minimal-label {
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.minimal-title {
+  font-family: var(--font-header);
+  font-size: 1.25rem;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.align-right {
+  text-align: right;
+  flex-direction: row-reverse; /* Flip order for Next link */
+}
+
+@media (max-width: 640px) {
+  .post-nav-minimal {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  
+  .nav-link-minimal {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .align-right {
+    text-align: right; 
+    flex-direction: row-reverse;
+  }
 }
 
 /* Theme Toggle Button Container */
