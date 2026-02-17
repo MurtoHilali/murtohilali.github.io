@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Hyperjudge: Source-checking tool for doc validity"
+title: "Hyperjudge: Source-Checking Tool for Doc Validity"
 description: A web app that checks the validity of linked sources in documents and webpages.
 tags: project seo writing tools
 image: /img/seo/hyperjudge-cover.png

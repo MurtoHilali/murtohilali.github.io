@@ -58,7 +58,7 @@ layout: default
 <div class="project-carousel" id="Projects">
     {% assign projects = site.posts | where_exp: "item", "item.tags contains 'project'" %}
     
-    {% for post in projects limit:6 %}
+    {% for post in projects limit:10 %}
         <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}" class="card-wrapper">
             <div class="image-container">
                 <!-- Portrait/Default Image -->
