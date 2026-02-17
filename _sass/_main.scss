@@ -381,7 +381,8 @@ blockquote {
   width: 100%;
   height: 100%;
   z-index: 3;
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,0.9) 100%);
+  /* Stronger gradient for better text visibility */
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
   pointer-events: none;
 }
 
@@ -418,25 +419,25 @@ blockquote {
   margin-top: auto; 
   min-width: 300px;
   box-sizing: border-box;
-  /* Fix text alignment */
+  /* Adjusted margins to ensure text isn't too low */
   margin-bottom: 0; 
-  padding-bottom: 0.5rem; /* Give space above footer */
+  padding-bottom: 0.25rem; 
 }
 
 .kepala .judul {
   font-family: var(--font-header);
   font-size: 1.75rem;
   line-height: 1.1;
-  color: #fff;
+  color: #fff; /* Ensure white text */
   margin: 0 0 0.5rem 0;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Stronger shadow */
   /* FIX: Allow title to wrap normally */
   white-space: normal;
 }
 
 .kepala p {
   font-size: 0.95rem;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255,255,255,0.95); /* Brighter description */
   line-height: 1.4;
   margin: 0;
   margin-bottom: 1rem; /* Space before footer */
@@ -445,23 +446,36 @@ blockquote {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 
 /* Footer Content (Legacy 'footer') */
 .footer {
   position: relative;
-  z-index: 2;
+  z-index: 4; /* Ensure z-index is sufficient */
+  
+  /* Make full width and attach to bottom */
+  width: 100%;
   padding: 1rem 1.5rem;
   border-top: 1px solid rgba(255,255,255,0.15);
+  
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  color: rgba(255,255,255,0.8);
+  color: #ffffff; /* Bright white text */
+  font-weight: 500; /* Bolder for visibility */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: transparent; /* Changed from blur bg to transparent since overlay handles contrast */
-  backdrop-filter: blur(5px);
-  width: 100%;
+  
+  /* The blur effect behind the footer */
+  background: rgba(0, 0, 0, 0.4); /* Darker tint for high contrast */
+  backdrop-filter: blur(10px);
+  
+  /* Reset margins */
+  margin: 0;
+  
+  /* Add shadow to text for readability on any background */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
 }
 
 .p-24 { padding: 1.5rem !important; }
