@@ -418,6 +418,9 @@ blockquote {
   margin-top: auto; 
   min-width: 300px;
   box-sizing: border-box;
+  /* Fix text alignment */
+  margin-bottom: 0; 
+  padding-bottom: 0.5rem; /* Give space above footer */
 }
 
 .kepala .judul {
@@ -435,7 +438,8 @@ blockquote {
   font-size: 0.95rem;
   color: rgba(255,255,255,0.9);
   line-height: 1.4;
-  margin: 0 0 1.25rem 0;
+  margin: 0;
+  margin-bottom: 1rem; /* Space before footer */
   /* FIX: Ensure description is 3 lines max */
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -447,7 +451,7 @@ blockquote {
 .footer {
   position: relative;
   z-index: 2;
-  padding-top: 1rem;
+  padding: 1rem 1.5rem;
   border-top: 1px solid rgba(255,255,255,0.15);
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -744,12 +748,19 @@ blockquote {
 
 .blog-thumb {
   width: 100%;
-  max-width: 300px; /* Adjust thumbnail width */
+  max-width: 100%; /* Ensure full width on mobile */
   flex-shrink: 0;
   aspect-ratio: 16/9;
   border-radius: 8px;
   overflow: hidden;
   background-color: var(--code-bg);
+}
+
+/* On desktop, constrain the width again */
+@media (min-width: 640px) {
+  .blog-thumb {
+    max-width: 300px; /* Adjust thumbnail width */
+  }
 }
 
 .blog-thumb img {
