@@ -5,14 +5,14 @@ description: A web app that checks the validity of linked sources in documents a
 tags: project seo writing tools
 image: /img/seo/hyperjudge-cover.png
 thumb: /img/thumb/hyperjudge-cover.webp
+expanded: /img/articles/hyperjudge-screenshot.png
 ---
 
 ![Hyperjudge Screenshot](/murtohilali.github.io/img/articles/hyperjudge-screenshot.png)
 
-## Table of Contents
 - [Overview](#overview)
-- [The Plan, Problem, & Solution](#the-plan-problem--solution)
-- [Lessons & Takeaways](#lessons--takeaways)
+- [The Plan, Problem, \& Solution](#the-plan-problem--solution)
+- [Lessons \& Takeaways](#lessons--takeaways)
 - [Roadmap](#roadmap)
 
 

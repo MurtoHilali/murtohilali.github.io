@@ -5,6 +5,7 @@ description: How I used AlphaFold-Multimer, XGBoost, and 47,000 SLURM jobs to pr
 tags: project bioinformatics ml
 image: /img/seo/afm-xgboost-ppi-cover.png
 thumb: /img/thumb/afm-xgboost-ppi-cover.webp
+expanded: /img/seo/xgboost-ppi-cover.png
 ---
 
 ![](/murtohilali.github.io/img/seo/xgboost-ppi-cover.png)

@@ -5,6 +5,7 @@ description: A step-by-step drug discovery and AI virtual screening project done
 tags: bioinformatics drug-discovery virtual-screening project
 image: /img/seo/aadd.png
 thumb: /img/thumb/aadd.webp
+expanded: /img/expanded/aadd-expanded.png
 ---
 [![](https://substackcdn.com/image/fetch/$s_!Yu60!,w_2400,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9ac0f9d4-1c03-4370-87c7-f888ef6e0474_960x540.png)](https://substackcdn.com/image/fetch/$s_!Yu60!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9ac0f9d4-1c03-4370-87c7-f888ef6e0474_960x540.png)
 By Author — Not random images either, there’s a chance you find the compounds in all of these organisms.

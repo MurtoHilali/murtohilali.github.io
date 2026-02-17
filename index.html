@@ -13,7 +13,7 @@ layout: default
         </h1>
         
         <p class="hero-bio">
-            UWaterloo Biotech/Economics grad interested in tech, compbio, proteins, and ML. Building tools for the future of biology.
+            Biotech/Economics student @ UWaterloo interested in tech, compbio, proteins, and ML. Building tools for the future of biology.
         </p>
 
         <!-- BENTO GRID LINKS -->
@@ -27,7 +27,7 @@ layout: default
             <a href="https://murto.co/proteinloop" class="bento-btn">
                 <i class="fa fa-link"></i> Proteinloop
             </a>
-            <a href="https://murto.co/records" target="_self" class="bento-btn">
+            <a href="https://records.murto.co/" target="_self" class="bento-btn">
                 <i class="fa fa-music"></i> Records
             </a>
             <a href="/murtohilali.github.io/Murto Hilali Resume ATS - Bioinformatics 2025.docx.pdf" target="_blank" class="bento-btn">
@@ -48,7 +48,7 @@ layout: default
 
 <!-- PROJECTS SECTION -->
 <div class="section-header">
-    <h2>Projects</h2>
+    <h2>Selected Works</h2>
     <div class="scroll-hint">
         SCROLL <i class="fa fa-arrow-right"></i>
     </div>
@@ -58,10 +58,22 @@ layout: default
 <div class="project-carousel" id="Projects">
     {% assign projects = site.posts | where_exp: "item", "item.tags contains 'project'" %}
     
-    {% for post in projects limit:6 %}
-        <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}">
-          <!-- Using card-wrapper logic inside carousel -->
-          <div class="card-wrapper" style="width: 300px; height: 460px; flex-shrink: 0;">
+    {% for post in projects limit:8 %}
+        <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}" class="card-wrapper">
+            <div class="image-container">
+                <!-- Portrait/Default Image -->
+                <img src="{{ site.url }}{{ site.baseurl }}/img/placeholder.svg" 
+                     data-src="{% if post.thumb %} {{ site.url }}{{ site.baseurl }}{{ post.thumb }} {% else %} {{ site.default-thumb }} {% endif %}"
+                     class="card-image img-default lazyload" 
+                     alt="{{ post.title }}">
+                
+                <!-- Landscape/Hover Image (Wider view) -->
+                <img src="{{ site.url }}{{ site.baseurl }}/img/placeholder.svg" 
+                     data-src="{% if post.expanded %}{{ site.url }}{{ site.baseurl }}{{ post.expanded }}{% else %}{% if post.thumb %} {{ site.url }}{{ site.baseurl }}{{ post.thumb }} {% else %} {{ site.default-thumb }} {% endif %}{% endif %}"
+                     class="card-image img-hover lazyload" 
+                     alt="{{ post.title }}">
+            </div>
+
             <div class="background"></div>
             
             <!-- Tags Overlay on Cover -->
@@ -73,24 +85,17 @@ layout: default
                 {% endfor %}
             </div>
             
-            <img class="image lazyload" 
-                 src="{{ site.url }}{{ site.baseurl }}/img/placeholder.svg" 
-                 data-src="{% if post.thumb %} {{ site.url }}{{ site.baseurl }}{{ post.thumb }} {% else %} {{ site.default-thumb }} {% endif %}" 
-                 alt="{{ post.title }}">
-            
-            <div class="kepala p-24">
+            <!-- Content Layer -->
+            <div class="kepala">
                 <h1 class="judul">{{ post.title }}</h1>
                 <p>{{ post.description }}</p>
+                
+                <div class="footer">
+                    {% assign minute=post.content | number_of_words | divided_by: 265 | plus: 1 %}
+                    <small>{{ post.date | date: "%d %b, %y" }}</small>
+                    <small>Read ({% if post.minute %} {{ post.minute }} {% else %} {{ minute }} {% endif %} min)</small>
+                </div>
             </div>
-            
-            <div class="footer p-24">
-                {% assign minute=post.content | number_of_words | divided_by: 265 | plus: 1 %}
-                <small>
-                    {{ post.date | date: "%d %b, %y" }} — 
-                    Read ({% if post.minute %} {{ post.minute }} {% else %} {{ minute }} {% endif %} min)
-                </small>
-            </div>
-          </div>
         </a>
     {% else %}
         <p>No projects found.</p>
