@@ -29,10 +29,7 @@
             overflow: hidden;
         }
 
-        h1,
-        h2,
-        h3,
-        .serif-font {
+        h1, h2, h3, .serif-font {
             font-family: 'Instrument Serif', serif;
         }
 
@@ -48,6 +45,7 @@
             padding: 0 2rem;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             background: #fff;
             border-bottom: 1px solid #ddd;
             z-index: 20;
@@ -61,6 +59,41 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+
+        .stat-number {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #111;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #888;
+            font-weight: 500;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 24px;
+            background: #ddd;
         }
 
         .split-view {
@@ -120,7 +153,6 @@
             border-radius: 2px;
         }
 
-        /* description box */
         .country-desc {
             background: #fbfbfb;
             border: 1px solid #ddd;
@@ -180,18 +212,62 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* List View Styles */
+        /* Flight info section */
+        .flights-section {
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid #eee;
+        }
+
+        .flights-section h3 {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            color: #555;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Gabarito', sans-serif;
+        }
+
+        .flight-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+        }
+
+        .flight-item:last-child {
+            border-bottom: none;
+        }
+
+        .flight-route {
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .flight-airline {
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        .flight-date {
+            font-size: 0.75rem;
+            color: #aaa;
+            white-space: nowrap;
+        }
+
+        .flight-icon {
+            color: #ccc;
+            font-size: 0.8rem;
+        }
+
+        /* List View */
         .country-list-item {
             padding: 1rem;
             margin-bottom: 0.5rem;
@@ -242,6 +318,31 @@
             color: #333;
         }
 
+        /* Legend */
+        .arc-legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(8px);
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.75rem;
+            color: #555;
+            z-index: 5;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .arc-legend-line {
+            width: 24px;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b6b, #ffa46b);
+            border-radius: 1px;
+        }
+
         @media (max-width: 768px) {
             .split-view {
                 flex-direction: column-reverse;
@@ -253,6 +354,10 @@
                 border-right: none;
                 border-top: 1px solid #ddd;
             }
+
+            .stats-bar {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -263,6 +368,22 @@
             <a href="/" class="home-link serif-font">
                 <i class="fa fa-arrow-left" style="font-size:1rem;"></i> Murto Polo
             </a>
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-number" id="stat-countries">0</span>
+                    <span class="stat-label">Countries</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" id="stat-flights">0</span>
+                    <span class="stat-label">Flights</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" id="stat-km">0</span>
+                    <span class="stat-label">km flown</span>
+                </div>
+            </div>
         </div>
 
         <div class="split-view">
@@ -276,6 +397,10 @@
 
             <div class="globe-panel">
                 <div id="globe-viz"></div>
+                <div class="arc-legend">
+                    <div class="arc-legend-line"></div>
+                    <span>Flight routes</span>
+                </div>
             </div>
         </div>
     </div>
@@ -284,89 +409,276 @@
         const BLANK_TEXTURE =
             'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/ax8p9cAAAAASUVORK5CYII=';
 
-        // Hardcoded rich data to merge
+        // Airport coordinates
+        const airports = {
+            YYZ: { lat: 43.6777, lng: -79.6248, city: "Toronto" },
+            JFK: { lat: 40.6413, lng: -73.7781, city: "New York" },
+            GRU: { lat: -23.4356, lng: -46.4731, city: "São Paulo" },
+            SFO: { lat: 37.6213, lng: -122.3790, city: "San Francisco" },
+            SIN: { lat: 1.3644, lng: 103.9915, city: "Singapore" },
+            PNH: { lat: 11.5466, lng: 104.8442, city: "Phnom Penh" },
+            DPS: { lat: -8.7482, lng: 115.1672, city: "Bali" },
+            HKT: { lat: 8.1132, lng: 98.3169, city: "Phuket" },
+            KUL: { lat: 2.7456, lng: 101.7099, city: "Kuala Lumpur" },
+            CDG: { lat: 49.0097, lng: 2.5479, city: "Paris" },
+            LTN: { lat: 51.8747, lng: -0.3683, city: "London" },
+            IST: { lat: 41.2753, lng: 28.7519, city: "Istanbul" },
+            KRK: { lat: 50.0777, lng: 19.7848, city: "Krakow" },
+            ORY: { lat: 48.7262, lng: 2.3652, city: "Paris" },
+            BVA: { lat: 49.4544, lng: 2.1126, city: "Paris" },
+            GRO: { lat: 41.9009, lng: 2.7605, city: "Girona" },
+            BCN: { lat: 41.2974, lng: 2.0833, city: "Barcelona" },
+            LIS: { lat: 38.7742, lng: -9.1342, city: "Lisbon" },
+        };
+
+        // All flights extracted from Gmail
+        const flights = [
+            { from: "YYZ", to: "JFK", date: "Nov 2017", airline: "Delta", color: "#ff6b6b" },
+            { from: "JFK", to: "GRU", date: "Nov 2017", airline: "Delta", color: "#ff6b6b" },
+            { from: "GRU", to: "JFK", date: "Dec 2017", airline: "Delta", color: "#ff8b6b" },
+            { from: "JFK", to: "YYZ", date: "Dec 2017", airline: "Delta", color: "#ff8b6b" },
+            { from: "YYZ", to: "SFO", date: "Sep 2024", airline: "United", color: "#6baaff" },
+            { from: "SFO", to: "SIN", date: "Sep 2024", airline: "United", color: "#6baaff" },
+            { from: "SIN", to: "PNH", date: "Oct 2024", airline: "Emirates", color: "#ffa46b" },
+            { from: "PNH", to: "SIN", date: "Nov 2024", airline: "Emirates", color: "#ffa46b" },
+            { from: "SIN", to: "DPS", date: "Nov 2024", airline: "Jetstar", color: "#6bddaa" },
+            { from: "DPS", to: "SIN", date: "Nov 2024", airline: "Jetstar", color: "#6bddaa" },
+            { from: "SIN", to: "HKT", date: "Nov 2024", airline: "Jetstar", color: "#6bddaa" },
+            { from: "HKT", to: "SIN", date: "Dec 2024", airline: "Jetstar", color: "#6bddaa" },
+            { from: "SIN", to: "KUL", date: "Dec 2024", airline: "AirAsia", color: "#dd6b8a" },
+            { from: "KUL", to: "SIN", date: "Dec 2024", airline: "AirAsia", color: "#dd6b8a" },
+            { from: "SIN", to: "SFO", date: "Jan 2025", airline: "United", color: "#6baaff" },
+            { from: "SFO", to: "YYZ", date: "Jan 2025", airline: "United", color: "#6baaff" },
+            { from: "YYZ", to: "CDG", date: "Jun 2025", airline: "Air France", color: "#9b6bff" },
+            { from: "CDG", to: "LTN", date: "Jul 2025", airline: "easyJet", color: "#ffaa6b" },
+            { from: "LTN", to: "CDG", date: "Jul 2025", airline: "easyJet", color: "#ffaa6b" },
+            { from: "IST", to: "KRK", date: "Aug 2025", airline: "LOT", color: "#6bc4ff" },
+            { from: "KRK", to: "ORY", date: "Aug 2025", airline: "LOT", color: "#6bc4ff" },
+            { from: "BVA", to: "GRO", date: "Jun 2025", airline: "Ryanair", color: "#ffdd6b" },
+            { from: "BCN", to: "LIS", date: "Jun 2025", airline: "Ryanair", color: "#ffdd6b" },
+            { from: "LIS", to: "ORY", date: "Jun 2025", airline: "Vueling", color: "#ffdd6b" },
+        ];
+
+        // Build arc data
+        const arcData = flights.map(f => ({
+            startLat: airports[f.from].lat,
+            startLng: airports[f.from].lng,
+            endLat: airports[f.to].lat,
+            endLng: airports[f.to].lng,
+            color: f.color,
+            label: `${airports[f.from].city} → ${airports[f.to].city}`,
+            airline: f.airline,
+            date: f.date,
+        }));
+
+        // Haversine distance
+        function haversine(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        }
+
+        const totalKm = flights.reduce((sum, f) => {
+            return sum + haversine(airports[f.from].lat, airports[f.from].lng, airports[f.to].lat, airports[f.to].lng);
+        }, 0);
+
+        // Flights per country
+        const countryFlights = {};
+        flights.forEach(f => {
+            const fromCity = airports[f.from].city;
+            const toCity = airports[f.to].city;
+            if (!countryFlights[fromCity]) countryFlights[fromCity] = [];
+            if (!countryFlights[toCity]) countryFlights[toCity] = [];
+            countryFlights[fromCity].push(f);
+            countryFlights[toCity].push(f);
+        });
+
+        // Map city to country ISO for linking flights to country panels
+        const cityToISO = {
+            "Toronto": "CAN", "New York": "USA", "São Paulo": "BRA",
+            "San Francisco": "USA", "Singapore": "SGP", "Phnom Penh": "KHM",
+            "Bali": "IDN", "Phuket": "THA", "Kuala Lumpur": "MYS",
+            "Paris": "FRA", "London": "GBR", "Istanbul": "TUR", "Krakow": "POL",
+            "Girona": "ESP", "Barcelona": "ESP", "Lisbon": "PRT",
+        };
+
+        const isoToFlights = {};
+        flights.forEach(f => {
+            const fromISO = cityToISO[airports[f.from].city];
+            const toISO = cityToISO[airports[f.to].city];
+            [fromISO, toISO].forEach(iso => {
+                if (!iso) return;
+                if (!isoToFlights[iso]) isoToFlights[iso] = [];
+                isoToFlights[iso].push(f);
+            });
+        });
+
+        // Deduplicate flights per country
+        Object.keys(isoToFlights).forEach(iso => {
+            const seen = new Set();
+            isoToFlights[iso] = isoToFlights[iso].filter(f => {
+                const key = `${f.from}-${f.to}-${f.date}`;
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+        });
+
         const hardcodedDescriptions = {
             "KHM": "Phnom Penh and Angkor Wat. This trip opened my eyes to so much history and culture.\n\nThe people were incredibly warm and welcoming, and the adventure was unforgettable.",
             "SGP": "Lived here for a few months while interning at a drug discovery startup.\n\nI fell in love with the city's food, planning, and sights.",
             "THA": "My trip was with friends from my university — and set of total strangers, who would later become friends as well!\n\nMy travels took me to Phuket and its surrounding islands, but I'd love to go back and explore Bangkok and Chiang Mai sometime soon.",
             "IDN": "Like most 20-somethings, my time in Indonesia was spent partying, exploring nature, and surfing.\n\nBali is an incredible place, and I can't wait to return one day.",
-            "TUR": "Without a doubt, one of my favorite countries I've visited so far.\n\nIstanbul is a city like no other, Cappadocias landscape's (and the hot air balloons) are breathtaking, and Fethiye offers some of the best beaches in the world.",
+            "TUR": "Without a doubt, one of my favorite countries I've visited so far.\n\nIstanbul is a city like no other, Cappadocia's landscapes (and the hot air balloons) are breathtaking, and Fethiye offers some of the best beaches in the world.",
             "CAN": "I live here!",
-            "BGD": "While I was born in Canada, my family hails from Bangladesh."
+            "BGD": "While I was born in Canada, my family hails from Bangladesh.",
         };
+
+        // Extended trips data
+        const tripsData = [
+            { id: "CAN", country: "Canada", color: "#e85555", posts: [] },
+            { id: "KHM", country: "Cambodia", color: "#ff5555", posts: [
+                { title: "Tokyo Drift", type: "TikTok", url: "#", icon: "fa-music" },
+                { title: "Angkor Wat Adventure", type: "Instagram", url: "#", icon: "fa-brands fa-instagram" }
+            ]},
+            { id: "SGP", country: "Singapore", color: "#ffaa55", posts: [
+                { title: "City in a Garden", type: "Blog", url: "#", icon: "fa-globe" }
+            ]},
+            { id: "THA", country: "Thailand", color: "#55ffaa", posts: [
+                { title: "Bangkok Street Food", type: "YouTube", url: "#", icon: "fa-brands fa-youtube" }
+            ]},
+            { id: "MYS", country: "Malaysia", color: "#ffaa55", posts: [
+                { title: "Kuala Lumpur Vibes", type: "Twitter", url: "#", icon: "fa-brands fa-twitter" }
+            ]},
+            { id: "IDN", country: "Indonesia", color: "#55aaff", posts: [
+                { title: "Bali Nights", type: "Instagram", url: "#", icon: "fa-brands fa-instagram" }
+            ]},
+            { id: "FRA", country: "France", color: "#aa55ff", posts: [
+                { title: "Eiffel Tower Views", type: "Facebook", url: "#", icon: "fa-brands fa-facebook" }
+            ]},
+            { id: "ESP", country: "Spain", color: "#ff55aa", posts: [
+                { title: "Barcelona Beaches", type: "LinkedIn", url: "#", icon: "fa-brands fa-linkedin" }
+            ]},
+            { id: "PRT", country: "Portugal", color: "#55ffaa", posts: [
+                { title: "Lisbon Lights", type: "Reddit", url: "#", icon: "fa-brands fa-reddit" }
+            ]},
+            { id: "GBR", country: "United Kingdom", color: "#ffaa55", posts: [
+                { title: "London Calling", type: "Pinterest", url: "#", icon: "fa-brands fa-pinterest" }
+            ]},
+            { id: "TUR", country: "Turkey", color: "#55aaff", posts: [
+                { title: "Istanbul Insights", type: "Snapchat", url: "#", icon: "fa-brands fa-snapchat" }
+            ]},
+            { id: "BRA", country: "Brazil", color: "#aa55ff", posts: [
+                { title: "Rio de Janeiro", type: "TikTok", url: "#", icon: "fa-music" }
+            ]},
+            { id: "USA", country: "United States", color: "#ff55aa", posts: [
+                { title: "New York Minute", type: "YouTube", url: "#", icon: "fa-brands fa-youtube" }
+            ]},
+        ];
 
         let visitedData = [];
         let visitedMap = new Map();
-        let world; // Exposed for sidebar interaction
-        let countriesFeatures = []; // Exposed for finding centroids
+        let world;
+        let countriesFeatures = [];
         const globeContainer = document.getElementById('globe-viz');
 
-        // Fetch geojson first, then data
-        Promise.all([
-            fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson').then(res => res.json()),
-            fetch('trips.json').then(res => res.json())
-        ]).then(([countries, trips]) => {
+        // Animate stats
+        function animateCounter(el, target, suffix) {
+            const duration = 1200;
+            const start = performance.now();
+            const tick = (now) => {
+                const t = Math.min((now - start) / duration, 1);
+                const ease = 1 - Math.pow(1 - t, 3);
+                const val = Math.round(target * ease);
+                el.textContent = val.toLocaleString() + (suffix || '');
+                if (t < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        }
 
-            countriesFeatures = countries.features;
+        // Init stats
+        setTimeout(() => {
+            animateCounter(document.getElementById('stat-countries'), tripsData.length);
+            animateCounter(document.getElementById('stat-flights'), flights.length);
+            animateCounter(document.getElementById('stat-km'), Math.round(totalKm));
+        }, 400);
 
-            // Merge trips with hardcoded descriptions
-            visitedData = trips.map(t => ({
-                ...t,
-                description: hardcodedDescriptions[t.id] || ""
-            }));
-            visitedMap = new Map(visitedData.map(d => [d.id, d]));
+        fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson')
+            .then(res => res.json())
+            .then(countries => {
 
-            // Render original list
-            renderList();
+                countriesFeatures = countries.features;
 
-            // Globe setup
-            countriesFeatures.forEach(f => {
-                if (f.properties.ISO_A3 === '-99') {
-                    f.properties.ISO_A3 = f.properties.ADM0_A3;
-                }
-            });
+                visitedData = tripsData.map(t => ({
+                    ...t,
+                    description: hardcodedDescriptions[t.id] || ""
+                }));
+                visitedMap = new Map(visitedData.map(d => [d.id, d]));
 
-            world = Globe()(globeContainer)
-                .backgroundColor('#f4f4f4')
-                .globeImageUrl(BLANK_TEXTURE)
-                .showAtmosphere(false)
-                .showGraticules(false)
-                .enablePointerInteraction(true)
+                renderList();
 
-                .width(globeContainer.clientWidth)
-                .height(globeContainer.clientHeight)
-
-                .polygonsData(countries.features)
-                .polygonCapColor(d => {
-                    const data = visitedMap.get(d.properties.ISO_A3);
-                    return data ? data.color : '#ffffff';
-                })
-                .polygonSideColor(() => '#cccccc')
-                .polygonStrokeColor(() => '#000')
-                .polygonAltitude(0.01)
-
-                .onPolygonClick(d => {
-                    const data = visitedMap.get(d.properties.ISO_A3);
-                    if (data) {
-                        renderPanel(data);
-                        const c = getLargestPolygonCentroid(d.geometry);
-                        world.pointOfView({ lat: c[1], lng: c[0], altitude: 1.8 }, 1000);
+                countriesFeatures.forEach(f => {
+                    if (f.properties.ISO_A3 === '-99') {
+                        f.properties.ISO_A3 = f.properties.ADM0_A3;
                     }
-                })
-                .onPolygonHover(d => {
-                    globeContainer.style.cursor =
-                        d && visitedMap.has(d.properties.ISO_A3) ? 'pointer' : 'grab';
                 });
 
-            world.controls().autoRotate = true;
-            world.controls().autoRotateSpeed = 0.5;
-            world.pointOfView({ altitude: 2.5 });
+                world = Globe()(globeContainer)
+                    .backgroundColor('#f4f4f4')
+                    .globeImageUrl(BLANK_TEXTURE)
+                    .showAtmosphere(false)
+                    .showGraticules(false)
+                    .enablePointerInteraction(true)
 
-            window.addEventListener('resize', () => {
-                world.width(globeContainer.clientWidth);
-                world.height(globeContainer.clientHeight);
+                    .width(globeContainer.clientWidth)
+                    .height(globeContainer.clientHeight)
+
+                    .polygonsData(countries.features)
+                    .polygonCapColor(d => {
+                        const data = visitedMap.get(d.properties.ISO_A3);
+                        return data ? data.color : '#ffffff';
+                    })
+                    .polygonSideColor(() => '#cccccc')
+                    .polygonStrokeColor(() => '#000')
+                    .polygonAltitude(0.01)
+
+                    // Flight arcs
+                    .arcsData(arcData)
+                    .arcStartLat(d => d.startLat)
+                    .arcStartLng(d => d.startLng)
+                    .arcEndLat(d => d.endLat)
+                    .arcEndLng(d => d.endLng)
+                    .arcColor(d => [d.color, d.color])
+                    .arcAltitudeAutoScale(0.4)
+                    .arcStroke(0.5)
+                    .arcDashLength(0.6)
+                    .arcDashGap(0.3)
+                    .arcDashAnimateTime(2000)
+
+                    .onPolygonClick(d => {
+                        const data = visitedMap.get(d.properties.ISO_A3);
+                        if (data) {
+                            renderPanel(data);
+                            const c = getLargestPolygonCentroid(d.geometry);
+                            world.pointOfView({ lat: c[1], lng: c[0], altitude: 1.8 }, 1000);
+                        }
+                    })
+                    .onPolygonHover(d => {
+                        globeContainer.style.cursor =
+                            d && visitedMap.has(d.properties.ISO_A3) ? 'pointer' : 'grab';
+                    });
+
+                world.controls().autoRotate = true;
+                world.controls().autoRotateSpeed = 0.5;
+                world.pointOfView({ altitude: 2.5 });
+
+                window.addEventListener('resize', () => {
+                    world.width(globeContainer.clientWidth);
+                    world.height(globeContainer.clientHeight);
+                });
             });
-        });
 
         function escapeHtml(str) {
             return (str || "")
@@ -380,38 +692,52 @@
         function renderDescription(text) {
             const cleaned = (text || "").trim();
             if (!cleaned) return "";
-            // escape HTML, then convert newlines to <br>
             const safe = escapeHtml(cleaned).replace(/\n/g, "<br>");
             return `<div class="country-desc">${safe}</div>`;
+        }
+
+        function renderFlightsForCountry(isoId) {
+            const countryFlights = isoToFlights[isoId];
+            if (!countryFlights || countryFlights.length === 0) return "";
+            return `
+                <div class="flights-section">
+                    <h3><i class="fa fa-plane" style="margin-right:6px;"></i> Flights</h3>
+                    ${countryFlights.map(f => `
+                        <div class="flight-item">
+                            <span class="flight-icon"><i class="fa fa-plane-departure"></i></span>
+                            <span class="flight-route">${airports[f.from].city} → ${airports[f.to].city}</span>
+                            <span class="flight-airline">${f.airline}</span>
+                            <span class="flight-date">${f.date}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
         }
 
         function renderList() {
             const panel = document.getElementById('info-panel');
             panel.innerHTML = `
-        <div class="fade-in">
-             <div class="placeholder" style="margin-top: 1rem; margin-bottom: 2rem; text-align: left; opacity: 1;">
-                <h3>My Travels</h3>
-                <p>Click a country to view notes.</p>
-            </div>
-            ${visitedData.map(d => `
-                <div class="country-list-item" onclick="renderPanelById('${d.id}')">
-                    <div class="item-name">
-                        <span style="color:${d.color}; margin-right:8px;">●</span> ${d.country}
+                <div class="fade-in">
+                    <div class="placeholder" style="margin-top: 1rem; margin-bottom: 2rem; text-align: left; opacity: 1;">
+                        <h3>My Travels</h3>
+                        <p>Click a country to view notes.</p>
                     </div>
-                    <div class="item-arrow"><i class="fa fa-chevron-right"></i></div>
+                    ${visitedData.map(d => `
+                        <div class="country-list-item" onclick="renderPanelById('${d.id}')">
+                            <div class="item-name">
+                                <span style="color:${d.color}; margin-right:8px;">●</span> ${d.country}
+                            </div>
+                            <div class="item-arrow"><i class="fa fa-chevron-right"></i></div>
+                        </div>
+                    `).join('')}
                 </div>
-            `).join('')}
-        </div>
-    `;
+            `;
         }
 
         function renderPanelById(id) {
             const data = visitedMap.get(id);
             if (data) {
                 renderPanel(data);
-
-                // Find geometry for this country to zoom in
-                // Match ID with ISO_A3
                 const feature = countriesFeatures.find(f => f.properties.ISO_A3 === id);
                 if (feature && world) {
                     const c = getLargestPolygonCentroid(feature.geometry);
@@ -423,32 +749,35 @@
         function renderPanel(data) {
             const panel = document.getElementById('info-panel');
             const descHtml = renderDescription(data.description);
+            const flightsHtml = renderFlightsForCountry(data.id);
 
             panel.innerHTML = `
-        <div class="fade-in">
-            <button class="back-btn" onclick="renderList()">
-                <i class="fa fa-arrow-left"></i> Back
-            </button>
+                <div class="fade-in">
+                    <button class="back-btn" onclick="renderList()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
 
-            <div class="country-header">
-                <h1>${data.country}</h1>
-                <div class="country-accent" style="background:${data.color};"></div>
-            </div>
-
-            ${descHtml}
-
-            ${data.posts.map(p => `
-                <a class="think-card" href="${p.url}" target="_blank">
-                    <i class="fa ${p.icon} card-icon" style="color:${data.color}"></i>
-                    <div class="card-content">
-                        <div class="card-title serif-font">${p.title}</div>
-                        <div class="card-type">${p.type}</div>
+                    <div class="country-header">
+                        <h1>${data.country}</h1>
+                        <div class="country-accent" style="background:${data.color};"></div>
                     </div>
-                    <i class="fa fa-external-link"></i>
-                </a>
-            `).join('')}
-        </div>
-    `;
+
+                    ${descHtml}
+
+                    ${data.posts.map(p => `
+                        <a class="think-card" href="${p.url}" target="_blank">
+                            <i class="fa ${p.icon} card-icon" style="color:${data.color}"></i>
+                            <div class="card-content">
+                                <div class="card-title serif-font">${p.title}</div>
+                                <div class="card-type">${p.type}</div>
+                            </div>
+                            <i class="fa fa-external-link"></i>
+                        </a>
+                    `).join('')}
+
+                    ${flightsHtml}
+                </div>
+            `;
         }
 
         function getLargestPolygonCentroid(geometry) {
