@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content OS - The Last Content Hire You'll Ever Make</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#0A0A0A',
+                            paper: '#FDFCF8', // Subtle warm off-white
+                            slate: '#1E293B', // Professional deep slate
+                            blue: '#1E3A8A',  // Trust/Finance Blue
+                            gray: '#F1F1F1'
+                        }
+                    },
+                    boxShadow: {
+                        'elegant': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                        'elegant-sm': '0 4px 6px -1px rgba(0,0,0,0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FDFCF8;
+            color: #0A0A0A;
+        }
+        
+        html { scroll-behavior: smooth; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FDFCF8; }
+        ::-webkit-scrollbar-thumb { background: #1E293B; }
+
+        .accordion-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.active { opacity: 1; }
+
+        .modal {
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            transform: translateY(20px);
+            transition: transform 0.3s ease-in-out;
+        }
+        .modal.open .modal-content {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased font-sans selection:bg-brand-blue selection:text-white">
+
+    <div id="guarantee-bar" class="fixed w-full z-[60] top-0 left-0 bg-brand-slate text-white text-center py-2 font-medium text-[10px] md:text-xs tracking-wide flex justify-center items-center gap-2 transition-transform duration-300 -translate-y-full h-[36px]">
+        <i class="ph ph-shield-check text-brand-paper text-sm md:text-base"></i>
+        <span>30-DAY RANKING GUARANTEE: WE RANK YOUR FIRM ON PAGE 1 OR WORK FOR FREE.</span>
+    </div>
+
+    <nav id="main-nav" class="fixed w-full z-50 top-0 left-0 bg-brand-paper/90 backdrop-blur-md border-b border-gray-200 px-4 py-3 md:px-8 flex justify-between items-center transition-all duration-300">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-brand-black text-white flex items-center justify-center rounded-sm">
+                <i class="ph ph-cpu text-xl"></i>
+            </div>
+            <div class="flex flex-col justify-center">
+                <span class="font-display font-bold text-xl tracking-tight leading-none uppercase">Content OS</span>
+            </div>
+        </div>
+        <a href="#book" class="hidden md:block font-medium text-sm bg-brand-black text-white px-5 py-2 hover:bg-brand-blue transition-colors duration-300 rounded-sm">
+            Schedule Briefing
+        </a>
+    </nav>
+
+    <section class="pt-36 pb-20 px-4 md:px-8 max-w-5xl mx-auto flex flex-col items-center text-center relative">
+        <div class="inline-block border border-gray-300 text-gray-600 px-4 py-1.5 text-xs uppercase tracking-[0.2em] mb-8 bg-white rounded-sm">
+            Enterprise AI Content Architecture
+        </div>
+        
+        <h1 class="font-display font-bold text-5xl md:text-7xl leading-[1.1] mb-6 text-brand-black tracking-tight">
+            The Last Content Hire <br/> Your Firm Will Ever Make
+        </h1>
+        
+        <p class="font-sans text-lg md:text-xl text-gray-600 max-w-2xl mb-12 leading-relaxed font-light">
+            Generate <strong class="font-semibold text-brand-black">20+ publish-ready SEO briefings per month</strong> without diverting billable hours. Powered by custom AI agents trained exclusively on your firm's expertise.
+        </p>
+
+        <div class="flex flex-col md:flex-row gap-4 mb-20 w-full md:w-auto">
+            <a href="#book" class="font-medium text-base bg-brand-blue text-white px-8 py-4 hover:bg-blue-900 transition-colors flex items-center justify-center gap-2 rounded-sm shadow-elegant-sm">
+                Initiate Architecture Call
+            </a>
+            <button onclick="toggleModal('examples-modal')" class="font-medium text-base bg-white text-brand-black px-8 py-4 border border-gray-200 hover:border-gray-400 transition-colors flex items-center justify-center gap-2 rounded-sm">
+                <i class="ph ph-files"></i> View Technical Outputs
+            </button>
+        </div>
+
+        <div class="w-full max-w-4xl aspect-video bg-brand-slate rounded-sm shadow-elegant relative overflow-hidden group cursor-pointer flex items-center justify-center border border-gray-800">
+            <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmYiLz48L3N2Zz4=')]"></div>
+            
+            <div class="text-center relative z-10 group-hover:scale-105 transition-transform duration-500">
+                <div class="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 mx-auto mb-4 transition-colors group-hover:bg-white group-hover:text-brand-black text-white">
+                    <i class="ph-fill ph-play text-2xl ml-1"></i>
+                </div>
+                <h3 class="font-display font-medium text-white text-xl">System Overview</h3>
+                <p class="text-gray-400 text-sm mt-2 font-light">Watch the 3-minute technical breakdown.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 border-y border-gray-200 bg-white">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+            <p class="text-center font-medium text-xs text-gray-400 uppercase tracking-[0.15em] mb-8">Trusted by specialized practices</p>
+            <div class="flex flex-wrap justify-center gap-10 md:gap-20 opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
+                <div class="font-display font-bold text-2xl text-brand-slate flex items-center gap-2"><i class="ph ph-buildings"></i> ALTA CAPITAL</div>
+                <div class="font-display font-bold text-2xl text-brand-slate flex items-center gap-2"><i class="ph ph-scales"></i> VANGUARD LAW</div>
+                <div class="font-display font-bold text-2xl text-brand-slate flex items-center gap-2"><i class="ph ph-chart-polar"></i> MERIDIAN</div>
+                <div class="font-display font-bold text-2xl text-brand-slate flex items-center gap-2"><i class="ph ph-briefcase"></i> CENTURION</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-4 md:px-8 max-w-7xl mx-auto">
+        <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-16 text-brand-black">The Executive Advantage</h2>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white p-10 border border-gray-200 shadow-elegant-sm rounded-sm hover:shadow-elegant transition-shadow duration-300">
+                <div class="text-brand-blue text-3xl mb-6">
+                    <i class="ph-light ph-clock-countdown"></i>
+                </div>
+                <h3 class="font-display font-bold text-xl mb-3">Zero Billable Hours Lost</h3>
+                <p class="text-gray-600 font-light leading-relaxed">Publish 8-20 highly technical, SEO-ready articles per month without your senior partners ever touching a keyboard.</p>
+            </div>
+
+            <div class="bg-brand-slate text-white p-10 rounded-sm shadow-elegant">
+                <div class="text-white text-3xl mb-6">
+                    <i class="ph-light ph-trend-up"></i>
+                </div>
+                <h3 class="font-display font-bold text-xl mb-3">Audience Acquisition</h3>
+                <p class="text-gray-300 font-light leading-relaxed">We do not optimize for word count; we optimize for Page 1 rankings and inclusion in LLM (AI) answer snapshots.</p>
+            </div>
+
+            <div class="bg-white p-10 border border-gray-200 shadow-elegant-sm rounded-sm hover:shadow-elegant transition-shadow duration-300">
+                <div class="text-brand-blue text-3xl mb-6">
+                    <i class="ph-light ph-infinity"></i>
+                </div>
+                <h3 class="font-display font-bold text-xl mb-3">Infinite Scalability</h3>
+                <p class="text-gray-600 font-light leading-relaxed">One systematic setup. Iterate on topics instantly, dominate niche search terms, and build compounding digital equity.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-4 md:px-8 max-w-5xl mx-auto border-t border-gray-200">
+        <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-20">Deployment Protocol</h2>
+        
+        <div class="relative">
+            <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-[1px] bg-gray-200 hidden md:block"></div>
+
+            <div class="flex flex-col md:flex-row items-center mb-20 relative">
+                <div class="w-full md:w-1/2 md:pr-16 text-center md:text-right mb-6 md:mb-0">
+                    <h3 class="font-display font-bold text-2xl mb-3">Phase I: Knowledge Ingestion</h3>
+                    <p class="text-gray-600 font-light">We ingest your firm’s internal frameworks, past successful deliverables, and strict compliance guidelines into an isolated environment.</p>
+                </div>
+                <div class="z-10 w-10 h-10 bg-white border border-gray-300 flex items-center justify-center font-display text-lg shadow-sm rounded-full text-brand-blue">01</div>
+                <div class="w-full md:w-1/2 md:pl-16 hidden md:block"></div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center mb-20 relative">
+                <div class="w-full md:w-1/2 md:pr-16 hidden md:block"></div>
+                <div class="z-10 w-10 h-10 bg-white border border-gray-300 flex items-center justify-center font-display text-lg shadow-sm rounded-full text-brand-blue">02</div>
+                <div class="w-full md:w-1/2 md:pl-16 text-center md:text-left mt-6 md:mt-0">
+                    <h3 class="font-display font-bold text-2xl mb-3">Phase II: Architecture</h3>
+                    <p class="text-gray-600 font-light">Custom AI agents are programmed specifically for your vertical to replicate senior-level clarity, tone, and strategic nuance.</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center relative">
+                <div class="w-full md:w-1/2 md:pr-16 text-center md:text-right mb-6 md:mb-0">
+                    <h3 class="font-display font-bold text-2xl mb-3">Phase III: Autopilot</h3>
+                    <p class="text-gray-600 font-light">Your system runs continuously, generating optimized content. You review, approve, and publish. The system learns and refines over time.</p>
+                </div>
+                <div class="z-10 w-10 h-10 bg-brand-blue border-none flex items-center justify-center font-display text-lg shadow-sm rounded-full text-white">03</div>
+                <div class="w-full md:w-1/2 md:pl-16 hidden md:block"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-brand-black text-white py-24 px-4 md:px-8 border-y border-gray-800" id="pricing">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-6">Engagement Models</h2>
+            <p class="text-center text-gray-400 max-w-2xl mx-auto mb-20 font-light">Select the deployment model that aligns with your firm's internal capacity.</p>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="bg-[#111] border border-gray-800 rounded-sm p-10 flex flex-col h-full hover:border-gray-600 transition-colors">
+                    <div class="border-b border-gray-800 pb-8 mb-8">
+                        <h3 class="font-display font-bold text-2xl mb-2 text-white">Turnkey Deployment</h3>
+                        <p class="text-gray-400 font-light mb-6">For firms requiring immediate infrastructure with zero operational drag.</p>
+                        <div class="font-display font-bold text-3xl">$999 <span class="text-sm font-sans font-light text-gray-500 uppercase tracking-widest ml-2">One-Time Build</span></div>
+                    </div>
+                    <div class="flex-grow">
+                        <ul class="space-y-4 text-gray-300 font-light mb-10">
+                            <li class="flex items-start gap-3"><i class="ph ph-check text-brand-blue mt-1"></i> End-to-end system architecture</li>
+                            <li class="flex items-start gap-3"><i class="ph ph-check text-brand-blue mt-1"></i> Custom-trained Writing & Editing Agents</li>
+                            <li class="flex items-start gap-3"><i class="ph ph-check text-brand-blue mt-1"></i> 6-month SEO cluster blueprint</li>
+                            <li class="flex items-start gap-3"><i class="ph ph-check text-brand-blue mt-1"></i> Handover training for your administrative team</li>
+                            <li class="flex items-start gap-3"><i class="ph ph-check text-brand-blue mt-1"></i> 120 days of algorithmic tuning & support</li>
+                        </ul>
+                    </div>
+                    <a href="#book" class="w-full font-medium text-center bg-white text-brand-black px-6 py-4 hover:bg-gray-200 transition-colors rounded-sm">
+                        Request Turnkey Setup
+                    </a>
+                </div>
+
+                <div class="bg-brand-slate border border-gray-700 rounded-sm p-10 flex flex-col h-full relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-brand-blue text-white text-[10px] font-bold uppercase tracking-widest px-4 py-1">Enterprise</div>
+                    <div class="border-b border-gray-600 pb-8 mb-8">
+                        <h3 class="font-display font-bold text-2xl mb-2 text-white">Co-Managed Infrastructure</h3>
+                        <p class="text-gray-300 font-light mb-6">For aggressive scaling, requiring strategic alignment with your senior partners.</p>
+                        <div class="font-display font-bold text-3xl">Custom <span class="text-sm font-sans font-light text-gray-400 uppercase tracking-widest ml-2">Based on Scope</span></div>
+                    </div>
+                    <div class="flex-grow">
+                        <ul class="space-y-4 text-gray-200 font-light mb-10">
+                            <li class="flex items-start gap-3"><i class="ph ph-plus text-white mt-1"></i> Includes complete Turnkey Deployment</li>
+                            <li class="flex items-start gap-3"><i class="ph ph-check text-white mt-1"></i> Partner-level strategy workshops</li>
+                            <li class="flex items-start gap-3"><i class="ph ph-check text-white mt-1"></i> Advanced prompt engineering & proprietary workflows</li>
+                            <li class="flex items-start gap-3"><i class="ph ph-check text-white mt-1"></i> Department-wide training & integration</li>
+                        </ul>
+                    </div>
+                    <a href="#book" class="w-full font-medium text-center bg-brand-blue text-white px-6 py-4 hover:bg-blue-800 transition-colors rounded-sm shadow-elegant-sm">
+                        Schedule Scope Review
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="book" class="bg-white py-24 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="font-display font-bold text-4xl md:text-5xl mb-6 text-brand-black">Secure Your Digital Authority.</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto font-light">Stop renting attention. Build an automated content asset that compounds your firm's equity month over month.</p>
+            
+            <div class="max-w-3xl mx-auto bg-brand-paper rounded-sm overflow-hidden border border-gray-200 shadow-elegant p-2">
+                <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3eOr0OW0668MEc7HqqJWBXYu5TTYVSU4e5BqATJR7kiSIy1-UoAuTdjA4HF3o2PTc1qyZ4NP1A?gv=true" style="border: 0" width="100%" height="600" frameborder="0"></iframe> 
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Slightly optimized scroll logic for the new slim bar
+        const guaranteeBar = document.getElementById('guarantee-bar');
+        const mainNav = document.getElementById('main-nav');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                guaranteeBar.classList.remove('-translate-y-full');
+                mainNav.classList.add('translate-y-[36px]');
+            } else {
+                guaranteeBar.classList.add('-translate-y-full');
+                mainNav.classList.remove('translate-y-[36px]');
+            }
+        });
+
+        function toggleModal(modalID){
+            const modal = document.getElementById(modalID);
+            const body = document.body;
+            if(modal.classList.contains('open')){
+                modal.classList.remove('open');
+                body.style.overflow = 'auto';
+            } else {
+                modal.classList.add('open');
+                body.style.overflow = 'hidden';
+            }
+        }
+    </script>
+</body>
+</html>

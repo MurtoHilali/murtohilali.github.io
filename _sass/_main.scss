@@ -1021,6 +1021,180 @@ applause-button svg {
   fill: var(--text-main);
 }
 
+/* =========================================
+   NATURE-STYLE ARTICLE LAYOUT
+   ========================================= */
+.nature-article {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 0.25rem;
+}
+
+.nature-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.nature-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin: 0 0 1.25rem 0;
+  font-weight: 600;
+}
+
+.nature-article > .nature-header > .title {
+  font-family: var(--font-header);
+  font-size: 2.75rem;
+  line-height: 1.1;
+  margin: 0 0 1rem 0;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.nature-standfirst {
+  font-family: var(--font-header);
+  font-size: 1.4rem;
+  line-height: 1.4;
+  color: var(--text-main);
+  font-style: italic;
+  margin: 0 0 1.75rem 0;
+  font-weight: 400;
+}
+
+.nature-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.nature-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.nature-meta-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-light);
+}
+
+.nature-meta-value {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.nature-body {
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.nature-body p {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  margin-bottom: 1.25rem;
+}
+
+/* Nature-style section headings: smaller, bold sans, uppercase tracking */
+.nature-body h2 {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-main);
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nature-body h3 {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.nature-body h4 {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--text-main);
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Nature-style figure captions: image followed by a paragraph reads as a caption */
+.nature-body img {
+  margin: 2.25rem auto 0.6rem auto;
+  border-radius: 8px;
+}
+
+.nature-body img + em,
+.nature-body p > img + em {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+/* When an image is wrapped in a link and the descriptive text follows in the
+   same paragraph (as in our posts), tighten the spacing. */
+.nature-body p:has(> a > img) {
+  margin-bottom: 0.4rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.nature-body p:has(> a > img) + p {
+  margin-top: 0;
+}
+
+/* Lists in body text */
+.nature-body ul, .nature-body ol {
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.nature-body li {
+  color: var(--text-main);
+  margin-bottom: 0.4rem;
+}
+
+/* Blockquotes — Nature pull-quote style */
+.nature-body blockquote {
+  font-family: var(--font-header);
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.45;
+  border-left: 3px solid var(--accent-color);
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  margin: 2rem 0;
+  color: var(--text-main);
+}
+
+@media (max-width: 720px) {
+  .nature-article > .nature-header > .title { font-size: 2.1rem; }
+  .nature-standfirst { font-size: 1.2rem; }
+  .nature-meta { gap: 1.5rem; }
+}
+
 /* FOOTER STYLES */
 .social-footer {
   padding: 3rem 1.5rem;
