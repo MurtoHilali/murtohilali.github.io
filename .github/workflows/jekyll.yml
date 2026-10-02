@@ -8,7 +8,7 @@ name: Build check
 
 on:
   push:
-    branches: [development]
+    branches: [development, main]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -38,7 +38,7 @@ jobs:
           set -e
           # permalink: pretty means blog.html is emitted as blog/index.html,
           # while lab.html has no front matter and is copied through as-is.
-          for f in _site/index.html _site/lab.html _site/blog/index.html; do
+          for f in _site/index.html _site/lab.html _site/blog/index.html _site/llms.txt; do
             [ -s "$f" ] || { echo "::error::$f missing or empty"; exit 1; }
           done
           count=$(find _site -name '*.html' | wc -l | tr -d ' ')

@@ -1,0 +1,45 @@
+---
+permalink: /llms.txt
+layout: null
+sitemap: false
+---
+{%- assign base = "https://murto.co" -%}
+# Murto Hilali
+
+> {{ site.description }}
+
+Personal site and portfolio of Murto Hilali, a Biotech and Economics student at
+the University of Waterloo. The writing is mostly computational biology and
+machine learning applied to proteins — contact maps, binding-site prediction,
+structure-based drug discovery — with occasional detours into tools, business,
+and travel.
+
+Posts are long-form technical write-ups: each project post walks through the
+full pipeline, including the dead ends, and links the repo and dataset where
+they exist.
+
+## Projects
+{% assign projects = site.posts | where_exp: "p", "p.tags contains 'project'" -%}
+{%- for p in projects %}
+- [{{ p.title }}]({{ base }}{{ p.url }}): {{ p.description | strip_newlines | strip }}
+{%- endfor %}
+
+## Posts
+{% assign writing = site.posts | where_exp: "p", "p.tags contains 'post'" -%}
+{%- for p in writing %}
+- [{{ p.title }}]({{ base }}{{ p.url }}): {{ p.description | strip_newlines | strip }}
+{%- endfor %}
+
+## Pages
+
+- [Lab]({{ base }}/lab.html): Index of the computational biology and ML projects, with repos, datasets, and write-ups attached to each.
+- [About]({{ base }}/about/): Background and contact.
+- [Blog]({{ base }}/blog/): Every post, newest first.
+- [Archive]({{ base }}/archive/): Posts grouped by date.
+- [Travels]({{ base }}/travels/): Trip log.
+
+## Optional
+
+- [Records]({{ base }}/records): Music listening log. Separate project, same domain.
+- [Atom feed]({{ base }}/atom.xml): Full post feed.
+- [JSON feed]({{ base }}/feed.json): Full post feed as JSON.
