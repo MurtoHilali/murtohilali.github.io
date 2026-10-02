@@ -32,7 +32,9 @@ gh api repos/MurtoHilali/murtohilali.github.io/pages --jq '{source,build_type,cn
   through verbatim, so it does not use `_layouts` and is unaffected by the
   site's theme switcher. Its project data is the `PROJECTS` array in the inline
   script.
-- `index_og.html` and `index_test.html` are old drafts, not served.
+- `index_og.html` and `index_test.html` are old homepage drafts. They *are*
+  still built and reachable at `/index_og` and `/index_test` — two extra
+  copies of the homepage. Worth excluding if you don't want them indexed.
 
 ## Conventions
 

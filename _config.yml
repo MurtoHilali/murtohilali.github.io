@@ -47,6 +47,7 @@ kramdown:
 exclude:
   - .jekyll-cache
   - .obsidian
+  - CLAUDE.md
   - Gemfile
   - Gemfile.lock
   - LICENSE.md
