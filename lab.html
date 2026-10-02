@@ -52,10 +52,10 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-[#F4F1EA]">
 
-  <div class="flex-grow flex flex-col pt-8 pb-16 px-4 sm:px-8 md:px-12">
+  <div class="flex-grow flex flex-col pt-6 sm:pt-8 pb-12 sm:pb-16 px-4 sm:px-8 md:px-12">
     
     <!-- Header -->
-    <header class="max-w-7xl mx-auto w-full mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b-[3px] border-[#2D2A26] pb-8">
+    <header class="max-w-7xl mx-auto w-full mb-8 sm:mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-5 sm:gap-6 border-b-[3px] border-[#2D2A26] pb-6 sm:pb-8">
       <div>
         <h1 class="text-3xl sm:text-5xl font-black uppercase tracking-tighter mb-2 text-[#2D2A26]">
           Murto's Lab
@@ -369,6 +369,10 @@ TIME: --:--:--</pre>
       }
     }
 
+    // Touch devices fire mouseenter on tap but often never mouseleave, which
+    // would leave a row stuck in its hover state.
+    const CAN_HOVER = window.matchMedia('(hover: hover)').matches;
+
     const container = document.getElementById('projects-container');
     
     PROJECTS.forEach((proj, index) => {
@@ -384,8 +388,8 @@ TIME: --:--:--</pre>
       let specsHtml = '';
       Object.entries(proj.specs).forEach(([key, value]) => {
         specsHtml += `
-          <div class="flex justify-between text-xs font-mono border-b border-[#2D2A26]/20 pb-1">
-            <span class="text-[#2D2A26]/70 uppercase">${key}</span>
+          <div class="flex justify-between items-baseline gap-3 text-xs font-mono border-b border-[#2D2A26]/20 pb-1">
+            <span class="text-[#2D2A26]/70 uppercase shrink-0">${key}</span>
             <span class="font-bold text-right uppercase text-[#2D2A26]">${value}</span>
           </div>`;
       });
@@ -395,7 +399,7 @@ TIME: --:--:--</pre>
         linksHtml += `
           <a href="${link.url}" target="_blank" rel="noreferrer" 
              onmouseenter="playSound('hover')" onclick="playSound('click')"
-             class="block w-fit bg-[#F4F1EA] border-2 border-[#2D2A26] px-5 py-3 text-xs font-bold uppercase tracking-widest text-[#2D2A26] shadow-[4px_4px_0_0_#2D2A26] hover:bg-[#EBE6DA] active:translate-y-[4px] active:translate-x-[4px] active:shadow-none transition-all select-none">
+             class="block w-full sm:w-fit text-center sm:text-left bg-[#F4F1EA] border-2 border-[#2D2A26] px-5 py-3 text-xs font-bold uppercase tracking-widest text-[#2D2A26] shadow-[4px_4px_0_0_#2D2A26] hover:bg-[#EBE6DA] active:translate-y-[4px] active:translate-x-[4px] active:shadow-none transition-all select-none">
             ${link.label}
           </a>`;
       });
@@ -405,32 +409,33 @@ TIME: --:--:--</pre>
           <!-- List Item Row -->
           <div id="header-${index}"
             onclick="toggleExpand(${index})"
-            onmouseenter="playSound('hover', ${index}); if(expandedIndex !== ${index}) { this.style.backgroundColor = '#EBE6DA'; }"
-            onmouseleave="if(expandedIndex !== ${index}) { this.style.backgroundColor = 'transparent'; }"
-            class="grid grid-cols-12 gap-4 py-4 px-4 cursor-pointer border-b-[3px] items-center transition-all duration-75 text-[#2D2A26] border-[#2D2A26]">
+            onmouseenter="if(CAN_HOVER){ playSound('hover', ${index}); if(expandedIndex !== ${index}) this.style.backgroundColor = '#EBE6DA'; }"
+            onmouseleave="if(CAN_HOVER && expandedIndex !== ${index}) { this.style.backgroundColor = 'transparent'; }"
+            class="flex flex-col gap-1.5 sm:grid sm:grid-cols-12 sm:gap-4 py-4 px-4 cursor-pointer border-b-[3px] sm:items-center transition-all duration-75 text-[#2D2A26] border-[#2D2A26]">
             
-            <div class="col-span-2 text-xs font-mono font-bold opacity-80 uppercase flex items-center gap-2">
+            <div class="sm:col-span-2 text-xs font-mono font-bold opacity-80 uppercase flex items-center gap-2">
               ${statusIndicator}
               ${proj.date}
+              <span class="sm:hidden ml-auto text-[10px] opacity-70">${proj.category}</span>
             </div>
             
-            <div class="col-span-10 sm:col-span-4 font-bold text-lg tracking-tight uppercase truncate flex items-center gap-3">
-              <div id="icon-${index}">${generatePixelIcon(proj.pixelGrid, proj.colorHex, false)}</div>
-              ${proj.name}
+            <div class="sm:col-span-4 min-w-0 font-bold text-base sm:text-lg tracking-tight uppercase flex items-center gap-3">
+              <div id="icon-${index}" class="shrink-0">${generatePixelIcon(proj.pixelGrid, proj.colorHex, false)}</div>
+              <span class="min-w-0 sm:truncate">${proj.name}</span>
             </div>
             
-            <div class="hidden sm:block col-span-4 text-[10px] leading-snug font-medium uppercase opacity-90 pr-2">
+            <div class="sm:col-span-4 text-[11px] sm:text-[10px] leading-snug font-medium uppercase opacity-90 sm:pr-2">
               ${proj.summary}
             </div>
             
-            <div class="hidden sm:block col-span-2 text-right text-[10px] font-mono font-bold uppercase opacity-70">
+            <div class="hidden sm:block sm:col-span-2 text-right text-[10px] font-mono font-bold uppercase opacity-70">
               ${proj.category}
             </div>
           </div>
 
           <!-- Expanded Area -->
           <div id="content-${index}" class="overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0 bg-[#EBE6DA] text-[#2D2A26]">
-            <div class="flex flex-col lg:flex-row p-6 sm:p-10 gap-10">
+            <div class="flex flex-col lg:flex-row p-5 sm:p-10 gap-8 lg:gap-10">
               
               <!-- LEFT: TEXT -->
               <div class="flex-1 flex flex-col">
