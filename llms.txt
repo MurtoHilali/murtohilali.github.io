@@ -36,7 +36,7 @@ they exist.
 - [About]({{ base }}/about/): Background and contact.
 - [Blog]({{ base }}/blog/): Every post, newest first.
 - [Archive]({{ base }}/archive/): Posts grouped by date.
-- [Travels]({{ base }}/travels/): Trip log.
+- [Travels]({{ base }}/travels.html): Trip log.
 
 ## Optional
 
