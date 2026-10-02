@@ -36,7 +36,15 @@ jobs:
       - name: Check the pages we care about were produced
         run: |
           set -e
-          for f in _site/index.html _site/lab.html _site/blog.html; do
+          # permalink: pretty means blog.html is emitted as blog/index.html,
+          # while lab.html has no front matter and is copied through as-is.
+          for f in _site/index.html _site/lab.html _site/blog/index.html; do
             [ -s "$f" ] || { echo "::error::$f missing or empty"; exit 1; }
           done
-          echo "Built $(find _site -name '*.html' | wc -l | tr -d ' ') HTML pages."
+          count=$(find _site -name '*.html' | wc -l | tr -d ' ')
+          [ "$count" -ge 10 ] || { echo "::error::only $count HTML pages built"; exit 1; }
+          echo "Built $count HTML pages."
+
+      - name: Show what was built
+        if: always()
+        run: find _site -maxdepth 1 | sort
