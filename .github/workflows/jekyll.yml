@@ -1,31 +1,42 @@
-# Build Jekyll and Deploy to Github Pages
-name: Jekyll site CI
+# Build check only -- this does NOT deploy.
+#
+# The live site is built by GitHub Pages itself from `main` (Settings ->
+# Pages, legacy build, custom domain murto.co). This workflow exists so a
+# broken build is caught on `development` or in a PR, before it reaches
+# the branch that is actually served.
+name: Build check
 
 on:
-  workflow_dispatch:
   push:
-    branches: [ master ]
+    branches: [development]
   pull_request:
-    branches: [ master ]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-check-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-    # Build
-    - name: 👷 Build the site in the jekyll container 
-      run: |
-        docker run \
-        -v ${{ github.workspace }}:/srv/jekyll \
-        -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll &&\
-        jekyll build --future -d build"
-    
-    # Deploy to gh-pages branch
-    - name: 🚀 Deploy to Github Pages
-      uses: JamesIves/github-pages-deploy-action@4.1.4
-      with:
-        branch: gh-pages # The branch the action should deploy to.
-        folder: build # The folder the action should deploy.
+      # Mirrors the Pages build, so a failure here means a failure there.
+      - name: Build the site
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Check the pages we care about were produced
+        run: |
+          set -e
+          for f in _site/index.html _site/lab.html _site/blog.html; do
+            [ -s "$f" ] || { echo "::error::$f missing or empty"; exit 1; }
+          done
+          echo "Built $(find _site -name '*.html' | wc -l | tr -d ' ') HTML pages."
