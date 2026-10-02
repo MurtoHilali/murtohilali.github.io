@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Murto's Lab | Bioinformatics Archive</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+    /* Global Vintage IBM Theme */
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #F4F1EA; /* Softer Vintage IBM Cream */
+      color: #2D2A26; /* Dark Charcoal */
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      cursor: crosshair; 
+    }
+    
+    ::-webkit-scrollbar { width: 12px; background: #EBE6DA; border-left: 3px solid #2D2A26; }
+    ::-webkit-scrollbar-thumb { background: #2D2A26; border: 2px solid #EBE6DA; }
+
+    ::selection {
+      background-color: #2D2A26; 
+      color: #F4F1EA;
+    }
+
+    /* Ticker Animation */
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); } 
+    }
+    .animate-marquee {
+      display: inline-block;
+      white-space: pre;
+      animation: marquee 30s linear infinite;
+    }
+
+    /* Pixel rendering for icons */
+    .pixelated {
+      image-rendering: pixelated;
+    }
+
+    /* CRT Scanline Overlay */
+    .scanlines {
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, #000 2px, #000 4px);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-[#F4F1EA]">
+
+  <div class="flex-grow flex flex-col pt-8 pb-16 px-4 sm:px-8 md:px-12">
+    
+    <!-- Header -->
+    <header class="max-w-7xl mx-auto w-full mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b-[3px] border-[#2D2A26] pb-8">
+      <div>
+        <h1 class="text-3xl sm:text-5xl font-black uppercase tracking-tighter mb-2 text-[#2D2A26]">
+          Murto's Lab
+        </h1>
+        <p class="text-xs sm:text-sm font-bold max-w-md leading-relaxed uppercase opacity-80 text-[#2D2A26]">
+          A curated index of computational biology experiments, deep learning benchmarks, and de novo protein designs.
+        </p>
+      </div>
+      
+      <!-- System Status Block -->
+      <div class="text-left md:text-right text-[10px] font-mono font-bold uppercase tracking-widest bg-[#2D2A26] text-[#4AF626] px-4 py-3 shadow-[4px_4px_0_0_#EBE6DA]">
+        LOC: TORONTO, CA<br/>
+        SYS: PROTEINLOOP
+      </div>
+    </header>
+
+    <main class="w-full max-w-7xl mx-auto flex-grow flex flex-col">
+      <!-- Index Header -->
+      <div class="hidden sm:grid grid-cols-12 gap-4 px-4 pb-3 border-b-[3px] border-[#2D2A26] text-[10px] uppercase font-bold font-mono tracking-widest text-[#2D2A26]">
+        <div class="col-span-2">Date / Status</div>
+        <div class="col-span-4">Project Title</div>
+        <div class="col-span-4">Synopsis</div>
+        <div class="col-span-2 text-right">Category</div>
+      </div>
+
+      <!-- Projects Container -->
+      <div id="projects-container" class="flex flex-col border-t-[3px] border-[#2D2A26] sm:border-t-0">
+        <!-- Projects injected here via JS -->
+      </div>
+    </main>
+  </div>
+
+  <footer class="w-full border-t-[3px] border-[#2D2A26]">
+    <div class="w-full flex overflow-hidden bg-black border-y-[3px] border-[#2D2A26] py-2 sm:py-3 select-none" style="contain: content;">
+      <!-- Need wide containers to ensure seamless scroll -->
+      <div class="flex w-max">
+        <pre id="ticker1" class="animate-marquee font-mono text-[4px] sm:text-[6px] md:text-[8px] leading-[4px] sm:leading-[6px] md:leading-[8px] font-bold text-[#4AF626] m-0"></pre>
+        <pre id="ticker2" class="animate-marquee font-mono text-[4px] sm:text-[6px] md:text-[8px] leading-[4px] sm:leading-[6px] md:leading-[8px] font-bold text-[#4AF626] m-0"></pre>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let audioCtx = null;
+
+    const initAudio = () => {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    };
+
+    const playSound = (type, index = 0) => {
+      try {
+        initAudio();
+        if (!audioCtx) return;
+
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        if (type === 'hover') {
+          // Buttery mechanical "tap", pitch shifts down based on row index
+          osc.type = 'sine';
+          const baseFreq = 500 - (index * 80); 
+          
+          osc.frequency.setValueAtTime(baseFreq * 1.5, audioCtx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(baseFreq, audioCtx.currentTime + 0.015);
+          
+          gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+          gainNode.gain.linearRampToValueAtTime(0.04, audioCtx.currentTime + 0.002);
+          gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.02);
+          
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.025);
+        } else if (type === 'click') {
+          // Deeper, chunky mechanical clack
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.05);
+          gainNode.gain.setValueAtTime(0.03, audioCtx.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.05);
+        }
+      } catch (e) {
+        console.warn("Audio not supported or blocked", e);
+      }
+    };
+
+    const ICONS = {
+      matrix: [
+        "................",
+        "...#.#.#.#.#....",
+        "...#.#.#.#.#....",
+        "...#.#.###.#....",
+        "...#.#...#.#....",
+        "...#.#####.#....",
+        "...#.......#....",
+        "...#########....",
+        "................",
+        "...#####.###....",
+        "...#...#.#.#....",
+        "...###.#.#.#....",
+        "...#.#.#.#.#....",
+        "...#.#.#.#.#....",
+        "................",
+        "................",
+      ],
+      network: [
+        "................",
+        "...###....###...",
+        "..#...#..#...#..",
+        "..#.#.#..#.#.#..",
+        "..#...#..#...#..",
+        "...###....###...",
+        "....##....##....",
+        ".....##..##.....",
+        "......####......",
+        ".....##..##.....",
+        "....##....##....",
+        "...###....###...",
+        "..#...#..#...#..",
+        "..#.#.#..#.#.#..",
+        "..#...#..#...#..",
+        "...###....###...",
+      ],
+      dna: [
+        "................",
+        "...##......##...",
+        "....##....##....",
+        ".....######.....",
+        "......####......",
+        ".....##..##.....",
+        "....##....##....",
+        "...##......##...",
+        "...##......##...",
+        "....##....##....",
+        ".....##..##.....",
+        "......####......",
+        ".....######.....",
+        "....##....##....",
+        "...##......##...",
+        "................",
+      ],
+      flask: [
+        ".......##.......",
+        ".......##.......",
+        ".......##.......",
+        ".......##.......",
+        "......####......",
+        ".....##..##.....",
+        "....##....##....",
+        "...##......##...",
+        "..##.####...##..",
+        ".##........#.##.",
+        ".##.##...#...##.",
+        ".##...###....##.",
+        "..##........##..",
+        "...##########...",
+        "................",
+        "................",
+      ]
+    };
+
+    const PROJECTS = [
+      {
+        date: '2026.08',
+        name: 'PAC-MAPS',
+        category: 'Machine Learning',
+        status: 'Active',
+        summary: 'Protein architecture classification from CATH contact maps.',
+        details: 'Classifies CATH architecture straight from structure by rendering each domain as an RGB contact map \u2014 red encodes inverted C\u03b2\u2013C\u03b2 distance (0\u201330 \u00c5), green marks helix\u2013helix residue pairs, blue marks strand\u2013strand pairs. Trained on the CATH S40 non-redundant set (~21,000 domains under 400 residues, 14 architectures) and benchmarked out-of-distribution by vaulting entire superfamilies out of train, the way DockGen and Chainsaw do. Four architectures were compared: a fine-tuned xresnet34, a vanilla CNN, a dilated residual CNN with squeeze-excitation, and a dilated CoordConv variant that feeds log sequence separation in as a channel. Best run hits 75.0% accuracy / 68.3% balanced accuracy on held-out superfamilies.',
+        stack: ['fastai', 'PyTorch', 'biotite', 'W&B'],
+        specs: { 'Test Accuracy': '75.0%', 'Balanced Acc.': '68.3%', 'Classes': '14 Architectures', 'Benchmark': 'Held-out Superfamilies' },
+        links: [],
+        colorHex: '#c500ff', 
+        asciiType: 'cnn', 
+        pixelGrid: ICONS.matrix
+      },
+      {
+        date: '2025.11',
+        name: 'PepBDB-ML Benchmark',
+        category: 'Machine Learning',
+        status: 'Completed',
+        summary: 'ML vs CNN for Binding-Site Detection.',
+        details: 'Assembling and comparing four different ML/DL models on identifying peptide-protein binding sites. Built alongside a custom ML-friendly dataset extracted and parsed directly from the PDB.',
+        stack: ['TensorFlow', 'Scikit-Learn', 'Pandas'],
+        specs: { 'Dataset': 'PepBDB-Derived', 'Models': 'RF, SVM, CNN, MLP', 'Task': 'Binary Classification' },
+        links: [
+          { label: 'PepBDB-ML Repo', url: 'https://github.com/MurtoHilali/PepBDB-ML' },
+          { label: 'Visual-PepBDB Repo', url: 'https://github.com/MurtoHilali/Visual-PepBDB' },
+          { label: 'Dataset (CSV)', url: 'https://drive.google.com/file/d/10pcHQH5zMcB5rlAxpL6ZEQ8HWNcCePBU/view?usp=sharing' },
+          { label: 'Dataset Post', url: 'https://murto.co/pepbdb-ml' },
+          { label: 'Benchmark Post', url: 'https://murto.co/benchmarking-peppi-models' }
+        ],
+        colorHex: '#0055ff', 
+        asciiType: 'neural',
+        pixelGrid: ICONS.network
+      },
+      {
+        date: '2024.05',
+        name: 'AF-M PPI Prediction',
+        category: 'Bioinformatics Pipeline',
+        status: 'Completed',
+        summary: 'Predicting missense mutation effects on PPIs.',
+        details: 'Utilized over 47,000 SLURM jobs to generate AlphaFold-Multimer predictions for wild-type and mutant protein complexes. Structural features were extracted to train an XGBoost classifier, achieving a 91% AUC for predicting PPI disruption.',
+        stack: ['AlphaFold-M', 'XGBoost', 'Bash'],
+        specs: { 'AUC': '0.91', 'Jobs Run': '47,000+', 'Target': 'Missense Variants' },
+        links: [
+          { label: 'Read Write-up', url: 'https://murto.co/xgboost-ppi' }
+        ],
+        colorHex: '#00c53a', 
+        asciiType: 'dna',
+        pixelGrid: ICONS.dna
+      },
+      {
+        date: '2023.09',
+        name: 'Acarbose Alternatives',
+        category: 'Virtual Screening',
+        status: 'Completed',
+        summary: 'In silico drug discovery for Acarbose alternatives.',
+        details: 'Identified 71 natural alternatives to a $200 million drug entirely in silico. Screened the COCONUT natural-products database by chemical similarity to acarbose, then docked the survivors with GNINA \u2014 an AutoDock Vina fork that scores poses with a CNN \u2014 and ranked them on CNN-VS. Decoys, redocking replicates, and stability analysis stripped out the false positives.',
+        stack: ['GNINA', 'RDKit', 'OpenBabel', 'ChimeraX'],
+        specs: { 'Hits Identified': '71', 'Target': 'A-Glucosidase', 'Scoring': 'CNN-VS', 'Library': 'COCONUT' },
+        links: [
+          { label: 'GitHub Repo', url: 'https://github.com/MurtoHilali/Acarbose-Alternative-Drug-Discovery' },
+          { label: 'Pipeline Post', url: 'https://murto.co/acarbose-alternative-drug-discovery' }
+        ],
+        colorHex: '#ff3300', 
+        asciiType: 'scan',
+        pixelGrid: ICONS.flask
+      }
+    ];
+
+    function generatePixelIcon(grid, color, isActive) {
+      const activeColor = isActive ? color : '#2D2A26';
+      const nonActiveOpacity = isActive ? '1' : '0.5';
+      
+      let cells = '';
+      grid.forEach(row => {
+        row.split('').forEach(cell => {
+          const bg = cell !== '.' ? activeColor : 'transparent';
+          cells += `<div class="aspect-square" style="background-color: ${bg}; opacity: ${cell !== '.' ? nonActiveOpacity : '1'}"></div>`;
+        });
+      });
+
+      return `
+        <div class="grid grid-cols-[repeat(16,minmax(0,1fr))] w-4 h-4 sm:w-5 sm:h-5 shrink-0 transition-all duration-200 pixelated">
+          ${cells}
+        </div>
+      `;
+    }
+
+    let expandedIndex = null;
+
+    function toggleExpand(index) {
+      playSound('click');
+      const contentId = `content-${index}`;
+      const headerId = `header-${index}`;
+      const iconContainerId = `icon-${index}`;
+      
+      const content = document.getElementById(contentId);
+      const header = document.getElementById(headerId);
+      const iconContainer = document.getElementById(iconContainerId);
+      const proj = PROJECTS[index];
+
+      // Close previously expanded if different
+      if (expandedIndex !== null && expandedIndex !== index) {
+        const prevContent = document.getElementById(`content-${expandedIndex}`);
+        const prevHeader = document.getElementById(`header-${expandedIndex}`);
+        const prevIcon = document.getElementById(`icon-${expandedIndex}`);
+        const prevProj = PROJECTS[expandedIndex];
+
+        prevContent.style.maxHeight = '0px';
+        prevContent.classList.remove('opacity-100', 'border-b-[3px]', 'border-[#2D2A26]');
+        prevContent.classList.add('opacity-0');
+        prevHeader.style.backgroundColor = 'transparent';
+        prevIcon.innerHTML = generatePixelIcon(prevProj.pixelGrid, prevProj.colorHex, false);
+      }
+
+      // Toggle current
+      if (expandedIndex === index) {
+        // Close it
+        content.style.maxHeight = '0px';
+        content.classList.remove('opacity-100', 'border-b-[3px]', 'border-[#2D2A26]');
+        content.classList.add('opacity-0');
+        header.style.backgroundColor = 'transparent';
+        iconContainer.innerHTML = generatePixelIcon(proj.pixelGrid, proj.colorHex, false);
+        expandedIndex = null;
+      } else {
+        // Open it
+        content.style.maxHeight = '1200px';
+        content.classList.remove('opacity-0');
+        content.classList.add('opacity-100', 'border-b-[3px]', 'border-[#2D2A26]');
+        header.style.backgroundColor = '#EBE6DA';
+        iconContainer.innerHTML = generatePixelIcon(proj.pixelGrid, proj.colorHex, true);
+        expandedIndex = index;
+      }
+    }
+
+    const container = document.getElementById('projects-container');
+    
+    PROJECTS.forEach((proj, index) => {
+      const statusIndicator = proj.status === 'Active' 
+        ? `<span class="w-2 h-2 bg-current animate-pulse"></span>` 
+        : `<span class="w-2 h-2 border-[1.5px] border-current"></span>`;
+
+      let stackHtml = '';
+      proj.stack.forEach(tech => {
+        stackHtml += `<span class="px-2 py-1 text-[10px] font-bold font-mono bg-[#DFDBCB] text-[#2D2A26] border-2 border-[#2D2A26] uppercase shadow-[2px_2px_0_0_#2D2A26]">${tech}</span>`;
+      });
+
+      let specsHtml = '';
+      Object.entries(proj.specs).forEach(([key, value]) => {
+        specsHtml += `
+          <div class="flex justify-between text-xs font-mono border-b border-[#2D2A26]/20 pb-1">
+            <span class="text-[#2D2A26]/70 uppercase">${key}</span>
+            <span class="font-bold text-right uppercase text-[#2D2A26]">${value}</span>
+          </div>`;
+      });
+
+      let linksHtml = '';
+      proj.links.forEach(link => {
+        linksHtml += `
+          <a href="${link.url}" target="_blank" rel="noreferrer" 
+             onmouseenter="playSound('hover')" onclick="playSound('click')"
+             class="block w-fit bg-[#F4F1EA] border-2 border-[#2D2A26] px-5 py-3 text-xs font-bold uppercase tracking-widest text-[#2D2A26] shadow-[4px_4px_0_0_#2D2A26] hover:bg-[#EBE6DA] active:translate-y-[4px] active:translate-x-[4px] active:shadow-none transition-all select-none">
+            ${link.label}
+          </a>`;
+      });
+
+      const rowHtml = `
+        <div class="flex flex-col group transition-none">
+          <!-- List Item Row -->
+          <div id="header-${index}"
+            onclick="toggleExpand(${index})"
+            onmouseenter="playSound('hover', ${index}); if(expandedIndex !== ${index}) { this.style.backgroundColor = '#EBE6DA'; }"
+            onmouseleave="if(expandedIndex !== ${index}) { this.style.backgroundColor = 'transparent'; }"
+            class="grid grid-cols-12 gap-4 py-4 px-4 cursor-pointer border-b-[3px] items-center transition-all duration-75 text-[#2D2A26] border-[#2D2A26]">
+            
+            <div class="col-span-2 text-xs font-mono font-bold opacity-80 uppercase flex items-center gap-2">
+              ${statusIndicator}
+              ${proj.date}
+            </div>
+            
+            <div class="col-span-10 sm:col-span-4 font-bold text-lg tracking-tight uppercase truncate flex items-center gap-3">
+              <div id="icon-${index}">${generatePixelIcon(proj.pixelGrid, proj.colorHex, false)}</div>
+              ${proj.name}
+            </div>
+            
+            <div class="hidden sm:block col-span-4 text-[10px] leading-snug font-medium uppercase opacity-90 pr-2">
+              ${proj.summary}
+            </div>
+            
+            <div class="hidden sm:block col-span-2 text-right text-[10px] font-mono font-bold uppercase opacity-70">
+              ${proj.category}
+            </div>
+          </div>
+
+          <!-- Expanded Area -->
+          <div id="content-${index}" class="overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0 bg-[#EBE6DA] text-[#2D2A26]">
+            <div class="flex flex-col lg:flex-row p-6 sm:p-10 gap-10">
+              
+              <!-- LEFT: TEXT -->
+              <div class="flex-1 flex flex-col">
+                <p class="text-sm sm:text-base font-medium leading-relaxed mb-8 max-w-2xl text-[#2D2A26]">
+                  ${proj.details}
+                </p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+                  <div>
+                    <h4 class="text-[10px] font-mono font-bold tracking-widest uppercase mb-3 text-[#2D2A26] border-b-2 border-[#2D2A26] pb-1 inline-block">Tech Stack</h4>
+                    <div class="flex flex-wrap gap-2 mt-2">${stackHtml}</div>
+                  </div>
+                  <div>
+                    <h4 class="text-[10px] font-mono font-bold tracking-widest uppercase mb-3 text-[#2D2A26] border-b-2 border-[#2D2A26] pb-1 inline-block">Specifications</h4>
+                    <div class="flex flex-col gap-1 mt-2">${specsHtml}</div>
+                  </div>
+                </div>
+
+                <div class="mt-auto flex flex-wrap gap-4">${linksHtml}</div>
+              </div>
+
+              <!-- RIGHT: VINTAGE IBM TERMINAL MONITOR -->
+              <div class="w-full lg:w-[320px] xl:w-[380px] flex-shrink-0 flex flex-col bg-[#F4F1EA] border-[3px] border-[#2D2A26] p-5 rounded-sm shadow-[8px_8px_0px_0px_#2D2A26] relative">
+                
+                <div class="flex justify-between items-center mb-4">
+                  <div class="text-[9px] font-bold uppercase tracking-widest text-[#2D2A26]/60">
+                    SYSTEM MONITOR DISPLAY
+                  </div>
+                  <div class="flex gap-1.5">
+                    <div class="w-2 h-2 rounded-full bg-[#ff3300] border border-[#2D2A26] shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)]"></div>
+                    <div class="w-2 h-2 rounded-full bg-[#00c53a] border border-[#2D2A26] shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)]"></div>
+                  </div>
+                </div>
+
+                <div class="bg-[#41403E] p-4 sm:p-6 rounded-sm border-4 border-[#2D2A26] shadow-[inset_0_8px_16px_rgba(0,0,0,0.5)]">
+                  <div class="relative bg-[#0F1110] border-2 border-[#1A1A1A] rounded-sm p-4 flex items-center justify-center overflow-hidden min-h-[220px]" style="box-shadow: inset 0 0 30px rgba(0,0,0,0.9)">
+                    
+                    <div class="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/10 to-transparent pointer-events-none rounded-t-sm z-20"></div>
+                    <div class="absolute top-0 right-0 w-[50%] h-[150%] bg-white/5 rotate-45 pointer-events-none z-20"></div>
+                    
+                    <div class="absolute inset-0 pointer-events-none z-20 opacity-[0.3] scanlines"></div>
+                    
+                    <div class="relative z-10 flex items-center justify-center w-full h-full">
+                       <!-- ASCII Anchor Point -->
+                       <pre class="ascii-animator font-mono text-[6px] sm:text-[8px] leading-[6px] sm:leading-[8px] font-bold whitespace-pre select-none overflow-hidden" 
+                            data-type="${proj.asciiType}" 
+                            data-index="${index}"
+                            style="color: ${proj.colorHex}; text-shadow: 0 0 4px ${proj.colorHex}90, 0 0 8px ${proj.colorHex}50"></pre>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex gap-2 mt-5 px-2">
+                    <div class="flex-1 h-2 bg-[#2D2A26]/10 rounded-sm border border-[#2D2A26]/20 shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)]"></div>
+                    <div class="flex-1 h-2 bg-[#2D2A26]/10 rounded-sm border border-[#2D2A26]/20 shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)]"></div>
+                    <div class="flex-1 h-2 bg-[#2D2A26]/10 rounded-sm border border-[#2D2A26]/20 shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)]"></div>
+                    <div class="flex-1 h-2 bg-[#2D2A26]/10 rounded-sm border border-[#2D2A26]/20 shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)]"></div>
+                    <div class="flex-1 h-2 bg-[#2D2A26]/10 rounded-sm border border-[#2D2A26]/20 shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)]"></div>
+                    <div class="flex-1 h-2 bg-[#2D2A26]/10 rounded-sm border border-[#2D2A26]/20 shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)]"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      container.insertAdjacentHTML('beforeend', rowHtml);
+    });
+
+    const DENSITY = " `.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@";
+    const TICKER_DENSITY = " .:-=+*#%@";
+    const animators = document.querySelectorAll('.ascii-animator');
+    let time = 0;
+
+    // Precompute ticker font to save processing in the loop
+    const tickerText = " BIOINFORMATICS // MACHINE LEARNING // PROTEIN DESIGN // DRUG DISCOVERY // ";
+    const alphabet = {
+      'A': [" AAA ", "A   A", "AAAAA", "A   A", "A   A"],
+      'B': ["BBBB ", "B   B", "BBBB ", "B   B", "BBBB "],
+      'C': [" CCC ", "C   C", "C    ", "C   C", " CCC "],
+      'D': ["DDDD ", "D   D", "D   D", "D   D", "DDDD "],
+      'E': ["EEEEE", "E    ", "EEE  ", "E    ", "EEEEE"],
+      'F': ["FFFFF", "F    ", "FFF  ", "F    ", "F    "],
+      'G': [" GGG ", "G    ", "G  GG", "G   G", " GGG "],
+      'H': ["H   H", "H   H", "HHHHH", "H   H", "H   H"],
+      'I': [" III ", "  I  ", "  I  ", "  I  ", " III "],
+      'J': ["  JJJ", "   J ", "   J ", "J  J ", " JJ  "],
+      'K': ["K   K", "K  K ", "KKK  ", "K  K ", "K   K"],
+      'L': ["L    ", "L    ", "L    ", "L    ", "LLLLL"],
+      'M': ["M   M", "MM MM", "M M M", "M   M", "M   M"],
+      'N': ["N   N", "NN  N", "N N N", "N  NN", "N   N"],
+      'O': [" OOO ", "O   O", "O   O", "O   O", " OOO "],
+      'P': ["PPPP ", "P   P", "PPPP ", "P    ", "P    "],
+      'Q': [" QQQ ", "Q   Q", "Q   Q", "Q  QQ", " QQ Q"],
+      'R': ["RRRR ", "R   R", "RRRR ", "R  R ", "R   R"],
+      'S': [" SSS ", "S    ", " SSS ", "    S", " SSS "],
+      'T': ["TTTTT", "  T  ", "  T  ", "  T  ", "  T  "],
+      'U': ["U   U", "U   U", "U   U", "U   U", " UUU "],
+      'V': ["V   V", "V   V", "V   V", " V V ", "  V  "],
+      'W': ["W   W", "W   W", "W W W", "WW WW", "W   W"],
+      'X': ["X   X", " X X ", "  X  ", " X X ", "X   X"],
+      'Y': ["Y   Y", " Y Y ", "  Y  ", "  Y  ", "  Y  "],
+      'Z': ["ZZZZZ", "   Z ", "  Z  ", " Z   ", "ZZZZZ"],
+      ' ': ["     ", "     ", "     ", "     ", "     "],
+      '/': ["    /", "   / ", "  /  ", " /   ", "/    "]
+    };
+
+    let fontLines = ["", "", "", "", ""];
+    for (let i = 0; i < tickerText.length; i++) {
+      const charBlock = alphabet[tickerText[i]] || alphabet[' '];
+      for (let j = 0; j < 5; j++) { fontLines[j] += charBlock[j] + "  "; }
+    }
+    const tickerW = fontLines[0].length * 2; // Repeat twice
+
+    function renderLoop() {
+      time += 0.015;
+
+      // 1. Update active monitors
+      animators.forEach(el => {
+        const idx = parseInt(el.dataset.index);
+        if (expandedIndex !== idx) return; // Save CPU, don't render hidden elements
+
+        const type = el.dataset.type;
+        const W = 46; 
+        const H = 22; 
+        let frameString = "";
+
+        for (let y = 0; y < H; y++) {
+          for (let x = 0; x < W; x++) {
+            let val = 0;
+            const nx = (x / W) * 2 - 1;
+            const ny = (y / H) * 2 - 1;
+            
+            if (type === 'cnn') {
+              const gridX = Math.abs(Math.sin(nx * 8));
+              const gridY = Math.abs(Math.sin(ny * 8));
+              const isGridLine = gridX < 0.2 || gridY < 0.2;
+              
+              const scanX = Math.sin(time * 1.5) * 0.6;
+              const scanY = Math.cos(time * 1.1) * 0.6;
+              const dx = Math.abs(nx - scanX);
+              const dy = Math.abs(ny - scanY);
+              
+              const inFilter = dx < 0.25 && dy < 0.25;
+              const isFilterBorder = (dx < 0.3 && dy < 0.3) && !inFilter;
+
+              if (isFilterBorder) val = 0.9; 
+              else if (inFilter) val = 0.6 + Math.sin(nx * 30 + ny * 30 - time * 20) * 0.4;
+              else if (isGridLine) val = 0.15; 
+              else val = 0.02; 
+            }
+            else if (type === 'neural') {
+              const cx1 = nx + Math.sin(time * 0.8) * 0.5;
+              const cy1 = ny + Math.cos(time * 1.2) * 0.5;
+              const cx2 = nx - Math.cos(time * 1.5) * 0.3;
+              const cy2 = ny - Math.sin(time * 0.7) * 0.3;
+              const d1 = Math.sqrt(cx1*cx1 + cy1*cy1);
+              const d2 = Math.sqrt(cx2*cx2 + cy2*cy2);
+              val = (Math.sin(d1 * 8 - time * 3) + Math.cos(d2 * 10 + time * 2) + 2) / 4;
+            }
+            else if (type === 'dna') {
+              const wave1 = Math.sin(ny * 4 + time * 3) * 0.6;
+              const wave2 = Math.sin(ny * 4 + time * 3 + Math.PI) * 0.6;
+              const d1 = Math.abs(nx - wave1);
+              const d2 = Math.abs(nx - wave2);
+              if (d1 < 0.1 || d2 < 0.1) val = 0.9;
+              else if (Math.abs(wave1 - wave2) > 0.2 && nx > Math.min(wave1, wave2) && nx < Math.max(wave1, wave2) && (y % 2 === 0)) val = 0.4;
+              else val = Math.max(0, 0.1 - Math.abs(nx));
+            }
+            else if (type === 'scan') {
+              const angle = Math.atan2(ny, nx);
+              const dist = Math.sqrt(nx*nx + ny*ny);
+              let radar = (angle + time * 2) % (Math.PI * 2);
+              if (radar < 0) radar += Math.PI * 2;
+              const radarPulse = 1.0 - (radar / (Math.PI * 2));
+              const ring = Math.abs(Math.sin(dist * 15 - time * 4));
+              val = (radarPulse * ring) + (dist < 0.8 && dist > 0.75 ? 0.8 : 0);
+            }
+
+            val = Math.max(0, Math.min(1, val));
+            frameString += DENSITY[Math.floor(val * (DENSITY.length - 1))];
+          }
+          frameString += "\n";
+        }
+        el.innerText = frameString;
+      });
+
+      // 2. Update bottom ticker
+      let tickerFrame = "";
+      for (let y = 0; y < 5; y++) {
+        for (let x = 0; x < tickerW; x++) {
+          const localX = x % (tickerW / 2);
+          const isLetter = fontLines[y][localX] !== ' ';
+          
+          const nx = x * 0.1;
+          const ny = y * 0.2;
+          const noise = (Math.sin(nx + time) + Math.cos(ny - time * 0.8) + Math.sin(nx * 0.5 + ny * 0.5 + time * 1.5)) / 3; 
+          const normalizedNoise = (noise + 1) / 2;
+
+          if (isLetter) {
+            tickerFrame += TICKER_DENSITY[Math.min(TICKER_DENSITY.length - 1, 5 + Math.floor(normalizedNoise * 4.99))];
+          } else {
+            tickerFrame += TICKER_DENSITY[Math.min(TICKER_DENSITY.length - 1, Math.floor(normalizedNoise * 2.99))];
+          }
+        }
+        tickerFrame += "\n";
+      }
+      
+      document.getElementById('ticker1').innerText = tickerFrame;
+      document.getElementById('ticker2').innerText = tickerFrame;
+
+      requestAnimationFrame(renderLoop);
+    }
+
+    // Start loop
+    renderLoop();
+  </script>
+</body>
+</html>
