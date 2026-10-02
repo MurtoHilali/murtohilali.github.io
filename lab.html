@@ -66,9 +66,17 @@
       </div>
       
       <!-- System Status Block -->
-      <div class="text-left md:text-right text-[10px] font-mono font-bold uppercase tracking-widest bg-[#2D2A26] text-[#4AF626] px-4 py-3 shadow-[4px_4px_0_0_#EBE6DA]">
-        LOC: TORONTO, CA<br/>
-        SYS: PROTEINLOOP
+      <div id="status-block" role="button" tabindex="0" title="Click to cycle readout"
+        aria-label="System readout. Click to cycle."
+        onclick="cycleStatus()"
+        onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();cycleStatus();}"
+        onmouseenter="playSound('hover')"
+        class="relative overflow-hidden text-left md:text-right bg-[#2D2A26] text-[#4AF626] px-4 py-3 shadow-[4px_4px_0_0_#EBE6DA] cursor-pointer select-none transition-all duration-75 hover:shadow-[4px_4px_0_0_#4AF626] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none focus:outline-none focus-visible:shadow-[4px_4px_0_0_#4AF626]">
+        <div class="absolute inset-0 pointer-events-none z-20 opacity-[0.25] scanlines"></div>
+        <pre id="status-readout" class="relative z-10 m-0 font-mono text-[10px] leading-[1.7] font-bold uppercase tracking-widest"
+             style="min-width: calc(18ch + 1.8em); text-shadow: 0 0 4px #4AF62690, 0 0 8px #4AF62650">LOC: TORONTO, CA
+SYS: PROTEINLOOP
+TIME: --:--:--</pre>
       </div>
     </header>
 
@@ -229,10 +237,10 @@
       {
         date: '2026.08',
         name: 'PAC-MAPS',
-        category: 'Machine Learning',
+        category: 'Deep Learning',
         status: 'Active',
         summary: 'Protein architecture classification from CATH contact maps.',
-        details: 'Classifies CATH architecture straight from structure by rendering each domain as an RGB contact map \u2014 red encodes inverted C\u03b2\u2013C\u03b2 distance (0\u201330 \u00c5), green marks helix\u2013helix residue pairs, blue marks strand\u2013strand pairs. Trained on the CATH S40 non-redundant set (~21,000 domains under 400 residues, 14 architectures) and benchmarked out-of-distribution by vaulting entire superfamilies out of train, the way DockGen and Chainsaw do. Four architectures were compared: a fine-tuned xresnet34, a vanilla CNN, a dilated residual CNN with squeeze-excitation, and a dilated CoordConv variant that feeds log sequence separation in as a channel. Best run hits 75.0% accuracy / 68.3% balanced accuracy on held-out superfamilies.',
+        details: 'Classifies CATH architecture straight from structure. Each domain is rendered as an RGB contact map \u2014 red for inverted C\u03b2\u2013C\u03b2 distance, green for helix\u2013helix pairs, blue for strand\u2013strand pairs \u2014 and read by a dilated CoordConv residual CNN. Benchmarked out-of-distribution by vaulting whole superfamilies out of training, the way DockGen and Chainsaw do.',
         stack: ['fastai', 'PyTorch', 'biotite', 'W&B'],
         specs: { 'Test Accuracy': '75.0%', 'Balanced Acc.': '68.3%', 'Classes': '14 Architectures', 'Benchmark': 'Held-out Superfamilies' },
         links: [],
@@ -241,7 +249,24 @@
         pixelGrid: ICONS.matrix
       },
       {
-        date: '2025.11',
+        date: '2026.02',
+        name: 'Acarbose Alternatives',
+        category: 'Virtual Screening',
+        status: 'Completed',
+        summary: 'In silico drug discovery for Acarbose alternatives.',
+        details: 'Identified 71 natural alternatives to a $200 million drug entirely in silico. Screened the COCONUT natural-products database by chemical similarity to acarbose, then docked the survivors with GNINA \u2014 an AutoDock Vina fork that scores poses with a CNN \u2014 and ranked them on CNN-VS. Decoys, redocking replicates, and stability analysis stripped out the false positives.',
+        stack: ['GNINA', 'RDKit', 'OpenBabel', 'ChimeraX'],
+        specs: { 'Hits Identified': '71', 'Target': 'A-Glucosidase', 'Scoring': 'CNN-VS', 'Library': 'COCONUT' },
+        links: [
+          { label: 'GitHub Repo', url: 'https://github.com/MurtoHilali/Acarbose-Alternative-Drug-Discovery' },
+          { label: 'Pipeline Post', url: 'https://murto.co/acarbose-alternative-drug-discovery' }
+        ],
+        colorHex: '#ff3300', 
+        asciiType: 'scan',
+        pixelGrid: ICONS.flask
+      },
+      {
+        date: '2024.08',
         name: 'PepBDB-ML Benchmark',
         category: 'Machine Learning',
         status: 'Completed',
@@ -275,23 +300,6 @@
         colorHex: '#00c53a', 
         asciiType: 'dna',
         pixelGrid: ICONS.dna
-      },
-      {
-        date: '2023.09',
-        name: 'Acarbose Alternatives',
-        category: 'Virtual Screening',
-        status: 'Completed',
-        summary: 'In silico drug discovery for Acarbose alternatives.',
-        details: 'Identified 71 natural alternatives to a $200 million drug entirely in silico. Screened the COCONUT natural-products database by chemical similarity to acarbose, then docked the survivors with GNINA \u2014 an AutoDock Vina fork that scores poses with a CNN \u2014 and ranked them on CNN-VS. Decoys, redocking replicates, and stability analysis stripped out the false positives.',
-        stack: ['GNINA', 'RDKit', 'OpenBabel', 'ChimeraX'],
-        specs: { 'Hits Identified': '71', 'Target': 'A-Glucosidase', 'Scoring': 'CNN-VS', 'Library': 'COCONUT' },
-        links: [
-          { label: 'GitHub Repo', url: 'https://github.com/MurtoHilali/Acarbose-Alternative-Drug-Discovery' },
-          { label: 'Pipeline Post', url: 'https://murto.co/acarbose-alternative-drug-discovery' }
-        ],
-        colorHex: '#ff3300', 
-        asciiType: 'scan',
-        pixelGrid: ICONS.flask
       }
     ];
 
@@ -635,6 +643,73 @@
 
       requestAnimationFrame(renderLoop);
     }
+
+    // ---- System status block: click to cycle readouts, with a CRT decode ----
+    const STATUS_GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/:.,+*=#";
+    const SESSION_START = Date.now();
+    const SCRAMBLE_MS = 420;
+    const pad2 = n => String(n).padStart(2, '0');
+
+    const STATUS_PAGES = [
+      () => [
+        'LOC: TORONTO, CA',
+        'SYS: PROTEINLOOP',
+        'TIME: ' + new Date().toLocaleTimeString('en-GB', { timeZone: 'America/Toronto', hour12: false })
+      ],
+      () => {
+        const secs = Math.floor((Date.now() - SESSION_START) / 1000);
+        return [
+          'IDX: ' + PROJECTS.length + ' PROJECTS',
+          'RUN: ' + PROJECTS.filter(p => p.status === 'Active').length + ' ACTIVE',
+          'SESS: ' + pad2(Math.floor(secs / 60)) + ':' + pad2(secs % 60)
+        ];
+      },
+      () => [
+        'ORG: UWATERLOO',
+        'DOM: COMPBIO / ML',
+        'NET: MURTO.CO'
+      ]
+    ];
+
+    const statusReadout = document.getElementById('status-readout');
+    let statusPage = 0;
+    let scrambleStart = 0;
+
+    // Characters resolve left to right, so the line reads like it's decoding.
+    function scrambleLine(line, prog) {
+      let out = '';
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === ' ' || prog >= 0.25 + (i / line.length) * 0.75) out += ch;
+        else out += STATUS_GLYPHS[Math.floor(Math.random() * STATUS_GLYPHS.length)];
+      }
+      return out;
+    }
+
+    function drawStatus() {
+      const elapsed = performance.now() - scrambleStart;
+      const scrambling = elapsed < SCRAMBLE_MS;
+      const prog = elapsed / SCRAMBLE_MS;
+      const lines = STATUS_PAGES[statusPage]().map(l => scrambling ? scrambleLine(l, prog) : l);
+      // blinking block cursor parked on the last line
+      lines[lines.length - 1] += (Math.floor(Date.now() / 500) % 2 === 0) ? '\u2588' : '\u00a0';
+      statusReadout.textContent = lines.join('\n');
+      if (scrambling) requestAnimationFrame(drawStatus);
+    }
+
+    function cycleStatus() {
+      playSound('click');
+      statusPage = (statusPage + 1) % STATUS_PAGES.length;
+      scrambleStart = performance.now();
+      drawStatus();
+    }
+
+    scrambleStart = performance.now(); // decode in on first paint
+    drawStatus();
+    // keeps the clock and the cursor blink alive between scrambles
+    setInterval(() => {
+      if (performance.now() - scrambleStart >= SCRAMBLE_MS) drawStatus();
+    }, 250);
 
     // Start loop
     renderLoop();
