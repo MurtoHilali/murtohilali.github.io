@@ -1,3 +1,7 @@
+---
+permalink: /lab/
+layout: null
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -243,7 +247,9 @@ TIME: --:--:--</pre>
         details: 'Classifies CATH architecture straight from structure. Each domain is rendered as an RGB contact map \u2014 red for inverted C\u03b2\u2013C\u03b2 distance, green for helix\u2013helix pairs, blue for strand\u2013strand pairs \u2014 and read by a dilated CoordConv residual CNN. Benchmarked out-of-distribution by vaulting whole superfamilies out of training, the way DockGen and Chainsaw do.',
         stack: ['fastai', 'PyTorch', 'biotite', 'W&B'],
         specs: { 'Test Accuracy': '75.0%', 'Balanced Acc.': '68.3%', 'Classes': '14 Architectures', 'Benchmark': 'Held-out Superfamilies' },
-        links: [],
+        links: [
+          { label: 'GitHub Repo', url: 'https://github.com/MurtoHilali/pac-maps' }
+        ],
         colorHex: '#c500ff', 
         asciiType: 'cnn', 
         pixelGrid: ICONS.matrix

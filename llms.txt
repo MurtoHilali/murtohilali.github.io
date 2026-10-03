@@ -32,11 +32,11 @@ they exist.
 
 ## Pages
 
-- [Lab]({{ base }}/lab.html): Index of the computational biology and ML projects, with repos, datasets, and write-ups attached to each.
+- [Lab]({{ base }}/lab/): Index of the computational biology and ML projects, with repos, datasets, and write-ups attached to each.
 - [About]({{ base }}/about/): Background and contact.
 - [Blog]({{ base }}/blog/): Every post, newest first.
 - [Archive]({{ base }}/archive/): Posts grouped by date.
-- [Travels]({{ base }}/travels.html): Trip log.
+- [Travels]({{ base }}/travels/): Trip log.
 
 ## Optional
 

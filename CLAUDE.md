@@ -28,12 +28,13 @@ gh api repos/MurtoHilali/murtohilali.github.io/pages --jq '{source,build_type,cn
   `_posts/2024-05-04-xgboost-ppi.md` is served at `murto.co/xgboost-ppi`.
 - A post appears on the homepage under **Projects** if its `tags` contain
   `project`, and under **Posts** if they contain `post`.
-- `lab.html` and `travels.html` are **standalone pages** with no front matter.
-  Jekyll copies them through verbatim, so they do not use `_layouts` and are
-  unaffected by the site's theme switcher. They are served at `/lab.html` and
-  `/travels.html` — *not* at `/lab/` or `/travels/`, since the pretty permalink
-  style only applies to files Jekyll actually processes. `lab.html`'s project
-  data is the `PROJECTS` array in its inline script.
+- `lab.html` and `travels.html` are **standalone pages**: full HTML documents
+  that do not use `_layouts` and are unaffected by the site's theme switcher.
+  Each carries only `permalink:` and `layout: null` in its front matter —
+  `layout: null` is load-bearing, because `_config.yml` defaults every processed
+  page to the `default` layout, which would wrap and break them. They are served
+  at `/lab/` and `/travels/`. `lab.html`'s project data is the `PROJECTS` array
+  in its inline script.
 - `llms.txt` is generated from the posts at build time, so it stays current.
   Don't hand-edit the output — edit the Liquid in `llms.txt`.
 - `index_og.html` and `index_test.html` are old homepage drafts. They *are*

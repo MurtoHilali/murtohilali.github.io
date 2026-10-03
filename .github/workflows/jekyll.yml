@@ -36,9 +36,9 @@ jobs:
       - name: Check the pages we care about were produced
         run: |
           set -e
-          # permalink: pretty means blog.html is emitted as blog/index.html,
-          # while lab.html has no front matter and is copied through as-is.
-          for f in _site/index.html _site/lab.html _site/blog/index.html _site/llms.txt; do
+          # Pages are emitted as <name>/index.html, either from the pretty
+          # permalink style or from an explicit permalink in their front matter.
+          for f in _site/index.html _site/lab/index.html _site/travels/index.html _site/blog/index.html _site/llms.txt; do
             [ -s "$f" ] || { echo "::error::$f missing or empty"; exit 1; }
           done
           count=$(find _site -name '*.html' | wc -l | tr -d ' ')
