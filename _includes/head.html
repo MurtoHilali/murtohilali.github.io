@@ -43,7 +43,7 @@
 
   <style>
     {% capture include_to_scssify %}
-      {% include inline.scss %}
+      {% if page.layout == "lab" %}{% include lab-inline.scss %}{% else %}{% include inline.scss %}{% endif %}
     {% endcapture %}
     {{ include_to_scssify | scssify }}
   </style>

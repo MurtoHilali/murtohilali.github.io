@@ -1,0 +1,6 @@
+// The Lab's stylesheet: shared fonts, tokens and chrome, plus the Lab's own
+// styles. It skips _main.scss so the site's base styles don't leak in.
+@import "fonts";
+@import "tokens";
+@import "chrome";
+@import "lab";
