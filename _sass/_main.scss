@@ -410,6 +410,27 @@ blockquote {
   }
 }
 
+/* Links inside running text are underlined, so they don't rely on colour alone */
+.post p a,
+.post li a,
+.post td a,
+.post blockquote a,
+.about p a,
+.about li a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+/* The "#" permalink after each post heading */
+.heading-anchor {
+  margin-left: 0.15em;
+  font-size: 0.75em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
 /* Archive */
 .archive-title { text-align: center; }
 .archive-year {

@@ -22,11 +22,12 @@ description: >-
   </div>
 
   <div class="lab-readout">
-    <button type="button" id="status-block" class="lab-readout-screen" title="Click to cycle readout" aria-label="System readout. Activate to cycle.">
+    <button type="button" id="status-block" class="lab-readout-screen" title="Click to cycle readout">
       <span class="lab-scanlines" aria-hidden="true"></span>
       <span id="status-readout" class="lab-readout-text">LOC: TORONTO, CA
 SYS: PROTEINLOOP
 TIME: --:--:--</span>
+      <span class="visually-hidden">(next readout)</span>
     </button>
     <button type="button" id="sound-toggle" class="lab-sound" aria-pressed="false" hidden>
       Sound: <span data-sound-state>off</span>

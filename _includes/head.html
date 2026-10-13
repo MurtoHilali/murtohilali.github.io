@@ -3,6 +3,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="bHU40NewTV/18/Vl6MAmvA" async></script>
 
+  {%- if page.collection == "posts" and page.content contains "substackcdn.com" %}
+  <link rel="preconnect" href="https://substackcdn.com">
+  {%- endif %}
+
   <link rel="preload" href="{{ '/assets/css/syntax.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="{{ '/assets/css/syntax.css' | relative_url }}"></noscript>
   

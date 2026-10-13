@@ -8,7 +8,18 @@ layout: default
     {{ page.date | date: "%B %-d, %Y" }}
   </p>
 
-  {{ content }}
+  {%- comment -%}
+    Image loading hints, added at render time so post sources stay as
+    written: the first image (usually the cover, often the LCP element)
+    loads with high priority, every later one lazily.
+  {%- endcomment -%}
+  {%- assign img_parts = content | split: "<img " -%}
+  {%- for part in img_parts -%}
+    {%- if forloop.first -%}{{ part }}
+    {%- elsif forloop.index == 2 -%}<img fetchpriority="high" decoding="async" {{ part }}
+    {%- else -%}<img loading="lazy" decoding="async" {{ part }}
+    {%- endif -%}
+  {%- endfor %}
 </div>
 
 <div class="post-nav-minimal">
