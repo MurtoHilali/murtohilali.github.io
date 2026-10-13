@@ -15,7 +15,7 @@ layout: default
 
 <div class="post-nav-minimal">
   {% if page.previous.url %}
-    <a href="{{ site.url }}{{ site.baseurl }}{{ page.previous.url }}" class="nav-link-minimal">
+    <a href="{{ page.previous.url | relative_url }}" class="nav-link-minimal">
       <span class="minimal-arrow">←</span>
       <div class="minimal-content">
         <span class="minimal-label">Previous Post</span>
@@ -27,7 +27,7 @@ layout: default
   {% endif %}
 
   {% if page.next.url %}
-    <a href="{{ site.url }}{{ site.baseurl }}{{ page.next.url }}" class="nav-link-minimal align-right">
+    <a href="{{ page.next.url | relative_url }}" class="nav-link-minimal align-right">
       <span class="minimal-arrow">→</span>
       <div class="minimal-content">
         <span class="minimal-label">Next Post</span>

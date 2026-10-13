@@ -27,12 +27,12 @@ title: Blog
     <!-- BLOG LIST with Thumbnails -->
     <div class="blog-list" id="myIndexList">
         {% for post in site.posts %}
-        <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}" class="blog-item">
+        <a href="{{ post.url | relative_url }}" class="blog-item">
             <!-- Thumbnail Image -->
             <div class="blog-thumb">
                 <img class="lazyload" 
-                     src="{{ site.url }}{{ site.baseurl }}/img/placeholder.svg" 
-                     data-src="{% if post.thumb %} {{ site.url }}{{ site.baseurl }}{{ post.thumb }} {% else %} {{ site.default-thumb }} {% endif %}" 
+                     src="{{ '/img/placeholder.svg' | relative_url }}" 
+                     data-src="{% if post.thumb %} {{ post.thumb | relative_url }} {% else %} {{ site.default-thumb | relative_url }} {% endif %}" 
                      alt="{{ post.title }}">
             </div>
 

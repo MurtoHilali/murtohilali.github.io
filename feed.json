@@ -7,14 +7,14 @@ layout: null
     "home_page_url": "{{ "/" | absolute_url }}",
     "feed_url": "{{ "/feed.json" | absolute_url }}",
     "description": {{ site.description | jsonify }},
-    "icon": "{{ "/apple-touch-icon.png" | absolute_url }}",
+    "icon": "{{ "/favicon.png" | absolute_url }}",
     "favicon": "{{ "/favicon.ico" | absolute_url }}",
     "expired": false,
     {% if site.author %}
     "author": {% if site.author.name %} {
         "name": "{{ site.author.name }}",
         "url": {% if site.author.url %}"{{ site.author.url }}"{% else %}null{% endif %},
-        "avatar": {% if site.author.avatar %}"{{ site.author.avatar }}"{% else %}null{% endif %}
+        "avatar": {% if site.author.avatar %}"{{ site.author.avatar | absolute_url }}"{% else %}null{% endif %}
     },{% else %}"{{ site.author }}",{% endif %}
     {% endif %}
 "items": [
@@ -48,7 +48,7 @@ layout: null
                 "author": {% if site.author.name %} {
                 "name": "{{ site.author.name }}",
                 "url": {% if site.author.url %}"{{ site.author.url }}"{% else %}null{% endif %},
-                "avatar": {% if site.author.avatar %}"{{ site.author.avatar }}"{% else %}null{% endif %}
+                "avatar": {% if site.author.avatar %}"{{ site.author.avatar | absolute_url }}"{% else %}null{% endif %}
                 }
                 {% else %}
                 "{{ site.author }}"

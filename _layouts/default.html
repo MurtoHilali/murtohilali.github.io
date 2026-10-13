@@ -61,7 +61,7 @@ layout: compress
   {% include footer.html %}
 
   {% if page.url == '/archive/' or page.url == '/notes/' %}
-   <script src="{{ site.url }}{{ site.baseurl }}/assets/js/custom-search.js"></script>
+   <script src="{{ '/assets/js/custom-search.js' | relative_url }}"></script>
   {% endif %}
 
 </body>

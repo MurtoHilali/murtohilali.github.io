@@ -18,22 +18,22 @@ layout: default
 
         <!-- BENTO GRID LINKS -->
         <div class="bento-grid">
-            <a href="{{ site.url }}{{ site.baseurl }}/about/" class="bento-btn">
+            <a href="{{ '/about/' | relative_url }}" class="bento-btn">
                 <i class="fa fa-user"></i> About
             </a>
-            <a href="{{ site.url }}{{ site.baseurl }}/blog/" class="bento-btn">
+            <a href="{{ '/blog/' | relative_url }}" class="bento-btn">
                 <i class="fa fa-pencil"></i> Posts
             </a>
-            <a href="{{ site.url }}{{ site.baseurl }}/lab/" class="bento-btn">
+            <a href="{{ '/lab/' | relative_url }}" class="bento-btn">
                 <i class="fa fa-flask"></i> Lab
             </a>
             <a href="https://murto.co/records" target="_self" class="bento-btn">
                 <i class="fa fa-music"></i> Records
             </a>
-            <a href="/murtohilali.github.io/Murto Hilali Resume ATS - Bioinformatics 2025.docx.pdf" target="_blank" class="bento-btn">
+            <a href="{{ '/resume.pdf' | relative_url }}" target="_blank" class="bento-btn">
                 <i class="fa fa-file-text"></i> Resume
             </a>
-            <a href="{{ site.url }}{{ site.baseurl }}/travels/" class="bento-btn">
+            <a href="{{ '/travels/' | relative_url }}" class="bento-btn">
                 <i class="fa fa-plane"></i> Travels
             </a>
         </div>
@@ -42,7 +42,7 @@ layout: default
     <!-- TILTED IMAGE -->
     <div class="hero-image-wrapper">
         <div class="hero-bg-tilt"></div>
-        <img src="/murtohilali.github.io/img/author/website-headshot.jpeg" alt="{{ site.author.name }}" class="hero-img">
+        <img src="{{ '/img/author/website-headshot.jpeg' | relative_url }}" alt="{{ site.author.name }}" class="hero-img">
     </div>
 </div>
 
@@ -59,17 +59,17 @@ layout: default
     {% assign projects = site.posts | where_exp: "item", "item.tags contains 'project'" %}
     
     {% for post in projects limit:10 %}
-        <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}" class="card-wrapper">
+        <a href="{{ post.url | relative_url }}" class="card-wrapper">
             <div class="image-container">
                 <!-- Portrait/Default Image -->
-                <img src="{{ site.url }}{{ site.baseurl }}/img/placeholder.svg" 
-                     data-src="{% if post.thumb %} {{ site.url }}{{ site.baseurl }}{{ post.thumb }} {% else %} {{ site.default-thumb }} {% endif %}"
+                <img src="{{ '/img/placeholder.svg' | relative_url }}" 
+                     data-src="{% if post.thumb %} {{ post.thumb | relative_url }} {% else %} {{ site.default-thumb | relative_url }} {% endif %}"
                      class="card-image img-default lazyload" 
                      alt="{{ post.title }}">
                 
                 <!-- Landscape/Hover Image (Wider view) -->
-                <img src="{{ site.url }}{{ site.baseurl }}/img/placeholder.svg" 
-                     data-src="{% if post.expanded %}{{ site.url }}{{ site.baseurl }}{{ post.expanded }}{% else %}{% if post.thumb %} {{ site.url }}{{ site.baseurl }}{{ post.thumb }} {% else %} {{ site.default-thumb }} {% endif %}{% endif %}"
+                <img src="{{ '/img/placeholder.svg' | relative_url }}" 
+                     data-src="{% if post.expanded %}{{ post.expanded | relative_url }}{% else %}{% if post.thumb %} {{ post.thumb | relative_url }} {% else %} {{ site.default-thumb | relative_url }} {% endif %}{% endif %}"
                      class="card-image img-hover lazyload" 
                      alt="{{ post.title }}">
             </div>
@@ -109,14 +109,14 @@ layout: default
 <!-- WRITING LIST -->
 <div class="section-header">
     <h2>Writing</h2>
-    <a href="{{ site.url }}{{ site.baseurl }}/blog/" style="font-size: 0.9rem; font-weight: 500;">View Archive</a>
+    <a href="{{ '/blog/' | relative_url }}" style="font-size: 0.9rem; font-weight: 500;">View Archive</a>
 </div>
 
 <div class="post-list" id="Posts">
     {% assign blog_posts = site.posts | where_exp: "item", "item.tags contains 'post'" %}
     
     {% for post in blog_posts limit:8 %}
-    <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}" class="post-item">
+    <a href="{{ post.url | relative_url }}" class="post-item">
         <div class="post-meta-group">
             <span class="post-date">{{ post.date | date: "%b %d, %Y" }}</span>
             <span class="post-title">{{ post.title }}</span>

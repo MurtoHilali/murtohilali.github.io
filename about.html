@@ -41,7 +41,7 @@ title: About
 
 <section class="post">
   <div class="flex-row-between" style="margin-bottom: 3rem;">
-    <a href="{{ site.url }}{{ site.baseurl }}/"><i class="fa fa-home"></i> Home</a>
+    <a href="{{ '/' | relative_url }}"><i class="fa fa-home"></i> Home</a>
     <button title="Change theme" id="theme-toggle" onclick="modeSwitcher()">
       <div></div>
     </button>
@@ -51,7 +51,7 @@ title: About
     
     <div class="about-image-wrapper"> 
        <img 
-         src="/murtohilali.github.io/img/author/website-headshot.jpeg" 
+         src="{{ '/img/author/website-headshot.jpeg' | relative_url }}" 
          alt="Murto Hilali"
          class="about-photo"
        >

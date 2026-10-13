@@ -3,7 +3,7 @@ permalink: /llms.txt
 layout: null
 sitemap: false
 ---
-{%- assign base = "https://murto.co" -%}
+{%- assign base = site.url | append: site.baseurl -%}
 # Murto Hilali
 
 > {{ site.description }}
