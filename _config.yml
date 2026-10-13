@@ -65,9 +65,6 @@ paginate: 20
 paginate_path: "/page/:num"
 
 collections:
-  pages:
-    output: true
-    permalink: /:name
   posts:
     output: true
     permalink: /:slug/
@@ -77,12 +74,6 @@ defaults:
       path: ""
     values:
       layout: "default"
-  -
-    scope:
-      path: ""
-      type: "pages"
-    values:
-      layout: "page"
   -
     scope:
       path: ""
