@@ -1,80 +1,61 @@
 ---
 layout: default
 title: About
+no_anchors: true
 ---
 
-<style>
-  .about-container {
-    display: flex;
-    flex-direction: row;
-    gap: 3rem;
-    align-items: flex-start;
-  }
-  
-  .about-image-wrapper {
-    flex: 1;
-    min-width: 300px;
-  }
-
-  .about-photo {
-    width: 100%; 
-    height: 500px; 
-    object-fit: cover; 
-    border-radius: 8px;
-  }
-
-  /* Mobile Rules: When screen is smaller than 768px */
-  @media (max-width: 768px) {
-    .about-container {
-      flex-direction: column; /* Stack vertically */
-      gap: 1.5rem;
-    }
-    .about-image-wrapper {
-      width: 100%;
-      min-width: 0;
-    }
-    .about-photo {
-      height: 350px; /* Slightly shorter on mobile so it fits the screen */
-    }
-  }
-</style>
-
-<section class="post">
+<section class="about">
   <div class="about-container">
-    
-    <div class="about-image-wrapper"> 
-       <img 
-         src="{{ '/img/author/website-headshot.jpeg' | relative_url }}" 
-         alt="Murto Hilali"
-         class="about-photo"
-       >
+    <div class="about-image-wrapper">
+      <img src="{{ '/img/author/website-headshot.jpeg' | relative_url }}" alt="Photo of {{ site.author.name }}" class="about-photo" width="2500" height="2500">
     </div>
 
-    <div style="flex: 1.5; display: flex; flex-direction: column; justify-content: center;">
-        <h2 style="margin-top: 0;">About Me</h2>
-        <p>
-          <b>Hey! I'm Murto.</b>
-        </p>
-        <p>
-          I just finished my degree at the University of Waterloo studying <span class="hand-drawn">Biotechnology & Economics</span>, 
-          with a co-op focus on computational biology and data science. 
-        </p>
-        <p>
-          I'm passionate about entrepreneurship and <span class="hand-drawn">using biology as a technology</span> to solve
-          real-world problems, so I'm always looking for opportunities to learn and grow in the world of compbio. I'm also
-          a huge travel enthusiast and love exploring new cities. I've been fortunate enough to visit over 
-          <span class="hand-drawn">10 countries</span> last year alone, and I can't wait to see more of the world.
-        </p>
-        
-        <p>I'm currently working on a few projects, including:</p>
-        <ul>
-          <li>a peptide that <span class="hand-drawn">prevents coffee stains</span> on teeth</li>
-          <li>a diffusion-based <span class="hand-drawn">molecular decoy</span> generator</li>
-        </ul>
-        
-        <p>
-          In my spare time, I enjoy writing, working out, reading Substack essays (because I doomscroll in a cool, literary way).
-        </p>
+    <div class="about-text">
+      <h1>About Me</h1>
+      <p>
+        <b>Hey! I'm Murto.</b>
+      </p>
+      <p>
+        I just finished my degree at the University of Waterloo studying <span class="hand-drawn">Biotechnology & Economics</span>,
+        with a co-op focus on computational biology and data science.
+      </p>
+      <p>
+        I'm passionate about entrepreneurship and <span class="hand-drawn">using biology as a technology</span> to solve
+        real-world problems, so I'm always looking for opportunities to learn and grow in the world of compbio. I'm also
+        a huge travel enthusiast and love exploring new cities. I've been fortunate enough to visit over
+        <span class="hand-drawn">10 countries</span>, and I can't wait to see more of the world.
+      </p>
+
+      {%- assign active = site.data.projects | where: "status", "active" %}
+      {%- if active.size > 0 %}
+      <p>I'm currently working on:</p>
+      <ul>
+        {%- for p in active %}
+        <li><a href="{{ '/lab/' | relative_url }}#{{ p.id }}">{{ p.title }}</a>: {{ p.summary }}</li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+
+      <p>
+        In my spare time, I enjoy writing, working out, reading Substack essays (because I doomscroll in a cool, literary way).
+      </p>
     </div>
   </div>
+
+  <h2>Experience</h2>
+  <ul class="about-experience">
+    <li><span><strong>QDX Technologies</strong>, Singapore: computational chemistry research</span> <time>2024</time></li>
+    <li><span><strong>SickKids</strong>, The Centre for Applied Genomics: bioinformatics research</span> <time>2023</time></li>
+    <li><span><strong>OICR</strong>, Toronto: bioinformatics workflow development</span> <time>2022</time></li>
+  </ul>
+
+  <h2>Publications</h2>
+  {% include publication-list.html %}
+
+  <h2>Elsewhere</h2>
+  <p>
+    Away from proteins, I keep a log of my <a href="https://murto.co/records/">record collection</a> and a map of
+    my <a href="{{ '/travels/' | relative_url }}">travels</a>. The quickest way to reach me is
+    <a href="mailto:{{ site.author.email }}">email</a>, and my <a href="{{ '/resume.pdf' | relative_url }}">CV</a> has the rest.
+  </p>
 </section>
