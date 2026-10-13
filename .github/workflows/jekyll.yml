@@ -38,12 +38,33 @@ jobs:
           set -e
           # Pages are emitted as <name>/index.html, either from the pretty
           # permalink style or from an explicit permalink in their front matter.
-          for f in _site/index.html _site/lab/index.html _site/travels/index.html _site/blog/index.html _site/llms.txt; do
+          for f in _site/index.html _site/lab/index.html _site/travels/index.html _site/blog/index.html _site/about/index.html _site/llms.txt _site/resume.pdf _site/cv/index.html; do
             [ -s "$f" ] || { echo "::error::$f missing or empty"; exit 1; }
           done
           count=$(find _site -name '*.html' | wc -l | tr -d ' ')
           [ "$count" -ge 10 ] || { echo "::error::only $count HTML pages built"; exit 1; }
           echo "Built $count HTML pages."
+
+      # Internal links (including #anchors like /lab/#pac-maps), image alt
+      # attributes and script paths. External links are skipped to keep it
+      # fast. Pinned to html-proofer 4.4.3: 5.2.2 reported "Checking 0
+      # internal links" when tried locally, because its async file loop
+      # returned no results, so it would have passed anything.
+      # --allow-missing-href and --enforce-https=false only cover post
+      # bodies: one has an empty href="", three link to http:// sites.
+      - name: Set up Ruby for htmlproofer
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Check internal links and image alt text
+        run: |
+          gem install html-proofer -v 4.4.3 --no-document
+          htmlproofer ./_site \
+            --disable-external=true \
+            --checks Links,Images,Scripts \
+            --allow-missing-href=true \
+            --enforce-https=false
 
       - name: Show what was built
         if: always()
