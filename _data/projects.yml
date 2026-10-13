@@ -30,6 +30,41 @@
 
 # ---------------------------------------------------------------- research
 
+- id: cyclospora-rat
+  title: Cyclospora RAT Binders
+  date: "2026-10"
+  status: active
+  track: research
+  category: Protein Design
+  featured: false
+  summary: Antigen selection and binder design for a Cyclospora rapid antigen test.
+  details: >-
+    Picking the surface antigen a rapid antigen test should target in
+    Cyclospora cayetanensis, then designing binders against it. A Snakemake
+    pipeline transfers annotations across 44 genomes (Liftoff, gffread),
+    aligns coding sequences codon-aware (MAFFT, pal2nal) and measures
+    selection as pN/pS with SNPGenie, while SignalP, DeepTMHMM, DeepLoc 2,
+    PredGPI and InterProScan predict which proteins actually reach the
+    surface. Candidates are shortlisted where conservation, localization and
+    predicted abundance intersect — abundance from a fine-tuned protein
+    language model with calibrated uncertainty — and the shortlist feeds
+    peptide and nanobody design for a lateral-flow produce screen.
+  stack: [Snakemake, MAFFT, SNPGenie, DeepLoc 2, InterProScan, PyTorch]
+  specs:
+    - { label: Genomes, value: "44" }
+    - { label: Filters, value: "Conservation, Surface, Abundance" }
+    - { label: Binders, value: "Peptides, Nanobodies" }
+    - { label: Readout, value: Lateral Flow }
+  links: []
+  post: null
+  thumb: null
+  thumb_alt: null
+  figure: null       # TODO(murto): a figure once there are results to show
+  figure_alt: null
+  color: "#00c5a7"
+  ascii: scan
+  icon: antibody
+
 - id: pac-maps
   title: PAC-MAPS
   headline: "PAC-MAPS: classifying protein architecture from contact maps"
@@ -71,7 +106,7 @@
 
 - id: acarbose-alternatives
   title: Acarbose Alternatives
-  headline: Virtual screen finds 71 natural alternatives to acarbose
+  headline: Structure-based virtual screen to find 71 natural alternatives to acarbose
   date: "2026-02"
   status: completed
   track: research
@@ -113,7 +148,7 @@
 
 - id: pepbdb-ml
   title: PepBDB-ML Benchmark
-  headline: Benchmarking four models on a custom peptide-binding dataset
+  headline: Benchmarking four AI models on a custom peptide-binding dataset
   date: "2024-08"
   status: completed
   track: research
@@ -154,7 +189,7 @@
 
 - id: af-m-ppi
   title: AF-M PPI Prediction
-  headline: Predicting how missense variants disrupt protein–protein interactions
+  headline: Predicting how missense variants disrupt protein–protein interactions with AI
   date: "2024-05"
   status: completed
   track: research
@@ -176,10 +211,10 @@
     - { label: Read Write-up, post: xgboost-ppi }
     - { label: "Related: Nature Genetics paper", url: "https://doi.org/10.1038/s41588-024-01686-x" }
   post: xgboost-ppi
-  thumb: /img/projects/af-m-roc-curve.webp   # same image as the figure
-  thumb_alt: "Multi-class ROC curves for the XGBoost classifier, with a micro-average AUC of 0.91"
-  thumb_width: 846
-  thumb_height: 699
+  thumb: /img/projects/af-m-complexes.webp   # cover image from the write-up
+  thumb_alt: "Two AlphaFold-Multimer predictions of the same protein complex side by side: the wild-type pair highlighted in green, the p.Arg72Tyr variant pair in red"
+  thumb_width: 1100
+  thumb_height: 743
   thumb_fit: contain
   figure: /img/projects/af-m-roc-curve.webp   # from the xgboost-ppi post
   figure_alt: "Multi-class ROC curves for the XGBoost classifier: per-class AUCs of 0.81, 0.85, 0.96 and 0.97, and a micro-average AUC of 0.91, all well above the random-chance diagonal."
