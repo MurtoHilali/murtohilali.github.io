@@ -71,9 +71,6 @@ collections:
   posts:
     output: true
     permalink: /:slug/
-  authors:
-    output: true
-  
 defaults:
   -
     scope:
@@ -97,12 +94,6 @@ defaults:
       path: ""
     values:
       image: /img/share-card.png
-  - 
-    scope:
-      path: ""
-      type: "authors"
-    values:
-      layout: "author"
 
 
 relative_links:
