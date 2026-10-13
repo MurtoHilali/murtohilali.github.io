@@ -1,17 +1,16 @@
 <footer class="social-footer">
-  <div class="social-footer-icons">
-    <a href="https://github.com/MurtoHilali" title="Github" target="_blank" rel="noopener noreferrer">
-      <i class="fa fa-github" aria-hidden="true"></i>
-    </a>
-    <a href="https://linkedin.com/in/MurtoHilali" title="LinkedIn" target="_blank" rel="noopener noreferrer">
-      <i class="fa fa-linkedin" aria-hidden="true"></i>
-    </a>
-    <a href="https://twitter.com/MurtoHilali" title="Twitter" target="_blank" rel="noopener noreferrer">
-      <i class="fa fa-twitter" aria-hidden="true"></i>
-    </a>
-    <a href="https://murto.medium.com" title="Medium" target="_blank" rel="noopener noreferrer">
-      <i class="fa fa-medium" aria-hidden="true"></i>
-    </a>
-  </div>
+  <ul class="social-footer-icons">
+    <li><a href="mailto:{{ site.author.email }}" aria-label="Email" title="Email"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
+    {%- for s in site.data.social %}
+    <li><a href="{{ s.url }}" aria-label="{{ s.name }}" title="{{ s.name }}" target="_blank" rel="noopener noreferrer"><i class="fa {{ s.icon }}" aria-hidden="true"></i></a></li>
+    {%- endfor %}
+  </ul>
+  <p class="footer-links">
+    <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a>
+    <span aria-hidden="true">·</span>
+    <a href="https://murto.co/records/">Records</a>
+    <span aria-hidden="true">·</span>
+    <a href="{{ '/travels/' | relative_url }}">Travels</a>
+  </p>
   <p>&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}</p>
 </footer>
