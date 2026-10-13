@@ -4,6 +4,7 @@ gem 'jekyll-paginate'
 gem 'jekyll-seo-tag'
 gem 'jekyll-sitemap'
 gem 'jekyll-relative-links'
+gem 'jekyll-redirect-from'
 gem "tzinfo-data", "~> 1.2021"
 
 # windows specific
