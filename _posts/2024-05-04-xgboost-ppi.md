@@ -8,7 +8,7 @@ thumb: /img/thumb/afm-xgboost-ppi-cover.webp
 expanded: /img/seo/xgboost-ppi-cover.png
 ---
 
-![](/murtohilali.github.io/img/seo/xgboost-ppi-cover.png)
+![](/img/seo/xgboost-ppi-cover.png)
 
 The human interactome, encompassing all protein-protein interactions, may involve up to [600,000 interactions](https://genomemedicine.biomedcentral.com/articles/10.1186/gm441). 
 
@@ -16,7 +16,7 @@ Predicting how a disease-causing mutation affects the interactome might seem lik
 
 I used the machine learning framework XGBoost, cutting-edge deep learning software AlphaFold-Multimer (AF-M), and over 47,000 SLURM jobs to build a multi-classifier model that predicts the effects of missense mutations on PPIs with a 91% AUC.
 
-![Multi-class ROC curve and AUC (By Author)](/murtohilali.github.io/img/articles/xgboost-ppi/roc-curve.png)
+![Multi-class ROC curve and AUC (By Author)](/img/articles/xgboost-ppi/roc-curve.png)
 *Multi-class ROC curve and AUC (By Author)*
 
 In this article, I'll walk through:
@@ -279,7 +279,7 @@ The lighter the colour of the diagonal, the more accurate the model.
 
 The confusion matrix is just one way of assessing the model's accuracy. We can also use an ROC curve:
 
-![Figure 2. Multi-class ROC curve and AUC](/murtohilali.github.io/img/articles/xgboost-ppi/roc-curve.png)
+![Figure 2. Multi-class ROC curve and AUC](/img/articles/xgboost-ppi/roc-curve.png)
 *Figure 2. Multi-class ROC curve and AUC*
 
 A receiver operating characteristic (ROC) curve plots FPR vs. TPR:

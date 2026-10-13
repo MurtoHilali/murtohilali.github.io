@@ -8,7 +8,7 @@ thumb: /img/thumb/hyperjudge-cover.webp
 expanded: /img/articles/hyperjudge-screenshot.png
 ---
 
-![Hyperjudge Screenshot](/murtohilali.github.io/img/articles/hyperjudge-screenshot.png)
+![Hyperjudge Screenshot](/img/articles/hyperjudge-screenshot.png)
 
 - [Overview](#overview)
 - [The Plan, Problem, \& Solution](#the-plan-problem--solution)
@@ -41,11 +41,11 @@ However, there was one problem — my ultimate goal is to ship this as a Chrome 
 
 Luckily, I have access to GPT-4o. Combining a high-fidelity mockup:
 
-![](/murtohilali.github.io/img/articles/hyperjudge-hi-fi-mockup.png)
+![](/img/articles/hyperjudge-hi-fi-mockup.png)
 
 Along with with lots of debugging and iced coffee led to the birth of [Hyperjudge](https://hyperjudge.com):
 
-![Hyperjudge Screenshot](/murtohilali.github.io/img/articles/hyperjudge-screenshot.png)
+![Hyperjudge Screenshot](/img/articles/hyperjudge-screenshot.png)
 
 I was able to build this under a day — I'm sure there are some cracked engineers who could do it an hour or two, but as someone with close to 0 experience with anything other than Python, I'm pretty proud of myself!
 

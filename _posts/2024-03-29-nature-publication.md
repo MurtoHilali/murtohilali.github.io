@@ -7,7 +7,7 @@ image: /img/seo/nature-pub-cover.png
 thumb: /img/thumb/nature-pub-cover.webp
 ---
 
-![Nature Paper Title and Screenshot](/murtohilali.github.io/img/articles/nature-paper.png){: width="100%"}
+![Nature Paper Title and Screenshot](/img/articles/nature-paper.png){: width="100%"}
 
 ## Overview
 I spent two co-op work terms doing bioinformatics research at The Center for Applied Genomics (TCAG) at the Hospital for Sick Children (SickKids), where I had the opportunity to work on studying how missense variants affected protein-protein interactions. 
@@ -15,7 +15,7 @@ I spent two co-op work terms doing bioinformatics research at The Center for App
 While there, I had the opportunity to contribute to a [paper covering the genomic architecture of cerebral palsy](https://www.nature.com/articles/s41588-024-01686-x). My contributions involved simulating PPI between CP-affected proteins using AlphaFold-Multimer in an attempt to identify any notable differences between wildtype and missense interactions, as well creating a supplemental figure. 
 
 Here's a quote from the paper describing the research I worked on:
-![Figure comparing 3 protein complexes](/murtohilali.github.io/img/articles/supp-fig-3.png)
+![Figure comparing 3 protein complexes](/img/articles/supp-fig-3.png)
 >To gain preliminary functional insight into potential molecular mechanisms of missense variants detected in the CP cohort, we used in silico approaches to investigate two potential mechanisms: disruption of protein–protein interactions34 and disruption of phosphorylation-mediated signaling. 
 We investigated three selected de novo P/LP missense variants using AlphaFold-Multimer to assess whether their mechanisms could disrupt protein–protein interactions (p.A334T in TUBA1A, p.D132A in EXOSC3 and p.E237D in GNAO1). These variants were selected based on previous evidence that missense variants in their respective proteins may disrupt protein–protein interactions. TUBA1A and EXOSC3 were not predicted by AlphaFold-Multimer to be involved in the interface with their putative interacting protein(s) (Supplementary Table 8, sheet 1). 
 However, the GNAO1 variant, p.E237D, was predicted by AlphaFold-Multimer to be involved in the interface with its regulator RGS4. It is interesting that a de novo variant at the same position, but causing a different amino acid change (p.E237K), has previously been implicated in CP-like features40. 
