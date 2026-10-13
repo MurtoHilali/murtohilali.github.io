@@ -1,0 +1,6 @@
+{%- comment -%}
+  A 16x16 icon from _data/icons.yml as one SVG path, filled with currentColor.
+  Params: name (icon key), class (optional extra classes).
+{%- endcomment -%}
+{%- assign _grid = site.data.icons[include.name] -%}
+<svg class="pixel-icon{% if include.class %} {{ include.class }}{% endif %}" viewBox="0 0 16 16" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="currentColor" d="{%- for _row in _grid -%}{%- assign _y = forloop.index0 -%}{%- assign _cells = _row | split: '' -%}{%- for _c in _cells -%}{%- if _c == '#' -%}M{{ forloop.index0 }} {{ _y }}h1v1h-1z{%- endif -%}{%- endfor -%}{%- endfor -%}"/></svg>

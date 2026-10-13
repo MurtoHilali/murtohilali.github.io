@@ -1,0 +1,89 @@
+{%- comment -%}
+  One Lab row for an entry of _data/projects.yml: a native <details> so it
+  opens without JavaScript, with id = project id for /lab/#<id> deep links.
+  Param: project.
+{%- endcomment -%}
+{%- assign p = include.project -%}
+{%- assign write_up = nil -%}
+{%- if p.post -%}{%- assign write_up = site.posts | where: "slug", p.post | first -%}{%- endif -%}
+<details class="lab-row" id="{{ p.id }}" name="lab-projects" style="--project-color: {{ p.color }};">
+  <summary class="lab-row-head">
+    <span class="lab-row-date">
+      <span class="lab-status lab-status-{{ p.status }}" aria-hidden="true"></span>
+      <span class="visually-hidden">{{ p.status | capitalize }},</span>
+      <time datetime="{{ p.date }}">{{ p.date | replace: "-", "." }}</time>
+      <span class="lab-row-cat lab-row-cat-inline">{{ p.category }}</span>
+    </span>
+    <span class="lab-row-title">
+      {% include pixel-icon.html name=p.icon class="lab-row-icon" %}
+      <h3>{{ p.title }}</h3>
+    </span>
+    <span class="lab-row-synopsis">{{ p.summary }}</span>
+    <span class="lab-row-cat lab-row-cat-column">{{ p.category }}</span>
+  </summary>
+
+  <div class="lab-panel">
+    <div class="lab-panel-text">
+      <p class="lab-panel-details">{{ p.details }}</p>
+
+      <div class="lab-panel-grid">
+        {%- if p.stack.size > 0 %}
+        <div>
+          <h4 class="lab-label">Tech Stack</h4>
+          <ul class="lab-chips">
+            {%- for t in p.stack %}<li>{{ t }}</li>{%- endfor %}
+          </ul>
+        </div>
+        {%- endif %}
+        {%- if p.specs.size > 0 %}
+        <div>
+          <h4 class="lab-label">Specifications</h4>
+          <dl class="lab-specs">
+            {%- for s in p.specs %}
+            <div><dt>{{ s.label }}</dt><dd>{{ s.value }}</dd></div>
+            {%- endfor %}
+          </dl>
+        </div>
+        {%- endif %}
+      </div>
+
+      <div class="lab-links">
+        {%- if write_up %}
+        <a class="lab-btn lab-btn-primary" href="{{ write_up.url | relative_url }}">Read the write-up</a>
+        {%- endif %}
+        {%- for l in p.links %}
+          {%- if l.post %}
+            {%- unless l.post == p.post %}
+              {%- assign linked = site.posts | where: "slug", l.post | first %}
+              {%- if linked %}
+        <a class="lab-btn" href="{{ linked.url | relative_url }}">{{ l.label }}</a>
+              {%- endif %}
+            {%- endunless %}
+          {%- else %}
+        <a class="lab-btn" href="{{ l.url }}" target="_blank" rel="noopener">{{ l.label }}<span class="visually-hidden"> (opens in a new tab)</span></a>
+          {%- endif %}
+        {%- endfor %}
+      </div>
+    </div>
+
+    {%- if p.figure %}
+    <figure class="lab-figure">
+      <img src="{{ p.figure | relative_url }}" alt="{{ p.figure_alt | escape }}" width="{{ p.figure_width | default: 760 }}" height="{{ p.figure_height | default: 570 }}" loading="lazy" decoding="async">
+    </figure>
+    {%- else %}
+    <div class="lab-monitor" aria-hidden="true">
+      <div class="lab-monitor-top">
+        <span>System monitor display</span>
+        <span class="lab-monitor-leds"><i></i><i></i></span>
+      </div>
+      <div class="lab-monitor-bezel">
+        <div class="lab-monitor-screen">
+          <pre class="ascii-animator" data-type="{{ p.ascii }}"></pre>
+          {% include pixel-icon.html name=p.icon class="lab-monitor-icon" %}
+        </div>
+      </div>
+      <div class="lab-monitor-vents"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    {%- endif %}
+  </div>
+</details>

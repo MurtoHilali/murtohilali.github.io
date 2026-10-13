@@ -1,0 +1,46 @@
+{%- comment -%}
+  Homepage "Selected work" card for one entry of _data/projects.yml.
+  Param: project.
+{%- endcomment -%}
+{%- assign p = include.project -%}
+{%- assign write_up = nil -%}
+{%- if p.post -%}{%- assign write_up = site.posts | where: "slug", p.post | first -%}{%- endif -%}
+{%- assign repo = nil -%}
+{%- for l in p.links -%}{%- if l.url contains "github.com" -%}{%- assign repo = l -%}{%- break -%}{%- endif -%}{%- endfor -%}
+{%- capture lab_url -%}{{ '/lab/' | relative_url }}#{{ p.id }}{%- endcapture -%}
+<article class="project-card" style="--project-color: {{ p.color }};">
+  <div class="project-card-media">
+    {%- if p.thumb %}
+    <img src="{{ p.thumb | relative_url }}" alt="{{ p.thumb_alt | escape }}" width="{{ p.thumb_width | default: 800 }}" height="{{ p.thumb_height | default: 1200 }}" loading="lazy" decoding="async">
+    {%- else %}
+    <div class="project-card-tile">{% include pixel-icon.html name=p.icon %}</div>
+    {%- endif %}
+  </div>
+  <div class="card-body">
+    <p class="project-card-meta">{{ p.category }}<span aria-hidden="true"> · </span><span class="visually-hidden">, </span>{{ p.date | slice: 0, 4 }}{% if p.status == "active" %}<span class="project-card-status">Active</span>{% endif %}</p>
+    <h3 class="card-title"><a href="{% if write_up %}{{ write_up.url | relative_url }}{% else %}{{ lab_url }}{% endif %}">{{ p.title }}</a></h3>
+    <p class="project-card-summary">{{ p.summary }}</p>
+    {%- if p.specs.size > 0 %}
+    <dl class="project-card-specs">
+      {%- for s in p.specs limit: 3 %}
+      <div><dt>{{ s.label }}</dt><dd>{{ s.value }}</dd></div>
+      {%- endfor %}
+    </dl>
+    {%- endif %}
+    {%- if p.stack.size > 0 %}
+    <ul class="chips" aria-label="Tools">
+      {%- for t in p.stack %}<li>{{ t }}</li>{%- endfor %}
+    </ul>
+    {%- endif %}
+    <p class="project-card-links">
+      {%- if write_up %}
+      <a href="{{ write_up.url | relative_url }}">Read the write-up<span class="visually-hidden">: {{ p.title }}</span> <span aria-hidden="true">→</span></a>
+      {%- else %}
+      <a href="{{ lab_url }}">Details in the Lab<span class="visually-hidden">: {{ p.title }}</span> <span aria-hidden="true">→</span></a>
+      {%- endif %}
+      {%- if repo %}
+      <a href="{{ repo.url }}">Code<span class="visually-hidden"> for {{ p.title }} on GitHub</span> <span aria-hidden="true">↗</span></a>
+      {%- endif %}
+    </p>
+  </div>
+</article>
