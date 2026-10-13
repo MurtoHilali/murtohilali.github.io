@@ -19,9 +19,10 @@ full pipeline, including the dead ends, and links the repo and dataset where
 they exist.
 
 ## Projects
-{% assign projects = site.posts | where_exp: "p", "p.tags contains 'project'" -%}
-{%- for p in projects %}
-- [{{ p.title }}]({{ base }}{{ p.url }}): {{ p.description | strip_newlines | strip }}
+{% for p in site.data.projects -%}
+{%- assign write_up = nil -%}
+{%- if p.post -%}{%- assign write_up = site.posts | where: "slug", p.post | first -%}{%- endif %}
+- [{{ p.title }}]({{ base }}{% if write_up %}{{ write_up.url }}{% else %}/lab/#{{ p.id }}{% endif %}): {{ p.summary | strip_newlines | strip }}
 {%- endfor %}
 
 ## Posts
