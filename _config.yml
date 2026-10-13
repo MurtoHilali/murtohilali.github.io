@@ -18,6 +18,7 @@ author:
   github: MurtoHilali # github username
   twitter: MurtoHilali # twitter username
   email: hilali.murto@gmail.com # email adress
+  orcid: 0000-0002-1541-0120 # from Crossref for the Nature Genetics DOI; used in the homepage JSON-LD
 
 twitter:
   username: MurtoHilali

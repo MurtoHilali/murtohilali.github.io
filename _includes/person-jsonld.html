@@ -1,0 +1,26 @@
+{%- comment -%}
+  Person structured data for the homepage. sameAs lists the profiles in
+  _data/social.yml plus ORCID.
+  TODO(murto): confirm jobTitle (it mirrors the hero's positioning line).
+{%- endcomment -%}
+{%- capture same_as -%}
+  {%- for s in site.data.social -%}{{ s.url | jsonify }},{%- endfor -%}
+  "https://orcid.org/{{ site.author.orcid }}"
+{%- endcapture -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": {{ site.author.name | jsonify }},
+  "url": {{ "/" | absolute_url | jsonify }},
+  "image": {{ "/img/author/headshot-800.webp" | absolute_url | jsonify }},
+  "jobTitle": "Computational biology researcher",
+  "knowsAbout": ["Computational biology", "Protein design", "Structure-based drug discovery", "Machine learning"],
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "University of Waterloo",
+    "url": "https://uwaterloo.ca/"
+  },
+  "sameAs": [{{ same_as }}]
+}
+</script>

@@ -7,7 +7,10 @@ no_anchors: true
 <section class="about">
   <div class="about-container">
     <div class="about-image-wrapper">
-      <img src="{{ '/img/author/website-headshot.jpeg' | relative_url }}" alt="Photo of {{ site.author.name }}" class="about-photo" width="2500" height="2500">
+      <img src="{{ '/img/author/headshot-800.webp' | relative_url }}"
+           srcset="{{ '/img/author/headshot-400.webp' | relative_url }} 400w, {{ '/img/author/headshot-800.webp' | relative_url }} 800w"
+           sizes="(min-width: 769px) 22rem, 18rem"
+           alt="Photo of {{ site.author.name }}" class="about-photo" width="800" height="1000" fetchpriority="high">
     </div>
 
     <div class="about-text">

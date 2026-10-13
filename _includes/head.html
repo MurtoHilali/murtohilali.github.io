@@ -2,7 +2,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="bHU40NewTV/18/Vl6MAmvA" async></script>
-  <link rel="preconnect" href="https://res.cloudinary.com">
 
   <link rel="preload" href="{{ '/assets/css/syntax.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="{{ '/assets/css/syntax.css' | relative_url }}"></noscript>
@@ -12,23 +11,21 @@
 
   {% seo title=false %}
   
-  <title>
-      {% if page.tag or page.title %}
-        {% if page.tag %}
-          {{ page.tag | escape }}
-        {% else %}
-          {{ page.title | escape }}
-        {% endif %}
-        -
-      {% endif %}
-      {% if paginator and paginator.page and paginator.total_pages > 1 and paginator.page > 1 %}
-        Page {{ paginator.page }} of {{ paginator.total_pages }} -
-      {% endif %}
-      {{ site.title | escape }}
-      {% unless page.tag or page.title %}
-        - {{ site.description | escape }}
-      {% endunless %}
-    </title>
+{%- comment -%}
+    The homepage's <title> is its own front-matter title; every other page is
+    "<page title> — <name>".
+  {%- endcomment -%}
+  {%- if page.url == "/" -%}
+    {%- assign page_title = page.title | default: site.title -%}
+  {%- elsif page.title -%}
+    {%- assign page_title = page.title | append: " — " | append: site.author.name -%}
+  {%- else -%}
+    {%- assign page_title = site.title -%}
+  {%- endif %}
+  <title>{{ page_title | escape }}</title>
+  {%- if page.url == "/" %}
+  {% include person-jsonld.html %}
+  {%- endif %}
   
   
 
