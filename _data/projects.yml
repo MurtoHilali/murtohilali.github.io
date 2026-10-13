@@ -17,9 +17,11 @@
 #   post            slug of the main write-up, if there is one. Rendered first,
 #                   as "Read the write-up"
 #   thumb/thumb_alt card image; with no thumb the card shows a tile built from
-#                   `color` and `icon`
+#                   `color` and `icon`. thumb_width/thumb_height default to 800x1200
 #   figure/figure_alt  a real result figure for the Lab panel; with no figure
-#                   the panel shows the ASCII monitor (`ascii`)
+#                   the panel shows the ASCII monitor (`ascii`). Also
+#                   figure_width/figure_height, figure_caption, and figure_link
+#                   (where "Full size" points; defaults to the image itself)
 #   color, ascii, icon  Lab styling. icon is a key in _data/icons.yml; ascii is
 #                   one of cnn | neural | dna | scan
 
@@ -49,10 +51,16 @@
   links:
     - { label: GitHub Repo, url: "https://github.com/MurtoHilali/pac-maps" }
   post: null
-  thumb: null       # TODO(murto): card image; until then the card shows a generated tile
-  thumb_alt: null
-  figure: null      # TODO(murto): contact map figure for the Lab panel
-  figure_alt: null
+  thumb: /img/projects/pac-maps-card.webp   # three panels of figures/prediction_gallery.png
+  thumb_alt: "Three RGB contact maps: a helix-rich orthogonal bundle (green blocks), a 7-bladed propeller (blue) and a beta barrel (purple)"
+  thumb_width: 1000
+  thumb_height: 328
+  figure: /img/projects/pac-maps-gallery.webp
+  figure_alt: "Twelve RGB contact maps from held-out test superfamilies, each labelled with its true and predicted CATH architecture. The top two rows are confident correct predictions, the bottom row the most confident errors."
+  figure_width: 1200
+  figure_height: 932
+  figure_caption: Predictions on held-out superfamilies
+  figure_link: "https://github.com/MurtoHilali/pac-maps/blob/main/figures/prediction_gallery.png"
   color: "#c500ff"
   ascii: cnn
   icon: matrix
@@ -85,8 +93,12 @@
   post: acarbose-alternative-drug-discovery
   thumb: /img/thumb/aadd.webp
   thumb_alt: "Abstract cover art: interlocking orange and violet blocks"
-  figure: null      # TODO(murto): docking pose figure for the Lab panel
-  figure_alt: null
+  figure: /img/projects/aadd-workflow.webp
+  figure_alt: "Workflow: COCONUT natural products are narrowed by molecular-fingerprint similarity to acarbose to about 10k candidates, docked with GNINA against 2QMJ, 3BAJ and 5NN8, then checked against decoys and redocking replicates to give the top candidates."
+  figure_width: 1462
+  figure_height: 530
+  figure_caption: Screening workflow
+  figure_link: "https://github.com/MurtoHilali/Acarbose-Alternative-Drug-Discovery/blob/main/figures/aadd-workflow.drawio.png"
   color: "#ff3300"
   ascii: scan
   icon: flask
@@ -118,8 +130,12 @@
   post: benchmarking-peppi-models
   thumb: /img/thumb/benchmarking-peppi-models.webp
   thumb_alt: "Abstract cover art: orange starbursts and crescents on red"
-  figure: null      # TODO(murto): result figure for the Lab panel
-  figure_alt: null
+  figure: /img/projects/pepbdb-ml-example.webp
+  figure_alt: "Twelve grayscale images from the PepBDB-ML image dataset, one per residue, each showing 41 features across a 7-residue window centred on that residue."
+  figure_width: 1432
+  figure_height: 656
+  figure_caption: Example images from the dataset
+  figure_link: "https://github.com/MurtoHilali/PepBDB-ML/blob/main/example.png"
   color: "#0055ff"
   ascii: neural
   icon: network
@@ -149,8 +165,12 @@
   post: xgboost-ppi
   thumb: /img/thumb/afm-xgboost-ppi-cover.webp
   thumb_alt: "Abstract cover art: overlapping yellow, cyan and magenta circles on black"
-  figure: null      # TODO(murto): ROC curve figure for the Lab panel
-  figure_alt: null
+  figure: /img/projects/af-m-roc-curve.webp   # from the xgboost-ppi post
+  figure_alt: "Multi-class ROC curves for the XGBoost classifier: per-class AUCs of 0.81, 0.85, 0.96 and 0.97, and a micro-average AUC of 0.91, all well above the random-chance diagonal."
+  figure_width: 846
+  figure_height: 699
+  figure_caption: Multi-class ROC and AUC
+  figure_link: /img/articles/xgboost-ppi/roc-curve.png
   color: "#00c53a"
   ascii: dna
   icon: dna
@@ -184,8 +204,12 @@
   post: vici
   thumb: /img/thumb/vici-cover-new.webp
   thumb_alt: "Abstract cover art: cyan and yellow blocks on magenta"
-  figure: null
-  figure_alt: null
+  figure: /img/projects/vici-workflow.webp
+  figure_alt: "vici flowchart: subset the data, optionally keep only genes with both P/LP and B/LB variants, extract missense residues, search for them in interfaces with PIONEER, and compile the results into a JSON."
+  figure_width: 900
+  figure_height: 1602
+  figure_caption: Workflow
+  figure_link: "https://github.com/MurtoHilali/vici/blob/main/vici.png"
   color: "#e6a100"
   ascii: dna
   icon: terminal
@@ -214,8 +238,12 @@
   post: damia
   thumb: /img/thumb/damia-cover.webp
   thumb_alt: "Abstract cover art: a grid of green and white dots"
-  figure: null
-  figure_alt: null
+  figure: /img/projects/damia-workflow.webp
+  figure_alt: "DAMIA overview: UniProt IDs lead to wild-type and missense complexes predicted with AlphaFold2-Multimer, then to interface, distance and PI-score outputs, with U-tests comparing wild-type and missense interfaces."
+  figure_width: 800
+  figure_height: 1600
+  figure_caption: Pipeline overview
+  figure_link: "https://github.com/MurtoHilali/damia/blob/main/imgs/workflow.png"
   color: "#009ec5"
   ascii: neural
   icon: network

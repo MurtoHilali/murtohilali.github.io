@@ -67,8 +67,15 @@
     </div>
 
     {%- if p.figure %}
+    {%- if p.figure_link %}{% assign figure_href = p.figure_link | relative_url %}{% else %}{% assign figure_href = p.figure | relative_url %}{% endif %}
     <figure class="lab-figure">
-      <img src="{{ p.figure | relative_url }}" alt="{{ p.figure_alt | escape }}" width="{{ p.figure_width | default: 760 }}" height="{{ p.figure_height | default: 570 }}" loading="lazy" decoding="async">
+      <a class="lab-figure-image" href="{{ figure_href }}" target="_blank" rel="noopener">
+        <img src="{{ p.figure | relative_url }}" alt="{{ p.figure_alt | escape }}" width="{{ p.figure_width | default: 760 }}" height="{{ p.figure_height | default: 570 }}" loading="lazy" decoding="async">
+      </a>
+      <figcaption>
+        {%- if p.figure_caption %}<span>{{ p.figure_caption }}</span>{% endif %}
+        <a href="{{ figure_href }}" target="_blank" rel="noopener">Full size<span class="visually-hidden"> (opens in a new tab)</span></a>
+      </figcaption>
     </figure>
     {%- else %}
     <div class="lab-monitor" aria-hidden="true">

@@ -584,16 +584,47 @@ html[data-theme="dark"]:has(> body.lab) {
 }
 
 .lab-figure {
+  align-self: flex-start;
   margin: 0;
-  padding: 0.75rem;
   border: 3px solid var(--lab-ink);
-  background-color: #fff;
+  background-color: var(--lab-paper);
   box-shadow: 8px 8px 0 0 var(--lab-ink);
+
+  /* Figures are on white backgrounds in both themes */
+  .lab-figure-image {
+    display: block;
+    padding: 0.75rem;
+    background-color: #fff;
+    border-bottom: 3px solid var(--lab-ink);
+  }
 
   img {
     display: block;
     width: 100%;
     height: auto;
+    max-height: 30rem; /* tall workflow diagrams */
+    object-fit: contain;
+  }
+
+  figcaption {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    font-family: $lab-mono;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--lab-muted);
+
+    a {
+      flex-shrink: 0;
+      color: var(--lab-link);
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+    }
   }
 }
 
