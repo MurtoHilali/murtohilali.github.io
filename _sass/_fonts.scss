@@ -1,0 +1,55 @@
+/* =========================================
+   FONTS
+   Self-hosted latin subsets in assets/google_fonts/ (all SIL OFL), fetched
+   from Google Fonts. Root-relative URLs because this CSS is inlined into
+   each page.
+   ========================================= */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 600;
+  font-display: swap;
+  src: url('/assets/google_fonts/inter-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/google_fonts/instrument-serif-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/google_fonts/instrument-serif-italic-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url('/assets/google_fonts/inconsolata-latin.woff2') format('woff2');
+}
+
+/* The Lab's monospace */
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/google_fonts/space-mono-400-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/assets/google_fonts/space-mono-700-latin.woff2') format('woff2');
+}

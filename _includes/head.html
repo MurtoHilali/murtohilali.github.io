@@ -38,11 +38,8 @@
     <link rel="alternate" type="application/json" title="{{ site.title }}" href="{{ '/feed.json' | absolute_url }}" />
     <link rel="sitemap" type="application/xml" title="sitemap" href="{{ '/sitemap.xml' | absolute_url }}" />
     
-  {% if site.googlewebfonts %}
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <!--<link href="https://fonts.googleapis.com/css2?{{ site.googlewebfonts }}&display=swap" rel="stylesheet">-->
-    <link rel="stylesheet" href="{{ '/assets/google_fonts/fonts.css' | relative_url }}">
-  {% endif %}
+  <link rel="preload" href="{{ '/assets/google_fonts/inter-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ '/assets/google_fonts/instrument-serif-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
 
   <style>
     {% capture include_to_scssify %}
