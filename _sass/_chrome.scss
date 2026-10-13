@@ -33,6 +33,12 @@
   text-decoration: none;
 }
 
+/* The Lab doesn't load the site's base link styles, so chrome sets its own */
+.site-header a,
+.social-footer a {
+  text-decoration: none;
+}
+
 /* Header */
 .site-header {
   border-bottom: 1px solid var(--border-color);
@@ -156,6 +162,9 @@
   color: var(--text-main);
   text-decoration: none;
 }
+
+.social-footer .footer-links a { color: var(--link-color); }
+.social-footer .footer-links a:hover { text-decoration: underline; }
 
 .social-footer .footer-links {
   font-family: var(--font-body);
