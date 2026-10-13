@@ -14,7 +14,7 @@ html[data-theme="light"] {
   --bg-color: #fafaf9; 
   --text-main: #292524; /* Stone-800 */
   --text-muted: #57534e; /* Stone-600 - Darkened for better readability */
-  --text-light: #a8a29e; /* Stone-400 */
+  --text-light: #706a65; /* 5:1 on the page and code backgrounds (was Stone-400, 2.4:1) */
   
   --border-color: #e7e5e4; /* Stone-200 */
   --line: #e7e5e4; /* Rules and outlines that sit on cards */
@@ -100,7 +100,7 @@ html[data-theme="dark"] {
   --bg-color: #1c1917; /* Stone-900 */
   --text-main: #e7e5e4; /* Stone-200 */
   --text-muted: #a8a29e; /* Stone-400 */
-  --text-light: #57534e; /* Stone-600 */
+  --text-light: #9a938d; /* 5:1 on cards (was Stone-600, 2.3:1) */
   
   --border-color: #292524; /* Stone-800 */
   --line: #44403c; /* Stone-700: visible on --card-bg, which is Stone-800 */

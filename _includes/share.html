@@ -1,20 +1,16 @@
 <div class="social-share">
   <div class="share-button">
-    <!-- twitter -->
-    <a class="share-post" href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ page.url | absolute_url | url_encode }}&via={{ site.twitter.username }}&related={{ site.twitter.username }}" rel="noopener noreferrer" target="_blank" title='Share "{{ page.title }}" on Twitter'>
-      <i class="fa fa-twitter"></i>
+    <a class="share-post" href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ page.url | absolute_url | url_encode }}&via={{ site.twitter.username }}&related={{ site.twitter.username }}" rel="noopener noreferrer" target="_blank" title='Share on Twitter' aria-label='Share on Twitter'>
+      <i class="fa fa-twitter" aria-hidden="true"></i>
     </a>
-    <!-- facebook -->
-    <a class="share-post" href="https://facebook.com/sharer.php?u={{ page.url | absolute_url | url_encode }}" rel="noopener noreferrer" target="_blank" title='Share "{{ page.title }}" on Facebook'>
-      <i class="fa fa-facebook-square"></i>
+    <a class="share-post" href="https://facebook.com/sharer.php?u={{ page.url | absolute_url | url_encode }}" rel="noopener noreferrer" target="_blank" title='Share on Facebook' aria-label='Share on Facebook'>
+      <i class="fa fa-facebook-square" aria-hidden="true"></i>
     </a>
-    <!-- telegram -->
-    <a class="share-post" href="https://telegram.me/share/url?text={{ page.title | url_encode }}&amp;url={{ page.url | absolute_url | url_encode }}" rel="noopener noreferrer" target="_blank" title='Share "{{ page.title }}" on Telegram'>
-      <i class="fa fa-telegram"></i>
+    <a class="share-post" href="https://telegram.me/share/url?text={{ page.title | url_encode }}&amp;url={{ page.url | absolute_url | url_encode }}" rel="noopener noreferrer" target="_blank" title='Share on Telegram' aria-label='Share on Telegram'>
+      <i class="fa fa-telegram" aria-hidden="true"></i>
     </a>
-    <!-- whatsapp -->
-    <a class="share-post" href="https://api.whatsapp.com/send?text={{ page.title | url_encode }}%20{{ page.url | absolute_url | url_encode }}" rel="noopener noreferrer" target="_blank" title='Share "{{ page.title }}" on WhatsApp'>
-      <i class="fa fa-whatsapp"></i>
+    <a class="share-post" href="https://api.whatsapp.com/send?text={{ page.title | url_encode }}%20{{ page.url | absolute_url | url_encode }}" rel="noopener noreferrer" target="_blank" title='Share on WhatsApp' aria-label='Share on WhatsApp'>
+      <i class="fa fa-whatsapp" aria-hidden="true"></i>
     </a>
   </div>
 </div>

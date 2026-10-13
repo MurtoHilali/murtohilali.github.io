@@ -410,6 +410,29 @@ blockquote {
   }
 }
 
+/* Archive */
+.archive-title { text-align: center; }
+.archive-year {
+  font-size: 1.75rem;
+  margin: 2rem 0 0.5rem;
+}
+
+/* Share links under posts */
+.social-share {
+  display: flex;
+  justify-content: center;
+  margin: 2.5rem 0 0;
+}
+.share-button {
+  display: flex;
+  gap: 1.5rem;
+}
+.share-post {
+  color: var(--text-muted);
+  font-size: 1.35rem;
+}
+.share-post:hover { color: var(--text-main); opacity: 1; }
+
 /* About page */
 .about-container {
   display: flex;
@@ -472,5 +495,5 @@ blockquote {
 
 /* Code Blocks */
 code, pre { background: var(--code-bg); }
-code { font-family: var(--font-mono); color: var(--accent-color); }
+code { font-family: var(--font-mono); color: var(--accent-strong); }
 pre { padding: 1rem; border-radius: 0.5rem; overflow: auto; }
