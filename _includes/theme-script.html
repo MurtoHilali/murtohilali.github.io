@@ -1,0 +1,23 @@
+<script>
+  /* Theme: saved choice, else the OS preference. Runs before the page paints.
+     No // comments in inline scripts: the compress layout joins lines. */
+  function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+    try { window.localStorage.setItem('theme', theme); } catch (e) {}
+    syncThemeToggle();
+  }
+  function syncThemeToggle() {
+    var toggle = document.getElementById('theme-toggle');
+    if (toggle) toggle.setAttribute('aria-pressed', document.documentElement.getAttribute('data-theme') === 'dark' ? 'true' : 'false');
+  }
+  function modeSwitcher() {
+    setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  }
+  (function () {
+    var theme = null;
+    try { theme = window.localStorage.getItem('theme'); } catch (e) {}
+    if (!theme) theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    document.addEventListener('DOMContentLoaded', syncThemeToggle);
+  })();
+</script>

@@ -1,8 +1,6 @@
 ---
 layout: default
 ---
-{% include homehead.html %}
-
 {% assign totpost = 0 %}
 {% assign filtered_posts = site.posts | where: 'author', page.short_name %}
 {% for post in filtered_posts %}
