@@ -2,7 +2,8 @@
 layout: post
 title: How I Found 71 Natural Alternatives to a $200 Million Drug
 description: A step-by-step drug discovery and AI virtual screening project done from my laptop
-tags: bioinformatics drug-discovery virtual-screening project
+kind: writeup
+tags: bioinformatics drug-discovery virtual-screening
 image: /img/seo/aadd.png
 thumb: /img/thumb/aadd.webp
 expanded: /img/expanded/aadd-expanded.png

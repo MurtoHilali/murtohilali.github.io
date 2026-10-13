@@ -63,36 +63,43 @@ no_anchors: true
     {% include publication-list.html %}
 </section>
 
-<!-- WRITING LIST -->
+<!-- WRITING: long-form write-ups -->
 <section class="home-section" aria-labelledby="writing">
-<div class="section-header">
-    <h2 id="writing">Writing</h2>
-    <a href="{{ '/blog/' | relative_url }}" style="font-size: 0.9rem; font-weight: 500;">View Archive</a>
-</div>
+    <div class="section-header">
+        <h2 id="writing">Writing</h2>
+        <a class="section-header-link" href="{{ '/blog/' | relative_url }}">All writing</a>
+    </div>
 
-<div class="post-list" id="Posts">
-    {% assign blog_posts = site.posts | where_exp: "item", "item.tags contains 'post'" %}
-    
-    {% for post in blog_posts limit:8 %}
-    <a href="{{ post.url | relative_url }}" class="post-item">
-        <div class="post-meta-group">
-            <span class="post-date">{{ post.date | date: "%b %d, %Y" }}</span>
-            <span class="post-title">{{ post.title }}</span>
-        </div>
-        
-        <div style="display: flex; align-items: center;">
-            <!-- Hover Tag Logic -->
-            {% for tag in post.tags %}
-                {% if tag != 'post' %}
-                    <span class="post-hover-tag">{{ tag }}</span>
-                    {% break %}
-                {% endif %}
-            {% endfor %}
-            <i class="fa fa-arrow-right post-arrow"></i>
-        </div>
-    </a>
-    {% endfor %}
-</div>
+    <ul class="post-list">
+        {%- assign writeups = site.posts | where: "kind", "writeup" %}
+        {%- for post in writeups limit: 5 %}
+        {%- assign minutes = post.content | number_of_words | divided_by: 265 | plus: 1 %}
+        <li>
+            <a class="post-link" href="{{ post.url | relative_url }}">
+                <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
+                <span class="post-title">{{ post.title }}</span>
+                <span class="post-readtime">{% if post.minute %}{{ post.minute }}{% else %}{{ minutes }}{% endif %} min read</span>
+            </a>
+        </li>
+        {%- endfor %}
+    </ul>
+</section>
+
+<!-- NEWS: dated one-liners -->
+<section class="home-section" aria-labelledby="news">
+    <div class="section-header">
+        <h2 id="news">News</h2>
+    </div>
+
+    <ul class="news-list">
+        {%- assign news = site.posts | where: "kind", "news" %}
+        {%- for post in news limit: 5 %}
+        <li>
+            <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </li>
+        {%- endfor %}
+    </ul>
 </section>
 
 <!-- NEWSLETTER -->

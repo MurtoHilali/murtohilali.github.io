@@ -2,7 +2,8 @@
 layout: post
 title: "Co-authorship in Nature Genetics with SickKids"
 description: Part of my work at SickKids contributed to a research paper in Nature.
-tags: bioinformatics post
+kind: news
+tags: bioinformatics
 image: /img/seo/nature-pub-cover.png
 thumb: /img/thumb/nature-pub-cover.webp
 ---

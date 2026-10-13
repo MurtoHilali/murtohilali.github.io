@@ -2,7 +2,8 @@
 layout: post
 title: "Predicting the Effect of Mutations on PPIs Using AlphaFold"
 description: How I used AlphaFold-Multimer, XGBoost, and 47,000 SLURM jobs to predict PPI outcomes with 91% AUC
-tags: project bioinformatics ml
+kind: writeup
+tags: bioinformatics ml
 image: /img/seo/afm-xgboost-ppi-cover.png
 thumb: /img/thumb/afm-xgboost-ppi-cover.webp
 expanded: /img/seo/xgboost-ppi-cover.png

@@ -8,15 +8,15 @@ sitemap: false
 
 > {{ site.description }}
 
-Personal site and portfolio of Murto Hilali, a Biotech and Economics student at
+Personal site and portfolio of Murto Hilali, a Biotech and Economics graduate of
 the University of Waterloo. The writing is mostly computational biology and
 machine learning applied to proteins — contact maps, binding-site prediction,
 structure-based drug discovery — with occasional detours into tools, business,
 and travel.
 
-Posts are long-form technical write-ups: each project post walks through the
-full pipeline, including the dead ends, and links the repo and dataset where
-they exist.
+Write-ups are long-form and technical: each walks through a project's full
+pipeline, including the dead ends, and links the repo and dataset where they
+exist. News posts are short updates.
 
 ## Projects
 {% for p in site.data.projects -%}
@@ -25,22 +25,33 @@ they exist.
 - [{{ p.title }}]({{ base }}{% if write_up %}{{ write_up.url }}{% else %}/lab/#{{ p.id }}{% endif %}): {{ p.summary | strip_newlines | strip }}
 {%- endfor %}
 
-## Posts
-{% assign writing = site.posts | where_exp: "p", "p.tags contains 'post'" -%}
-{%- for p in writing %}
+## Write-ups
+{% assign writeups = site.posts | where: "kind", "writeup" -%}
+{%- for p in writeups %}
 - [{{ p.title }}]({{ base }}{{ p.url }}): {{ p.description | strip_newlines | strip }}
+{%- endfor %}
+
+## News
+{% assign news = site.posts | where: "kind", "news" -%}
+{%- for p in news %}
+- [{{ p.title }}]({{ base }}{{ p.url }}): {{ p.description | strip_newlines | strip }}
+{%- endfor %}
+
+## Publications
+{% for pub in site.data.publications %}
+- [{{ pub.title }}](https://doi.org/{{ pub.doi }}): {{ pub.authors }}. {{ pub.venue }}{% if pub.volume %} {{ pub.volume }}{% endif %}{% if pub.pages %}, {{ pub.pages }}{% endif %} ({{ pub.year }}). {{ pub.role }}.
 {%- endfor %}
 
 ## Pages
 
-- [Lab]({{ base }}/lab/): Index of the computational biology and ML projects, with repos, datasets, and write-ups attached to each.
+- [Lab]({{ base }}/lab/): Every project, grouped into research, tools and side projects, with specs, repos, datasets, and write-ups.
 - [About]({{ base }}/about/): Background and contact.
-- [Blog]({{ base }}/blog/): Every post, newest first.
+- [Writing]({{ base }}/blog/): Every write-up and news post, newest first.
 - [Archive]({{ base }}/archive/): Posts grouped by date.
 - [Travels]({{ base }}/travels/): Trip log.
 
 ## Optional
 
-- [Records]({{ base }}/records): Music listening log. Separate project, same domain.
+- [Records]({{ base }}/records/): Music listening log. Separate project, same domain.
 - [Atom feed]({{ base }}/atom.xml): Full post feed.
 - [JSON feed]({{ base }}/feed.json): Full post feed as JSON.

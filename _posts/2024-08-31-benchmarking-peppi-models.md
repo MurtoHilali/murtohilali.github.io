@@ -2,7 +2,8 @@
 layout: post
 title: "PepBDB-ML Benchmark: ML vs CNN for Binding-Site Detection"
 description: Assembling four different ML/DL models to compare performance on identifying peptide-protein binding sites.
-tags: ai bioinformatics project
+kind: writeup
+tags: ai bioinformatics
 image: /img/seo/benchmarking-peppi-models.png
 thumb: /img/thumb/benchmarking-peppi-models.webp
 ---

@@ -2,7 +2,8 @@
 layout: post
 title: "Getting Featured by UWaterloo for AI Research at SickKids"
 description: My briliant friend Kritika and I got to chat about doing AI research at SickKids.
-tags: bioinformatics post
+kind: news
+tags: bioinformatics
 image: /img/seo/uwaterloo-sickkids-ai.png
 thumb: /img/thumb/uwaterloo-sickkids-ai.webp
 ---

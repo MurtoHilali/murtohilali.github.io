@@ -2,7 +2,8 @@
 layout: post
 title: "How to Win a Case Competition in 7 Hours"
 description: Competing in and winning my first ever business innovation case competition.
-tags: post business
+kind: news
+tags: business
 image: /img/seo/fusion-conference.png
 thumb: /img/thumb/fusion-conference.webp
 ---
