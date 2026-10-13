@@ -175,6 +175,16 @@
   border-radius: 0;
 }
 
+/* Figures and plots: show the whole image on white rather than crop it */
+.project-card-media--contain {
+  background-color: #fff;
+  border-bottom: 1px solid var(--line);
+}
+.project-card-media--contain img {
+  object-fit: contain;
+  padding: 0.5rem;
+}
+
 /* Generated tile for projects without a thumb: the Lab's pixel icon, enlarged */
 .project-card-tile {
   height: 100%;
@@ -227,6 +237,8 @@
   font-size: 1.75rem;
   margin: 0 0 0.5rem;
 }
+/* With no summary line under it, the title sits straight on the specs */
+.card-title + .project-card-specs { margin-top: 0.75rem; }
 .card-title a { color: var(--text-main); }
 .card-title a:hover { color: var(--accent-strong); text-decoration: none; opacity: 1; }
 

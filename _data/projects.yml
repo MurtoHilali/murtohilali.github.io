@@ -4,6 +4,7 @@
 # Fields
 #   id              stable slug; the anchor on /lab/#<id>
 #   title, date     date is YYYY-MM
+#   headline        optional, longer title for the homepage card (falls back to title)
 #   status          active | completed | archived
 #   track           research | tools | side   (groups the Lab)
 #   category        short label shown in the Lab row
@@ -17,7 +18,9 @@
 #   post            slug of the main write-up, if there is one. Rendered first,
 #                   as "Read the write-up"
 #   thumb/thumb_alt card image; with no thumb the card shows a tile built from
-#                   `color` and `icon`. thumb_width/thumb_height default to 800x1200
+#                   `color` and `icon`. thumb_width/thumb_height default to 800x1200.
+#                   thumb_fit: contain shows a whole figure on white instead of
+#                   cropping it to fill the card
 #   figure/figure_alt  a real result figure for the Lab panel; with no figure
 #                   the panel shows the ASCII monitor (`ascii`). Also
 #                   figure_width/figure_height, figure_caption, and figure_link
@@ -29,6 +32,7 @@
 
 - id: pac-maps
   title: PAC-MAPS
+  headline: "PAC-MAPS: classifying protein architecture from contact maps"
   date: "2026-08"
   status: active
   track: research
@@ -67,6 +71,7 @@
 
 - id: acarbose-alternatives
   title: Acarbose Alternatives
+  headline: Virtual screen finds 71 natural alternatives to acarbose
   date: "2026-02"
   status: completed
   track: research
@@ -91,8 +96,11 @@
     - { label: GitHub Repo, url: "https://github.com/MurtoHilali/Acarbose-Alternative-Drug-Discovery" }
     - { label: Pipeline Post, post: acarbose-alternative-drug-discovery }
   post: acarbose-alternative-drug-discovery
-  thumb: /img/thumb/aadd.webp
-  thumb_alt: "Abstract cover art: interlocking orange and violet blocks"
+  thumb: /img/projects/aadd-docking-targets.webp   # from the write-up
+  thumb_alt: "The docking targets 2QMJ, 3BAJ and 5NN8 as protein surfaces, each with the GNINA search box drawn in red around bound acarbose"
+  thumb_width: 1305
+  thumb_height: 545
+  thumb_fit: contain
   figure: /img/projects/aadd-workflow.webp
   figure_alt: "Workflow: COCONUT natural products are narrowed by molecular-fingerprint similarity to acarbose to about 10k candidates, docked with GNINA against 2QMJ, 3BAJ and 5NN8, then checked against decoys and redocking replicates to give the top candidates."
   figure_width: 1462
@@ -105,6 +113,7 @@
 
 - id: pepbdb-ml
   title: PepBDB-ML Benchmark
+  headline: Benchmarking four models on a custom peptide-binding dataset
   date: "2024-08"
   status: completed
   track: research
@@ -128,8 +137,11 @@
     - { label: Dataset Post, post: pepbdb-ml }
     - { label: Benchmark Post, post: benchmarking-peppi-models }
   post: benchmarking-peppi-models
-  thumb: /img/thumb/benchmarking-peppi-models.webp
-  thumb_alt: "Abstract cover art: orange starbursts and crescents on red"
+  thumb: /img/projects/pepbdb-ml-example.webp   # same image as the figure
+  thumb_alt: "Twelve grayscale images from the PepBDB-ML image dataset, one per residue, each showing 41 features across a 7-residue window"
+  thumb_width: 1432
+  thumb_height: 656
+  thumb_fit: contain
   figure: /img/projects/pepbdb-ml-example.webp
   figure_alt: "Twelve grayscale images from the PepBDB-ML image dataset, one per residue, each showing 41 features across a 7-residue window centred on that residue."
   figure_width: 1432
@@ -142,6 +154,7 @@
 
 - id: af-m-ppi
   title: AF-M PPI Prediction
+  headline: Predicting how missense variants disrupt protein–protein interactions
   date: "2024-05"
   status: completed
   track: research
@@ -163,8 +176,11 @@
     - { label: Read Write-up, post: xgboost-ppi }
     - { label: "Related: Nature Genetics paper", url: "https://doi.org/10.1038/s41588-024-01686-x" }
   post: xgboost-ppi
-  thumb: /img/thumb/afm-xgboost-ppi-cover.webp
-  thumb_alt: "Abstract cover art: overlapping yellow, cyan and magenta circles on black"
+  thumb: /img/projects/af-m-roc-curve.webp   # same image as the figure
+  thumb_alt: "Multi-class ROC curves for the XGBoost classifier, with a micro-average AUC of 0.91"
+  thumb_width: 846
+  thumb_height: 699
+  thumb_fit: contain
   figure: /img/projects/af-m-roc-curve.webp   # from the xgboost-ppi post
   figure_alt: "Multi-class ROC curves for the XGBoost classifier: per-class AUCs of 0.81, 0.85, 0.96 and 0.97, and a micro-average AUC of 0.91, all well above the random-chance diagonal."
   figure_width: 846
