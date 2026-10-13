@@ -12,7 +12,7 @@ default-thumb: /img/thumb/default.webp
 author:
   name: Murto Hilali
   url: https://murto.co/
-  bio: Computational biology and protein design. UWaterloo Biotech/Econ '26. # TODO(murto): confirm bio wording
+  bio: Computational biology and AI. UWaterloo Biotech/Econ '26.
   avatar: /img/author/website-headshot.jpeg
   username: murto # general username
   github: MurtoHilali # github username
