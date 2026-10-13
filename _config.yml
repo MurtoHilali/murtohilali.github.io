@@ -7,7 +7,6 @@ image: /img/share-card.png
 timezone:  Toronto
 repo: https://github.com/MurtoHilali/murtohilali.github.io # site repo [optional]
 data-theme: light # default theme "dark" | "light"
-discus-identifier: webthme
 default-thumb: /img/thumb/default.webp
 
 author:
