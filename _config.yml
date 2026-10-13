@@ -46,8 +46,6 @@ exclude:
   - README.md
   - CONTRIBUTING.md
   - notes/
-  - index_og.html
-  - index_test.html
   
 compress_html:
   clippings: all
