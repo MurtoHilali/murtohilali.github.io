@@ -1,0 +1,278 @@
+# The only place a project is defined. The homepage "Selected work" grid,
+# the Lab (/lab/), the About page and llms.txt all render from this file.
+#
+# Fields
+#   id              stable slug; the anchor on /lab/#<id>
+#   title, date     date is YYYY-MM
+#   status          active | completed | archived
+#   track           research | tools | side   (groups the Lab)
+#   category        short label shown in the Lab row
+#   featured        true puts it on the homepage, ordered by featured_order
+#   summary         one line; the Lab synopsis and the card blurb
+#   details         the Lab's expanded paragraph
+#   stack           list of tools, shown as chips
+#   specs           ordered list of { label, value }; cards show the first three
+#   links           { label, url } for external links, or { label, post: <slug> }
+#                   for a post on this site
+#   post            slug of the main write-up, if there is one. Rendered first,
+#                   as "Read the write-up"
+#   thumb/thumb_alt card image; with no thumb the card shows a tile built from
+#                   `color` and `icon`
+#   figure/figure_alt  a real result figure for the Lab panel; with no figure
+#                   the panel shows the ASCII monitor (`ascii`)
+#   color, ascii, icon  Lab styling. icon is a key in _data/icons.yml; ascii is
+#                   one of cnn | neural | dna | scan
+
+# ---------------------------------------------------------------- research
+
+- id: pac-maps
+  title: PAC-MAPS
+  date: "2026-08"
+  status: active
+  track: research
+  category: Deep Learning
+  featured: true
+  featured_order: 1
+  summary: Protein architecture classification from CATH contact maps.
+  details: >-
+    Classifies CATH architecture straight from structure. Each domain is
+    rendered as an RGB contact map — red for inverted Cβ–Cβ distance, green for
+    helix–helix pairs, blue for strand–strand pairs — and read by a dilated
+    CoordConv residual CNN. Benchmarked out-of-distribution by vaulting whole
+    superfamilies out of training, the way DockGen and Chainsaw do.
+  stack: [fastai, PyTorch, biotite, W&B]
+  specs:
+    - { label: Test Accuracy, value: "75.0%" }
+    - { label: Balanced Acc., value: "68.3%" }
+    - { label: Classes, value: 14 Architectures }
+    - { label: Benchmark, value: Held-out Superfamilies }
+  links:
+    - { label: GitHub Repo, url: "https://github.com/MurtoHilali/pac-maps" }
+  post: null
+  thumb: null       # TODO(murto): card image; until then the card shows a generated tile
+  thumb_alt: null
+  figure: null      # TODO(murto): contact map figure for the Lab panel
+  figure_alt: null
+  color: "#c500ff"
+  ascii: cnn
+  icon: matrix
+
+- id: acarbose-alternatives
+  title: Acarbose Alternatives
+  date: "2026-02"
+  status: completed
+  track: research
+  category: Virtual Screening
+  featured: true
+  featured_order: 2
+  summary: In silico drug discovery for Acarbose alternatives.
+  details: >-
+    Identified 71 natural alternatives to a $200 million drug entirely in
+    silico. Screened the COCONUT natural-products database by chemical
+    similarity to acarbose, then docked the survivors with GNINA — an AutoDock
+    Vina fork that scores poses with a CNN — and ranked them on CNN-VS. Decoys,
+    redocking replicates, and stability analysis stripped out the false
+    positives.
+  stack: [GNINA, RDKit, OpenBabel, ChimeraX]
+  specs:
+    - { label: Hits Identified, value: "71" }
+    - { label: Target, value: A-Glucosidase }
+    - { label: Scoring, value: CNN-VS }
+    - { label: Library, value: COCONUT }
+  links:
+    - { label: GitHub Repo, url: "https://github.com/MurtoHilali/Acarbose-Alternative-Drug-Discovery" }
+    - { label: Pipeline Post, post: acarbose-alternative-drug-discovery }
+  post: acarbose-alternative-drug-discovery
+  thumb: /img/thumb/aadd.webp
+  thumb_alt: "Abstract cover art: interlocking orange and violet blocks"
+  figure: null      # TODO(murto): docking pose figure for the Lab panel
+  figure_alt: null
+  color: "#ff3300"
+  ascii: scan
+  icon: flask
+
+- id: pepbdb-ml
+  title: PepBDB-ML Benchmark
+  date: "2024-08"
+  status: completed
+  track: research
+  category: Machine Learning
+  featured: true
+  featured_order: 4
+  summary: ML vs CNN for Binding-Site Detection.
+  details: >-
+    Assembling and comparing four different ML/DL models on identifying
+    peptide-protein binding sites. Built alongside a custom ML-friendly dataset
+    extracted and parsed directly from the PDB.
+  stack: [TensorFlow, Scikit-Learn, Pandas]
+  specs:
+    - { label: Dataset, value: PepBDB-Derived }
+    - { label: Models, value: "RF, SVM, CNN, MLP" }
+    - { label: Task, value: Binary Classification }
+  links:
+    - { label: PepBDB-ML Repo, url: "https://github.com/MurtoHilali/PepBDB-ML" }
+    - { label: Visual-PepBDB Repo, url: "https://github.com/MurtoHilali/Visual-PepBDB" }
+    - { label: Dataset (CSV), url: "https://drive.google.com/file/d/10pcHQH5zMcB5rlAxpL6ZEQ8HWNcCePBU/view?usp=sharing" }
+    - { label: Dataset Post, post: pepbdb-ml }
+    - { label: Benchmark Post, post: benchmarking-peppi-models }
+  post: benchmarking-peppi-models
+  thumb: /img/thumb/benchmarking-peppi-models.webp
+  thumb_alt: "Abstract cover art: orange starbursts and crescents on red"
+  figure: null      # TODO(murto): result figure for the Lab panel
+  figure_alt: null
+  color: "#0055ff"
+  ascii: neural
+  icon: network
+
+- id: af-m-ppi
+  title: AF-M PPI Prediction
+  date: "2024-05"
+  status: completed
+  track: research
+  category: Bioinformatics Pipeline
+  featured: true
+  featured_order: 3
+  summary: Predicting missense mutation effects on PPIs.
+  details: >-
+    Utilized over 47,000 SLURM jobs to generate AlphaFold-Multimer predictions
+    for wild-type and mutant protein complexes. Structural features were
+    extracted to train an XGBoost classifier, achieving a 91% AUC for
+    predicting PPI disruption.
+  stack: [AlphaFold-M, XGBoost, Bash]
+  specs:
+    - { label: AUC, value: "0.91" }
+    - { label: Jobs Run, value: "47,000+" }
+    - { label: Target, value: Missense Variants }
+  links:
+    - { label: Read Write-up, post: xgboost-ppi }
+    - { label: "Related: Nature Genetics paper", url: "https://doi.org/10.1038/s41588-024-01686-x" }
+  post: xgboost-ppi
+  thumb: /img/thumb/afm-xgboost-ppi-cover.webp
+  thumb_alt: "Abstract cover art: overlapping yellow, cyan and magenta circles on black"
+  figure: null      # TODO(murto): ROC curve figure for the Lab panel
+  figure_alt: null
+  color: "#00c53a"
+  ascii: dna
+  icon: dna
+
+# ------------------------------------------------------------------- tools
+# TODO(murto): status and category for VICI, DAMIA, Hyperjudge and Idiomics
+# were inferred from their posts; details, stack and specs are drawn from the
+# post text. Confirm or rewrite.
+
+- id: vici
+  title: VICI
+  date: "2023-09"
+  status: completed
+  track: tools
+  category: Command Line Tool
+  featured: false
+  summary: An open source command line tool to find P/LP and B/LB controls to test AF-M using PIONEER.
+  details: >-
+    Finds variants of known effect at protein–protein interfaces to use as in
+    silico controls. Takes pathogenic and benign variant tables from ClinVar,
+    keeps the ones PIONEER places at PPI-encoding sequences, and outputs a JSON
+    of positive and negative controls. Built to test AlphaFold-Multimer at
+    SickKids.
+  stack: [Bash, ClinVar, PIONEER]
+  specs:
+    - { label: Input, value: ClinVar Tables }
+    - { label: Filter, value: PIONEER PPI Sites }
+    - { label: Output, value: JSON Controls }
+  links:
+    - { label: GitHub Repo, url: "https://github.com/MurtoHilali/vici" }
+  post: vici
+  thumb: /img/thumb/vici-cover-new.webp
+  thumb_alt: "Abstract cover art: cyan and yellow blocks on magenta"
+  figure: null
+  figure_alt: null
+  color: "#e6a100"
+  ascii: dna
+  icon: terminal
+
+- id: damia
+  title: DAMIA
+  date: "2023-04"
+  status: completed
+  track: tools
+  category: Bioinformatics Pipeline
+  featured: false
+  summary: Pipeline and command line utility for analyzing missense variant protein-protein interfaces in silico.
+  details: >-
+    Compares wild-type protein complexes predicted with AlphaFold-Multimer
+    against the same complexes with missense mutations introduced. Its scripts
+    measure Cα and Cβ distances across the interface, find consensus interface
+    residues, score Jaccard similarity between wild-type and missense
+    interfaces, average PI-score features, and run a U-test between the two.
+  stack: [Python, PyMOL, pandas, PI-score]
+  specs:
+    - { label: Tools, value: 6 CLI Scripts }
+    - { label: Input, value: AF-M Complexes }
+    - { label: Test, value: Mann–Whitney U }
+  links:
+    - { label: GitHub Repo, url: "https://github.com/MurtoHilali/damia" }
+  post: damia
+  thumb: /img/thumb/damia-cover.webp
+  thumb_alt: "Abstract cover art: a grid of green and white dots"
+  figure: null
+  figure_alt: null
+  color: "#009ec5"
+  ascii: neural
+  icon: network
+
+# ------------------------------------------------------------ side projects
+
+- id: hyperjudge
+  title: Hyperjudge
+  date: "2024-05"
+  status: completed
+  track: side
+  category: Web App
+  featured: false
+  summary: A web app that checks the validity of linked sources in documents and webpages.
+  details: >-
+    Pulls every hyperlink and its anchor text from a page, scores each linked
+    domain's authority with the Moz API, and reports the scores and their
+    average. Built in under a day with GPT-4o, to automate a fact-checking
+    step from editing work at a marketing agency.
+  stack: [JavaScript, Moz API, GPT-4o]
+  specs:
+    - { label: Scoring, value: Moz Domain Authority }
+    - { label: Build Time, value: Under a Day }
+    - { label: Status, value: Live }
+  links:
+    - { label: Live App, url: "https://hyperjudge.com" }
+  post: hyperjudge
+  thumb: /img/thumb/hyperjudge-cover.webp
+  thumb_alt: "Abstract cover art: white, green and red bars on dark brown"
+  figure: null
+  figure_alt: null
+  color: "#e0004d"
+  ascii: scan
+  icon: magnifier
+
+- id: idiomics
+  title: Idiomics
+  date: "2022-03"
+  status: completed
+  track: side
+  category: Illustration
+  featured: false
+  summary: A collection of free idiom illustrations for blogs and newsletters.
+  details: >-
+    Idiom illustrations drawn during the pandemic for articles on Medium,
+    released free to download and use. My first launch on Product Hunt.
+  stack: []         # TODO(murto): tools used, if worth listing
+  specs:
+    - { label: License, value: Free to Use }
+    - { label: Launch, value: Product Hunt }
+  links:
+    - { label: Product Hunt, url: "https://www.producthunt.com/posts/idiomics" }
+  post: idiomics
+  thumb: /img/thumb/idiomics-cover.webp
+  thumb_alt: Hand-drawn idiom illustrations printed on square cards
+  figure: null
+  figure_alt: null
+  color: "#8a5cf6"
+  ascii: neural
+  icon: pencil
