@@ -1,112 +1,72 @@
 ---
 layout: default
+no_anchors: true
 ---
 
-<!-- HERO SECTION -->
-<div class="hero-section">
+{%- comment -%}
+  TODO(murto): confirm the positioning line and the supporting sentence below.
+{%- endcomment -%}
+<section class="hero-section" aria-labelledby="hero-name">
     <div class="hero-content">
-        <h1 class="hero-title">
-            Hey there,<br>
-            <span>I'm {{ site.author.name }}.</span>
-        </h1>
-        
+        <h1 class="hero-title" id="hero-name">{{ site.author.name }}</h1>
+
+        <p class="hero-lede">
+            Computational biology researcher working on AI, protein design, and structure-based drug discovery.
+        </p>
         <p class="hero-bio">
-            Biotech/Economics grad from UWaterloo interested in tech, compbio, proteins, and ML. Building tools for the future of biology.
+            UWaterloo Biotech/Econ '26. Previously SickKids, OICR, and QDX Technologies.
         </p>
 
-        <!-- BENTO GRID LINKS -->
-        <div class="bento-grid">
-            <a href="{{ '/about/' | relative_url }}" class="bento-btn">
-                <i class="fa fa-user"></i> About
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:{{ site.author.email }}">
+                <i class="fa fa-envelope" aria-hidden="true"></i> Email me
             </a>
-            <a href="{{ '/blog/' | relative_url }}" class="bento-btn">
-                <i class="fa fa-pencil"></i> Posts
-            </a>
-            <a href="{{ '/lab/' | relative_url }}" class="bento-btn">
-                <i class="fa fa-flask"></i> Lab
-            </a>
-            <a href="https://murto.co/records" target="_self" class="bento-btn">
-                <i class="fa fa-music"></i> Records
-            </a>
-            <a href="{{ '/resume.pdf' | relative_url }}" target="_blank" class="bento-btn">
-                <i class="fa fa-file-text"></i> Resume
-            </a>
-            <a href="{{ '/travels/' | relative_url }}" class="bento-btn">
-                <i class="fa fa-plane"></i> Travels
+            <a class="btn" href="{{ '/resume.pdf' | relative_url }}">
+                <i class="fa fa-file-text-o" aria-hidden="true"></i> CV
             </a>
         </div>
+
+        <ul class="hero-social">
+            {%- for s in site.data.social %}{% if s.hero %}
+            <li><a href="{{ s.url }}" aria-label="{{ s.name }}" title="{{ s.name }}"><i class="fa {{ s.icon }}" aria-hidden="true"></i></a></li>
+            {%- endif %}{% endfor %}
+        </ul>
     </div>
 
-    <!-- TILTED IMAGE -->
     <div class="hero-image-wrapper">
-        <div class="hero-bg-tilt"></div>
-        <img src="{{ '/img/author/website-headshot.jpeg' | relative_url }}" alt="{{ site.author.name }}" class="hero-img">
+        <div class="hero-bg-tilt" aria-hidden="true"></div>
+        <img src="{{ '/img/author/website-headshot.jpeg' | relative_url }}" alt="Photo of {{ site.author.name }}" class="hero-img" width="2500" height="2500">
     </div>
-</div>
+</section>
 
-<!-- PROJECTS SECTION -->
-<div class="section-header">
-    <h2>Projects</h2>
-    <div class="scroll-hint">
-        SCROLL <i class="fa fa-arrow-right"></i>
+<!-- SELECTED WORK -->
+<section class="home-section" aria-labelledby="selected-work">
+    <div class="section-header">
+        <h2 id="selected-work">Selected work</h2>
     </div>
-</div>
 
-<!-- Horizontal Scroll Container for Projects -->
-<div class="project-carousel" id="Projects">
-    {% assign projects = site.posts | where_exp: "item", "item.tags contains 'project'" %}
-    
-    {% for post in projects limit:10 %}
-        <a href="{{ post.url | relative_url }}" class="card-wrapper">
-            <div class="image-container">
-                <!-- Portrait/Default Image -->
-                <img src="{{ '/img/placeholder.svg' | relative_url }}" 
-                     data-src="{% if post.thumb %} {{ post.thumb | relative_url }} {% else %} {{ site.default-thumb | relative_url }} {% endif %}"
-                     class="card-image img-default lazyload" 
-                     alt="{{ post.title }}">
-                
-                <!-- Landscape/Hover Image (Wider view) -->
-                <img src="{{ '/img/placeholder.svg' | relative_url }}" 
-                     data-src="{% if post.expanded %}{{ post.expanded | relative_url }}{% else %}{% if post.thumb %} {{ post.thumb | relative_url }} {% else %} {{ site.default-thumb | relative_url }} {% endif %}{% endif %}"
-                     class="card-image img-hover lazyload" 
-                     alt="{{ post.title }}">
-            </div>
+    <div class="project-grid">
+        {%- assign featured = site.data.projects | where: "featured", true | sort: "featured_order" %}
+        {%- for p in featured %}
+        {% include project-card.html project=p %}
+        {%- endfor %}
+    </div>
 
-            <div class="background"></div>
-            
-            <!-- Tags Overlay on Cover -->
-            <div class="card-tags">
-                {% for tag in post.tags %}
-                    {% if tag != 'project' %}
-                        <span class="card-tag">{{ tag }}</span>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            
-            <!-- Content Layer -->
-            <!-- NOTE: Moved footer OUTSIDE of .kepala to span full width -->
-            <div class="kepala">
-                <h1 class="judul">{{ post.title }}</h1>
-                <p>{{ post.description }}</p>
-            </div>
-            
-            <div class="footer">
-                {% assign minute=post.content | number_of_words | divided_by: 265 | plus: 1 %}
-                <small>{{ post.date | date: "%d %b, %y" }}</small>
-                <small>Read ({% if post.minute %} {{ post.minute }} {% else %} {{ minute }} {% endif %} min)</small>
-            </div>
-        </a>
-    {% else %}
-        <p>No projects found.</p>
-    {% endfor %}
-    <div style="min-width: 1px;"></div>
-</div>
+    <p class="section-more"><a href="{{ '/lab/' | relative_url }}">All projects <span aria-hidden="true">→</span></a></p>
+</section>
 
-<br><br>
+<!-- PUBLICATIONS -->
+<section class="home-section" aria-labelledby="publications">
+    <div class="section-header">
+        <h2 id="publications">Publications</h2>
+    </div>
+    {% include publication-list.html %}
+</section>
 
 <!-- WRITING LIST -->
+<section class="home-section" aria-labelledby="writing">
 <div class="section-header">
-    <h2>Writing</h2>
+    <h2 id="writing">Writing</h2>
     <a href="{{ '/blog/' | relative_url }}" style="font-size: 0.9rem; font-weight: 500;">View Archive</a>
 </div>
 
@@ -133,8 +93,7 @@ layout: default
     </a>
     {% endfor %}
 </div>
-
-<br><br>
+</section>
 
 <!-- NEWSLETTER -->
 <div class="section-header">

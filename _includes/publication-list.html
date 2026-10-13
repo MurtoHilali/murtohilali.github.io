@@ -1,0 +1,11 @@
+{%- comment -%}
+  Publications from _data/publications.yml, linked by DOI.
+{%- endcomment -%}
+<ul class="pub-list">
+  {%- for pub in site.data.publications %}
+  <li class="pub">
+    <a class="pub-title" href="https://doi.org/{{ pub.doi }}">{{ pub.title }}</a>
+    <p class="pub-meta">{{ pub.authors | replace: "Hilali M", "<strong>Hilali M</strong>" }}. <cite>{{ pub.venue }}</cite>{% if pub.volume %} {{ pub.volume }}{% endif %}{% if pub.pages %}, {{ pub.pages }}{% endif %} ({{ pub.year }}). <span class="pub-role">{{ pub.role }}</span></p>
+  </li>
+  {%- endfor %}
+</ul>

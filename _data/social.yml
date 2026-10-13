@@ -1,0 +1,20 @@
+# Profiles linked from the hero (hero: true), the footer, and the homepage's
+# Person JSON-LD (sameAs). icon is a Font Awesome 4.7 class.
+- name: GitHub
+  url: https://github.com/MurtoHilali
+  icon: fa-github
+  hero: true
+- name: LinkedIn
+  url: https://linkedin.com/in/MurtoHilali
+  icon: fa-linkedin
+  hero: true
+- name: Google Scholar
+  url: "https://scholar.google.com/citations?user=Q6fUOLAAAAAJ&hl=en"
+  icon: fa-graduation-cap
+  hero: true
+- name: X (Twitter)
+  url: https://twitter.com/MurtoHilali
+  icon: fa-twitter
+- name: Medium
+  url: https://murto.medium.com
+  icon: fa-medium
