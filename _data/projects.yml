@@ -39,19 +39,10 @@
   featured: false
   summary: Choosing the surface antigen a Cyclospora rapid antigen test should target.
   details: >-
-    Working out which protein a rapid antigen test for Cyclospora cayetanensis
-    should look for, as the groundwork for designing a binder against it.
-    Three notebooks so far. The first collects every C. cayetanensis assembly
-    on NCBI, drops suppressed and contaminated records, keeps what compleasm
-    scores at S ≥ 90% complete, clusters the survivors with sourmash against
-    collection year and geography, and lifts CcayRef3's annotations onto each
-    one with Liftoff. The second runs DeepLoc 2.1 across the 5,793-protein
-    reference proteome to find what reaches the cell surface. The third takes
-    the extracellular set into OrthoFinder against Toxoplasma gondii,
-    Plasmodium falciparum and P. yoelii, so PaxDB abundances in those species
-    can stand in for measurements C. cayetanensis doesn't have. What comes out
-    conserved, surface-exposed and abundant is what a peptide or nanobody
-    binder would be raised against, for a lateral-flow produce screen.
+    Picking the surface protein a rapid antigen test for Cyclospora
+    cayetanensis should target. Public assemblies are QC'd and lifted onto one
+    annotation, DeepLoc 2.1 finds the proteins that reach the surface, and
+    OrthoFinder borrows PaxDB abundances from relatives to rank what's left.
   stack: [compleasm, sourmash, Liftoff, DeepLoc 2, OrthoFinder, PaxDB]
   specs:
     - { label: Stage, value: Target Selection }

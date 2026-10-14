@@ -147,7 +147,7 @@ body.lab {
 .lab-columns {
   display: none;
 
-  @media (min-width: $sm) {
+  @media (min-width: $lg) {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 1rem;
@@ -158,7 +158,8 @@ body.lab {
     text-transform: uppercase;
     color: var(--text-light);
 
-    span { grid-column: span 4; }
+    span { grid-column: span 3; }
+    span:nth-child(3) { grid-column: span 5; }
     span:first-child,
     span:last-child { grid-column: span 2; }
     span:last-child { text-align: right; }
@@ -192,8 +193,13 @@ body.lab {
 }
 
 .lab-row-head {
+  /* Every row is the same height: the synopsis is capped at three lines
+     (below) and the row reserves room for them, so the index reads as an
+     even table rather than a ragged list. */
+  min-height: 10.2rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.35rem;
   padding: 1.1rem 0.75rem;
   list-style: none;
@@ -204,7 +210,8 @@ body.lab {
   &::-webkit-details-marker { display: none; }
   &::marker { content: ""; }
 
-  @media (min-width: $sm) {
+  @media (min-width: $lg) {
+    min-height: 6.35rem;
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 1rem;
@@ -234,7 +241,7 @@ body.lab {
   font-size: 0.85rem;
   color: var(--text-muted);
 
-  @media (min-width: $sm) { grid-column: span 2; }
+  @media (min-width: $lg) { grid-column: span 2; }
 }
 
 .lab-status {
@@ -262,7 +269,7 @@ body.lab {
   align-items: center;
   gap: 0.65rem;
 
-  @media (min-width: $sm) { grid-column: span 4; }
+  @media (min-width: $lg) { grid-column: span 3; }
 
   h3 {
     min-width: 0;
@@ -272,12 +279,9 @@ body.lab {
     font-weight: 400;
     line-height: 1.25;
     color: var(--text-main);
-
-    @media (min-width: $sm) {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -292,11 +296,15 @@ body.lab {
 .lab-row[open] .lab-row-icon { color: var(--project-color); }
 
 .lab-row-synopsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   font-size: 0.95rem;
   line-height: 1.45;
   color: var(--text-muted);
 
-  @media (min-width: $sm) { grid-column: span 4; padding-right: 0.5rem; }
+  @media (min-width: $lg) { grid-column: span 5; padding-right: 0.5rem; }
 }
 
 .lab-row-cat {
@@ -309,12 +317,12 @@ body.lab {
 .lab-row-cat-inline {
   margin-left: auto;
 
-  @media (min-width: $sm) { display: none; }
+  @media (min-width: $lg) { display: none; }
 }
 .lab-row-cat-column {
   display: none;
 
-  @media (min-width: $sm) {
+  @media (min-width: $lg) {
     display: block;
     grid-column: span 2;
     text-align: right;
