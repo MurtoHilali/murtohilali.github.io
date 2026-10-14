@@ -6,7 +6,13 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="site-header-inner">
-    <a class="site-name" href="{{ '/' | relative_url }}"{% if _url == '/' %} aria-current="page"{% endif %}>{{ site.author.name }}</a>
+    {%- comment -%}
+      On phones the name shows as initials so the header stays on one line.
+      The full name stays in the accessibility tree either way.
+    {%- endcomment -%}
+    {%- assign name_parts = site.author.name | split: " " -%}
+    {%- capture initials -%}{%- for word in name_parts -%}{{ word | slice: 0 }}{%- endfor -%}{%- endcapture -%}
+    <a class="site-name" href="{{ '/' | relative_url }}"{% if _url == '/' %} aria-current="page"{% endif %}><span class="site-name-full">{{ site.author.name }}</span><span class="site-name-short" aria-hidden="true">{{ initials }}</span></a>
     <nav class="site-nav" aria-label="Main">
       <ul>
         <li><a href="{{ '/lab/' | relative_url }}"{% if _url == '/lab/' %} aria-current="page"{% endif %}>Lab</a></li>
