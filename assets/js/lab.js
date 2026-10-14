@@ -4,7 +4,7 @@
  * this file. This adds:
  *   - opening a row from the URL hash (/lab/#pac-maps)
  *   - the status-block clock and click-to-cycle readout
- *   - ASCII monitors in open rows and the ticker band
+ *   - the ASCII monitor in an open row
  *   - sound, off by default
  * Motion stops under prefers-reduced-motion, and the animation loop pauses
  * while the tab is hidden.
@@ -113,7 +113,7 @@
     });
   });
 
-  document.querySelectorAll('.lab-btn').forEach(function (btn) {
+  document.querySelectorAll('.lab-panel .btn').forEach(function (btn) {
     btn.addEventListener('mouseenter', function () { playSound('hover'); });
     btn.addEventListener('click', function () { playSound('click'); });
   });
@@ -190,95 +190,27 @@
     return pre ? { row: row, pre: pre, type: pre.getAttribute('data-type') } : null;
   }).filter(Boolean);
 
-  /* --------------------------------------------------------- ticker */
-
-  var TICKER_DENSITY = ' .:-=+*#%@';
-  var TICKER_TEXT = ' BIOINFORMATICS // MACHINE LEARNING // PROTEIN DESIGN // DRUG DISCOVERY // ';
-  var ALPHABET = {
-    'A': [' AAA ', 'A   A', 'AAAAA', 'A   A', 'A   A'],
-    'B': ['BBBB ', 'B   B', 'BBBB ', 'B   B', 'BBBB '],
-    'C': [' CCC ', 'C   C', 'C    ', 'C   C', ' CCC '],
-    'D': ['DDDD ', 'D   D', 'D   D', 'D   D', 'DDDD '],
-    'E': ['EEEEE', 'E    ', 'EEE  ', 'E    ', 'EEEEE'],
-    'F': ['FFFFF', 'F    ', 'FFF  ', 'F    ', 'F    '],
-    'G': [' GGG ', 'G    ', 'G  GG', 'G   G', ' GGG '],
-    'H': ['H   H', 'H   H', 'HHHHH', 'H   H', 'H   H'],
-    'I': [' III ', '  I  ', '  I  ', '  I  ', ' III '],
-    'J': ['  JJJ', '   J ', '   J ', 'J  J ', ' JJ  '],
-    'K': ['K   K', 'K  K ', 'KKK  ', 'K  K ', 'K   K'],
-    'L': ['L    ', 'L    ', 'L    ', 'L    ', 'LLLLL'],
-    'M': ['M   M', 'MM MM', 'M M M', 'M   M', 'M   M'],
-    'N': ['N   N', 'NN  N', 'N N N', 'N  NN', 'N   N'],
-    'O': [' OOO ', 'O   O', 'O   O', 'O   O', ' OOO '],
-    'P': ['PPPP ', 'P   P', 'PPPP ', 'P    ', 'P    '],
-    'Q': [' QQQ ', 'Q   Q', 'Q   Q', 'Q  QQ', ' QQ Q'],
-    'R': ['RRRR ', 'R   R', 'RRRR ', 'R  R ', 'R   R'],
-    'S': [' SSS ', 'S    ', ' SSS ', '    S', ' SSS '],
-    'T': ['TTTTT', '  T  ', '  T  ', '  T  ', '  T  '],
-    'U': ['U   U', 'U   U', 'U   U', 'U   U', ' UUU '],
-    'V': ['V   V', 'V   V', 'V   V', ' V V ', '  V  '],
-    'W': ['W   W', 'W   W', 'W W W', 'WW WW', 'W   W'],
-    'X': ['X   X', ' X X ', '  X  ', ' X X ', 'X   X'],
-    'Y': ['Y   Y', ' Y Y ', '  Y  ', '  Y  ', '  Y  '],
-    'Z': ['ZZZZZ', '   Z ', '  Z  ', ' Z   ', 'ZZZZZ'],
-    ' ': ['     ', '     ', '     ', '     ', '     '],
-    '/': ['    /', '   / ', '  /  ', ' /   ', '/    ']
-  };
-
-  var fontLines = ['', '', '', '', ''];
-  for (var c = 0; c < TICKER_TEXT.length; c++) {
-    var glyph = ALPHABET[TICKER_TEXT[c]] || ALPHABET[' '];
-    for (var j = 0; j < 5; j++) fontLines[j] += glyph[j] + '  ';
-  }
-  var tickerW = fontLines[0].length * 2; // the text twice, so the marquee loops seamlessly
-  var tickers = [document.getElementById('ticker1'), document.getElementById('ticker2')].filter(Boolean);
-
-  function tickerFrame(time) {
-    var out = '';
-    for (var y = 0; y < 5; y++) {
-      for (var x = 0; x < tickerW; x++) {
-        var isLetter = fontLines[y][x % (tickerW / 2)] !== ' ';
-        var nx = x * 0.1;
-        var ny = y * 0.2;
-        var noise = (Math.sin(nx + time) + Math.cos(ny - time * 0.8) + Math.sin(nx * 0.5 + ny * 0.5 + time * 1.5)) / 3;
-        var n = (noise + 1) / 2;
-        out += isLetter
-          ? TICKER_DENSITY[Math.min(TICKER_DENSITY.length - 1, 5 + Math.floor(n * 4.99))]
-          : TICKER_DENSITY[Math.min(TICKER_DENSITY.length - 1, Math.floor(n * 2.99))];
-      }
-      out += '\n';
-    }
-    return out;
-  }
-
   /* ------------------------------------------------- animation loop */
 
   var time = 0;
   var rafId = null;
-  var tickerVisible = true;
 
   function drawMonitors() {
     monitors.forEach(function (m) {
       if (m.row.open) m.pre.textContent = monitorFrame(m.type, time);
     });
   }
-  function drawTicker() {
-    var frame = tickerFrame(time);
-    tickers.forEach(function (t) { t.textContent = frame; });
-  }
-
   function anyMonitorOpen() {
     return monitors.some(function (m) { return m.row.open; });
   }
   function shouldAnimate() {
-    return !reduceMotion.matches && document.visibilityState === 'visible' && (tickerVisible || anyMonitorOpen());
+    return !reduceMotion.matches && document.visibilityState === 'visible' && anyMonitorOpen();
   }
 
   function tick() {
     rafId = null;
     time += 0.015;
     drawMonitors();
-    if (tickerVisible) drawTicker();
     if (shouldAnimate()) rafId = window.requestAnimationFrame(tick);
   }
   function start() {
@@ -299,25 +231,16 @@
     if (document.visibilityState === 'visible') start(); else stop();
   });
 
-  if ('IntersectionObserver' in window && tickers.length) {
-    new IntersectionObserver(function (entries) {
-      tickerVisible = entries[0].isIntersecting;
-      if (tickerVisible) start();
-    }).observe(tickers[0].parentNode.parentNode);
-  }
-
   function onMotionPreference() {
     if (reduceMotion.matches) {
       stop();
       drawMonitors();
-      drawTicker();
     } else {
       start();
     }
   }
   if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', onMotionPreference);
 
-  drawTicker();
   drawMonitors();
   start();
 

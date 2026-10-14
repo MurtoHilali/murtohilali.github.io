@@ -49,34 +49,6 @@
   margin-bottom: 1.5rem;
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.7rem 1.2rem;
-  border: 1px solid var(--border-hover);
-  border-radius: 0.5rem;
-  background-color: var(--card-bg);
-  color: var(--text-main);
-  font-size: 0.95rem;
-  font-weight: 500;
-  line-height: 1.2;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-.btn:hover {
-  border-color: var(--text-main);
-  text-decoration: none;
-  opacity: 1;
-  transform: translateY(-1px);
-}
-
-.btn-primary {
-  background-color: var(--text-main);
-  border-color: var(--text-main);
-  color: var(--bg-color);
-}
-.btn-primary:hover { background-color: var(--accent-strong); border-color: var(--accent-strong); }
-
 .hero-social {
   list-style: none;
   display: flex;
@@ -277,24 +249,6 @@
 /* Narrow cards (phones, and the 2-up grid on tablets): two spec columns */
 @container (max-width: 24rem) {
   .project-card-specs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-.chips {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0 0 1.25rem;
-  padding: 0;
-}
-.chips li {
-  margin: 0;
-  padding: 0.1rem 0.6rem;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  font-size: 0.8rem;
-  line-height: 1.6;
-  color: var(--text-muted);
 }
 
 .project-card-links {

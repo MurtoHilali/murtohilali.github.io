@@ -10,46 +10,10 @@
   font-style: normal;
 }
 
-/* =========================================
-   2. RESET & BASICS
-   ========================================= */
-*,
-:after,
-:before {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  -webkit-tap-highlight-color: transparent;
-  scroll-behavior: smooth;
-}
-
 @import "tokens";
+@import "base";
 @import "chrome";
 @import "home";
-
-body {
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  font-family: var(--font-body);
-  line-height: 1.75;
-  text-rendering: optimizeLegibility;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* LINK STYLE FIX */
-a {
-  color: var(--link-color);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  text-decoration: underline;
-  opacity: 0.8;
-}
 
 /* =========================================
    4. LAYOUT & TYPOGRAPHY
@@ -62,60 +26,11 @@ main {
   flex-direction: column;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-header);
-  font-weight: 400; 
-  color: var(--text-main);
-  line-height: 1.2;
-  margin-top: 2.5rem;   
-  margin-bottom: 1.5rem; 
-}
-
-h1 { font-size: 3rem; }
-h2 { font-size: 2.25rem; }
-h3 { font-size: 1.75rem; }
-h4 { font-size: 1.5rem; }
-
-p {
-  margin-bottom: 1.5rem;
-  font-size: 1.1rem;
-  color: var(--text-muted);
-}
-
 .post > h1.title {
   font-family: var(--font-header);
   font-size: 3rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
-}
-
-/* LIST INDENTATION FIX */
-ul, ol {
-  padding-left: 2rem;
-  margin-bottom: 1.5rem;
-}
-
-li {
-  margin-bottom: 0.5rem;
-  padding-left: 0.5rem;
-}
-
-/* IMAGE WIDTH FIX */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 2rem auto;
-  border-radius: 8px;
-}
-
-/* Blockquotes */
-blockquote {
-  font-style: italic;
-  border-left: 4px solid var(--accent-color);
-  padding-left: 1.5rem;
-  margin: 2rem 0;
-  color: var(--text-main);
 }
 
 /* =========================================
@@ -513,11 +428,6 @@ blockquote {
   }
   .about-image-wrapper { max-width: 18rem; }
 }
-
-/* Code Blocks */
-code, pre { background: var(--code-bg); }
-code { font-family: var(--font-mono); color: var(--accent-strong); }
-pre { padding: 1rem; border-radius: 0.5rem; overflow: auto; }
 
 /* Keep wide post content inside the column on phones: long inline code
    wraps, and tables scroll within their own box instead of the page. */

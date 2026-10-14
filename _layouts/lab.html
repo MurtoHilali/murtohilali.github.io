@@ -11,10 +11,14 @@
     {{ content }}
   </main>
 
+  {%- comment -%}
+    Plain text, duplicated so the marquee loops seamlessly. No JS needed.
+  {%- endcomment -%}
+  {%- assign ticker = "Bioinformatics // Machine learning // Protein design // Drug discovery // " -%}
   <div class="lab-ticker" aria-hidden="true">
-    <div class="lab-ticker-track">
-      <pre id="ticker1"></pre>
-      <pre id="ticker2"></pre>
+    <div class="lab-ticker-strip">
+      <div class="lab-ticker-track"><span>{{ ticker }}{{ ticker }}{{ ticker }}</span></div>
+      <div class="lab-ticker-track"><span>{{ ticker }}{{ ticker }}{{ ticker }}</span></div>
     </div>
   </div>
 

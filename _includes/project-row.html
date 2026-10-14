@@ -30,7 +30,7 @@
         {%- if p.stack.size > 0 %}
         <div>
           <h4 class="lab-label">Tech Stack</h4>
-          <ul class="lab-chips">
+          <ul class="chips">
             {%- for t in p.stack %}<li>{{ t }}</li>{%- endfor %}
           </ul>
         </div>
@@ -49,18 +49,18 @@
 
       <div class="lab-links">
         {%- if write_up %}
-        <a class="lab-btn lab-btn-primary" href="{{ write_up.url | relative_url }}">Read the write-up</a>
+        <a class="btn btn-primary" href="{{ write_up.url | relative_url }}">Read the write-up</a>
         {%- endif %}
         {%- for l in p.links %}
           {%- if l.post %}
             {%- unless l.post == p.post %}
               {%- assign linked = site.posts | where: "slug", l.post | first %}
               {%- if linked %}
-        <a class="lab-btn" href="{{ linked.url | relative_url }}">{{ l.label }}</a>
+        <a class="btn" href="{{ linked.url | relative_url }}">{{ l.label }}</a>
               {%- endif %}
             {%- endunless %}
           {%- else %}
-        <a class="lab-btn" href="{{ l.url }}" target="_blank" rel="noopener">{{ l.label }}<span class="visually-hidden"> (opens in a new tab)</span></a>
+        <a class="btn" href="{{ l.url }}" target="_blank" rel="noopener">{{ l.label }}<span class="visually-hidden"> (opens in a new tab)</span></a>
           {%- endif %}
         {%- endfor %}
       </div>

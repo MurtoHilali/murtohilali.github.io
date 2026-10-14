@@ -35,25 +35,28 @@
   date: "2026-10"
   status: active
   track: research
-  category: Protein Design
+  category: Antigen Discovery
   featured: false
-  summary: Antigen selection and binder design for a Cyclospora rapid antigen test.
+  summary: Choosing the surface antigen a Cyclospora rapid antigen test should target.
   details: >-
-    Picking the surface antigen a rapid antigen test should target in
-    Cyclospora cayetanensis, then designing binders against it. A Snakemake
-    pipeline transfers annotations across 44 genomes (Liftoff, gffread),
-    aligns coding sequences codon-aware (MAFFT, pal2nal) and measures
-    selection as pN/pS with SNPGenie, while SignalP, DeepTMHMM, DeepLoc 2,
-    PredGPI and InterProScan predict which proteins actually reach the
-    surface. Candidates are shortlisted where conservation, localization and
-    predicted abundance intersect — abundance from a fine-tuned protein
-    language model with calibrated uncertainty — and the shortlist feeds
-    peptide and nanobody design for a lateral-flow produce screen.
-  stack: [Snakemake, MAFFT, SNPGenie, DeepLoc 2, InterProScan, PyTorch]
+    Working out which protein a rapid antigen test for Cyclospora cayetanensis
+    should look for, as the groundwork for designing a binder against it.
+    Three notebooks so far. The first collects every C. cayetanensis assembly
+    on NCBI, drops suppressed and contaminated records, keeps what compleasm
+    scores at S ≥ 90% complete, clusters the survivors with sourmash against
+    collection year and geography, and lifts CcayRef3's annotations onto each
+    one with Liftoff. The second runs DeepLoc 2.1 across the 5,793-protein
+    reference proteome to find what reaches the cell surface. The third takes
+    the extracellular set into OrthoFinder against Toxoplasma gondii,
+    Plasmodium falciparum and P. yoelii, so PaxDB abundances in those species
+    can stand in for measurements C. cayetanensis doesn't have. What comes out
+    conserved, surface-exposed and abundant is what a peptide or nanobody
+    binder would be raised against, for a lateral-flow produce screen.
+  stack: [compleasm, sourmash, Liftoff, DeepLoc 2, OrthoFinder, PaxDB]
   specs:
-    - { label: Genomes, value: "44" }
-    - { label: Filters, value: "Conservation, Surface, Abundance" }
-    - { label: Binders, value: "Peptides, Nanobodies" }
+    - { label: Stage, value: Target Selection }
+    - { label: Proteome, value: "5,793 proteins" }
+    - { label: Outgroups, value: "T. gondii, P. falciparum, P. yoelii" }
     - { label: Readout, value: Lateral Flow }
   links: []
   post: null
