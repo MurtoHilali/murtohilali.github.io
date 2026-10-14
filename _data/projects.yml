@@ -8,6 +8,12 @@
 #   status          active | completed | archived
 #   track           research | tools | side   (groups the Lab)
 #   category        short label shown in the Lab row
+#   topics          2-3 research topics, from a shared vocabulary across projects;
+#                   the homepage card's meta line. Keep them comparable between
+#                   projects rather than precise about one
+#   result          { metric, note } for the homepage card: the single headline
+#                   outcome. Every value is also in `specs`, which the Lab shows
+#                   in full
 #   featured        true puts it on the homepage, ordered by featured_order
 #   summary         one line; the Lab synopsis and the card blurb
 #   details         the Lab's expanded paragraph
@@ -36,8 +42,12 @@
   status: active
   track: research
   category: Antigen Discovery
+  topics: [Comparative genomics, Protein design, Diagnostics]
   featured: false
   summary: Choosing the surface antigen a Cyclospora rapid antigen test should target.
+  result:
+    metric: 5,793 proteins screened
+    note: for surface exposure, then ranked by abundance borrowed from relatives
   details: >-
     Picking the surface protein a rapid antigen test for Cyclospora
     cayetanensis should target. Public assemblies are QC'd and lifted onto one
@@ -66,9 +76,13 @@
   status: active
   track: research
   category: Deep Learning
+  topics: [Deep learning, Protein structure, Benchmarking]
   featured: true
   featured_order: 1
   summary: Protein architecture classification from CATH contact maps.
+  result:
+    metric: 75.0% accuracy
+    note: across 14 CATH architectures, with whole superfamilies held out of training
   details: >-
     Classifies CATH architecture straight from structure. Each domain is
     rendered as an RGB contact map — red for inverted Cβ–Cβ distance, green for
@@ -105,9 +119,13 @@
   status: completed
   track: research
   category: Virtual Screening
+  topics: [Virtual screening, Molecular docking, Drug discovery]
   featured: true
   featured_order: 2
   summary: In silico drug discovery for Acarbose alternatives.
+  result:
+    metric: 71 candidates
+    note: pulled from the COCONUT library, docked with GNINA and ranked on CNN-VS
   details: >-
     Identified 71 natural alternatives to a $200 million drug entirely in
     silico. Screened the COCONUT natural-products database by chemical
@@ -147,9 +165,13 @@
   status: completed
   track: research
   category: Machine Learning
+  topics: [Machine learning, Dataset construction, Benchmarking]
   featured: true
   featured_order: 4
   summary: ML vs CNN for Binding-Site Detection.
+  result:
+    metric: 4 models compared
+    note: "on per-residue binding-site prediction: RF, SVM, CNN and MLP"
   details: >-
     Assembling and comparing four different ML/DL models on identifying
     peptide-protein binding sites. Built alongside a custom ML-friendly dataset
@@ -188,9 +210,13 @@
   status: completed
   track: research
   category: Bioinformatics Pipeline
+  topics: [Machine learning, Protein interactions, Structure prediction]
   featured: true
   featured_order: 3
   summary: Predicting missense mutation effects on PPIs.
+  result:
+    metric: 0.91 AUC
+    note: predicting PPI disruption, from 47,000+ AlphaFold-Multimer jobs
   details: >-
     Utilized over 47,000 SLURM jobs to generate AlphaFold-Multimer predictions
     for wild-type and mutant protein complexes. Structural features were
@@ -231,6 +257,7 @@
   status: completed
   track: tools
   category: Command Line Tool
+  topics: [Variant analysis, Tool development]
   featured: false
   summary: An open source command line tool to find P/LP and B/LB controls to test AF-M using PIONEER.
   details: >-
@@ -265,6 +292,7 @@
   status: completed
   track: tools
   category: Bioinformatics Pipeline
+  topics: [Structural bioinformatics, Variant analysis, Tool development]
   featured: false
   summary: Pipeline and command line utility for analyzing missense variant protein-protein interfaces in silico.
   details: >-
@@ -301,6 +329,7 @@
   status: completed
   track: side
   category: Web App
+  topics: [Web development, APIs]
   featured: false
   summary: A web app that checks the validity of linked sources in documents and webpages.
   details: >-
@@ -330,6 +359,7 @@
   status: completed
   track: side
   category: Illustration
+  topics: [Illustration, Design]
   featured: false
   summary: A collection of free idiom illustrations for blogs and newsletters.
   details: >-

@@ -17,17 +17,24 @@
     {%- endif %}
   </div>
   <div class="card-body">
-    <p class="project-card-meta">{{ p.category }}<span aria-hidden="true"> · </span><span class="visually-hidden">, </span>{{ p.date | slice: 0, 4 }}{% if p.status == "active" %}<span class="project-card-status">Active</span>{% endif %}</p>
+    {%- comment -%}
+      Topics, not the Lab's one-off category, so the four cards line up and a
+      reader can compare them at a glance.
+    {%- endcomment -%}
+    {%- assign topics = p.topics | default: nil -%}
+    <p class="project-card-meta">
+      {%- if topics -%}
+        {%- for t in topics -%}{{ t }}<span aria-hidden="true"> · </span><span class="visually-hidden">, </span>{%- endfor -%}
+      {%- else -%}
+        {{ p.category }}<span aria-hidden="true"> · </span><span class="visually-hidden">, </span>
+      {%- endif -%}
+      <span class="project-card-when">{{ p.date | slice: 0, 4 }}{% if p.status == "active" %}<span class="project-card-status">Active</span>{% endif %}</span>
+    </p>
     <h3 class="card-title"><a href="{% if write_up %}{{ write_up.url | relative_url }}{% else %}{{ lab_url }}{% endif %}">{{ p.headline | default: p.title }}</a></h3>
-    {%- unless p.headline %}
+    {%- if p.result %}
+    <p class="project-card-result"><strong>{{ p.result.metric }}</strong> {{ p.result.note }}</p>
+    {%- elsif p.headline == nil %}
     <p class="project-card-summary">{{ p.summary }}</p>
-    {%- endunless %}
-    {%- if p.specs.size > 0 %}
-    <dl class="project-card-specs">
-      {%- for s in p.specs limit: 3 %}
-      <div><dt>{{ s.label }}</dt><dd>{{ s.value }}</dd></div>
-      {%- endfor %}
-    </dl>
     {%- endif %}
     {%- if p.stack.size > 0 %}
     <ul class="chips" aria-label="Tools">
