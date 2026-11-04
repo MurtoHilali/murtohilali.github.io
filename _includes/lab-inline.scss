@@ -1,9 +1,10 @@
-// The Lab's stylesheet: the shared fonts, tokens, base and chrome the rest of
-// the site uses, plus the Lab's own styles. It skips _main.scss, which is the
+// The Lab's stylesheet: the shared fonts, tokens, base, chrome and project
+// cards the rest of the site uses, plus the Lab's own styles. It skips _main.scss, which is the
 // site's page-specific CSS (posts, blog, archive, about).
 @import "fonts";
 @import "tokens";
 @import "base";
 @import "chrome";
+@import "cards";
 @import "lab";
 @import "paint";

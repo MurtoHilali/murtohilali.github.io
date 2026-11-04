@@ -89,7 +89,6 @@ blockquote { border-left-width: 2px; }
 .pub-role,
 .lab-label,
 .lab-row-date,
-.lab-row-cat,
 .social-footer p {
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -295,13 +294,11 @@ body.lab {
 .lab-monitor-screen,
 .lab-ticker-strip { border-radius: 2px; }
 
-/* Epilogue runs wider than the old display serif, so row titles are set
-   smaller and may wrap rather than being cut off with an ellipsis */
+/* Row titles are the cards' headlines, so they're set smaller to fit */
 .lab-row-title h3 {
   font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  white-space: normal;
 }
 
 .lab-monitor-leds i { background-color: var(--te-orange); }
@@ -310,4 +307,16 @@ body.lab {
 /* The pulsing active dot is yellow; a black ring keeps it visible on grey */
 .lab-status-active {
   border-color: var(--text-main);
+}
+
+/* Cards / List toggle, styled like the Writing filters */
+.lab-view-toggle,
+.lab-view-toggle button {
+  border-radius: 2px;
+}
+.lab-view-toggle button {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }

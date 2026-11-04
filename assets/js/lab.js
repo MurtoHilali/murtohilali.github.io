@@ -1,8 +1,10 @@
 /*
- * Progressive extras for /lab/. The rows, details, specs and links are all
- * in the HTML (built from _data/projects.yml), so the page works without
- * this file. This adds:
- *   - opening a row from the URL hash (/lab/#pac-maps)
+ * Progressive extras for /lab/. The cards, rows, details, specs and links
+ * are all in the HTML (built from _data/projects.yml), so the page works
+ * without this file, showing the card view. This adds:
+ *   - the Cards / List toggle, remembered in localStorage
+ *   - in the list view, opening a row from the URL hash (/lab/#pac-maps);
+ *     in the card view the hash lands on the card natively
  *   - the status-block clock and click-to-cycle readout
  *   - the ASCII monitor in an open row
  *   - sound, off by default
@@ -118,16 +120,50 @@
     btn.addEventListener('click', function () { playSound('click'); });
   });
 
+  /* -------------------------------------------------------------- view */
+
+  var VIEW_KEY = 'lab-view';
+  var views = document.getElementById('lab-views');
+  var viewToggle = document.querySelector('.lab-view-toggle');
+  var viewButtons = viewToggle ? Array.prototype.slice.call(viewToggle.querySelectorAll('button[data-view]')) : [];
+
+  function currentView() {
+    return views && views.getAttribute('data-view') === 'list' ? 'list' : 'cards';
+  }
+
+  function setView(view, remember) {
+    if (!views) return;
+    views.setAttribute('data-view', view);
+    viewButtons.forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-view') === view ? 'true' : 'false');
+    });
+    if (remember) {
+      try { window.localStorage.setItem(VIEW_KEY, view); } catch (e) {}
+    }
+    refreshMonitors();
+  }
+
+  if (viewToggle && views) {
+    viewToggle.hidden = false;
+    viewButtons.forEach(function (b) {
+      b.addEventListener('click', function () {
+        playSound('click');
+        setView(b.getAttribute('data-view'), true);
+      });
+    });
+  }
+
+  // The hash is a project id. The card carries that id, so the browser
+  // scrolls to it in the card view; the list view opens row-<id> instead.
   function openFromHash() {
     var id;
     try { id = decodeURIComponent(window.location.hash.slice(1)); } catch (e) { return; }
-    if (!id) return;
-    var row = document.getElementById(id);
+    if (!id || currentView() !== 'list') return;
+    var row = document.getElementById('row-' + id);
     if (!row || !row.classList.contains('lab-row')) return;
     row.open = true;
     row.scrollIntoView({ block: 'start', behavior: reduceMotion.matches ? 'auto' : 'smooth' });
   }
-  openFromHash();
   window.addEventListener('hashchange', openFromHash);
 
   /* ----------------------------------------------------- ASCII monitors */
@@ -318,4 +354,9 @@
   window.setInterval(function () {
     if (document.visibilityState === 'visible' && performance.now() - scrambleStart >= SCRAMBLE_MS) drawStatus();
   }, 250);
+
+  // Last, once the monitors exist: sync the toggle with the view the inline
+  // script in lab.html may already have restored, then honour the hash.
+  setView(currentView(), false);
+  openFromHash();
 })();

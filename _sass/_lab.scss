@@ -142,6 +142,91 @@ body.lab {
   }
 }
 
+/* ----------------------------------------------------- views & toggle */
+
+/* Cards are the default and the only view without JavaScript; lab.js
+   reveals the toggle and switches data-view */
+.lab-views[data-view="cards"] .lab-list,
+.lab-views[data-view="list"] .lab-cards {
+  display: none;
+}
+
+.lab-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.lab-view-toggle {
+  display: inline-flex;
+  padding: 0.25rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background-color: var(--card-bg);
+
+  &[hidden] { display: none; }
+
+  button {
+    padding: 0.4rem 0.95rem;
+    border: 0;
+    border-radius: 999px;
+    background: none;
+    color: var(--text-muted);
+    font: 500 0.9rem/1.2 var(--font-body);
+    cursor: pointer;
+
+    &:hover { color: var(--text-main); }
+
+    &[aria-pressed="true"] {
+      background-color: var(--text-main);
+      color: var(--bg-color);
+    }
+  }
+}
+
+/* ------------------------------------------------------------ card view */
+
+/* No columns to line up with here, so the heading stays compact */
+.lab-cards .lab-group-title {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.project-card-details {
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.project-card-specs {
+  margin: 0 0 1.25rem;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  div:first-child { border-top: 1px solid var(--line); }
+
+  dt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-light);
+  }
+  dd {
+    margin: 0;
+    font-size: 0.95rem;
+    text-align: right;
+    color: var(--text-main);
+  }
+}
+
 /* ---------------------------------------------------------- index table */
 
 .lab-columns {
@@ -158,10 +243,8 @@ body.lab {
     text-transform: uppercase;
     color: var(--text-light);
 
-    span { grid-column: span 3; }
-    span:nth-child(3) { grid-column: span 4; }
+    span { grid-column: span 5; }
     span:first-child { grid-column: span 2; }
-    span:last-child { text-align: right; }
   }
 }
 
@@ -284,7 +367,7 @@ body.lab {
   align-items: center;
   gap: 0.65rem;
 
-  @media (min-width: $lg) { grid-column: span 3; }
+  @media (min-width: $lg) { grid-column: span 5; }
 
   h3 {
     min-width: 0;
@@ -294,9 +377,6 @@ body.lab {
     font-weight: 400;
     line-height: 1.25;
     color: var(--text-main);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 }
 
@@ -319,29 +399,9 @@ body.lab {
   line-height: 1.45;
   color: var(--text-muted);
 
-  @media (min-width: $lg) { grid-column: span 4; padding-right: 0.5rem; }
-}
+  @media (min-width: $lg) { grid-column: span 5; padding-right: 0.5rem; }
 
-.lab-row-cat {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--text-light);
-}
-.lab-row-cat-inline {
-  margin-left: auto;
-
-  @media (min-width: $lg) { display: none; }
-}
-.lab-row-cat-column {
-  display: none;
-
-  @media (min-width: $lg) {
-    display: block;
-    grid-column: span 3;   /* wide enough for "Bioinformatics Pipeline" on one line */
-    text-align: right;
-  }
+  strong { color: var(--text-main); font-weight: 600; }
 }
 
 /* ------------------------------------------------------------ open panel */

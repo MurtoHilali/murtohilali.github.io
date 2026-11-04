@@ -60,16 +60,20 @@ image loading hints at render time instead of editing them.
 - Styles are SCSS partials inlined into each page via `_includes/head.html`:
   `_fonts` (self-hosted woff2 in `assets/google_fonts/`), `_tokens` (light/dark
   custom properties), `_chrome` (header, toggle, footer, focus), then `_main` +
-  `_home` for the site, or `_lab` for the Lab.
+  `_home` + `_cards` for the site, or `_cards` + `_lab` for the Lab.
 - **The Lab** (`lab.html`, served at `/lab/`) uses `layout: lab`
-  (`_layouts/lab.html`). Rows are rendered at build time from
-  `_data/projects.yml` via `_includes/project-row.html` as native
-  `<details>`, so the page works without JS; `/lab/#<project id>` opens a row.
-  Its CSS is `_sass/_lab.scss`, scoped under `body.lab` and loaded through
-  `_includes/lab-inline.scss` (which skips `_main.scss`). `assets/js/lab.js`
-  only adds extras (status clock, ASCII monitors, ticker, sound, which is off by
-  default and creates no AudioContext until enabled). There is no Tailwind and
-  no inline `PROJECTS` array any more.
+  (`_layouts/lab.html`). It renders `_data/projects.yml` twice at build time:
+  a **card view** (the default, and the only view without JS) from
+  `_includes/project-card.html` with `full=true`, and a **list view** of native
+  `<details>` rows from `_includes/project-row.html`. A card carries the
+  project id, so `/lab/#<project id>` lands on it; rows are `row-<id>`, and
+  `assets/js/lab.js` opens the row for the hash in the list view. lab.js adds
+  the Cards / List toggle (remembered in localStorage, applied before first
+  paint by an inline script in `lab.html`) and the extras (status clock, ASCII
+  monitors, ticker, sound, which is off by default and creates no AudioContext
+  until enabled). Card styles are `_sass/_cards.scss`, shared with the
+  homepage; the Lab's own CSS is `_sass/_lab.scss`, scoped under `body.lab`.
+  Both load through `_includes/lab-inline.scss` (which skips `_main.scss`).
 - `travels.html` is still a **standalone page**: a full HTML document with
   `permalink: /travels/` and `layout: null`. `layout: null` is load-bearing,
   because `_config.yml` defaults every page to `default`. It doesn't use the

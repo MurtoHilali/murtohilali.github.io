@@ -1,14 +1,21 @@
 {%- comment -%}
-  Homepage "Selected work" card for one entry of _data/projects.yml.
-  Param: project.
+  A project card for one entry of _data/projects.yml: the homepage
+  "Selected work" grid, and the Lab's card view.
+  Params:
+    project  the entry
+    full     true on the Lab: the card also shows the details paragraph,
+             specs and every link, and carries id = project id so
+             /lab/#<id> lands on it
 {%- endcomment -%}
 {%- assign p = include.project -%}
+{%- assign full = include.full | default: false -%}
 {%- assign write_up = nil -%}
 {%- if p.post -%}{%- assign write_up = site.posts | where: "slug", p.post | first -%}{%- endif -%}
 {%- assign repo = nil -%}
 {%- for l in p.links -%}{%- if l.url contains "github.com" -%}{%- assign repo = l -%}{%- break -%}{%- endif -%}{%- endfor -%}
 {%- capture lab_url -%}{{ '/lab/' | relative_url }}#{{ p.id }}{%- endcapture -%}
-<article class="project-card" style="--project-color: {{ p.color }};">
+{%- assign name = p.headline | default: p.title -%}
+<article class="project-card{% if full %} project-card--full{% endif %}"{% if full %} id="{{ p.id }}"{% endif %} style="--project-color: {{ p.color }};">
   <div class="project-card-media{% if p.thumb and p.thumb_fit == "contain" %} project-card-media--contain{% endif %}">
     {%- if p.thumb %}
     <img src="{{ p.thumb | relative_url }}" alt="{{ p.thumb_alt | escape }}" width="{{ p.thumb_width | default: 800 }}" height="{{ p.thumb_height | default: 1200 }}" loading="lazy" decoding="async">
@@ -18,7 +25,7 @@
   </div>
   <div class="card-body">
     {%- comment -%}
-      Topics, not the Lab's one-off category, so the four cards line up and a
+      Topics, not the Lab's one-off category, so the cards line up and a
       reader can compare them at a glance.
     {%- endcomment -%}
     {%- assign topics = p.topics | default: nil -%}
@@ -30,11 +37,27 @@
       {%- endif -%}
       <span class="project-card-when">{{ p.date | slice: 0, 4 }}</span>
     </p>
-    <h3 class="card-title"><a href="{% if write_up %}{{ write_up.url | relative_url }}{% else %}{{ lab_url }}{% endif %}">{{ p.headline | default: p.title }}</a></h3>
+    {%- if write_up %}
+    <h3 class="card-title"><a href="{{ write_up.url | relative_url }}">{{ name }}</a></h3>
+    {%- elsif full %}
+    <h3 class="card-title">{{ name }}</h3>
+    {%- else %}
+    <h3 class="card-title"><a href="{{ lab_url }}">{{ name }}</a></h3>
+    {%- endif %}
     {%- if p.result %}
     <p class="project-card-result"><strong>{{ p.result.metric }}</strong> {{ p.result.note }}</p>
-    {%- elsif p.headline == nil %}
+    {%- elsif full or p.headline == nil %}
     <p class="project-card-summary">{{ p.summary }}</p>
+    {%- endif %}
+    {%- if full %}
+    <p class="project-card-details">{{ p.details }}</p>
+    {%- if p.specs.size > 0 %}
+    <dl class="project-card-specs">
+      {%- for s in p.specs %}
+      <div><dt>{{ s.label }}</dt><dd>{{ s.value }}</dd></div>
+      {%- endfor %}
+    </dl>
+    {%- endif %}
     {%- endif %}
     {%- if p.stack.size > 0 %}
     <ul class="chips" aria-label="Tools">
@@ -43,12 +66,29 @@
     {%- endif %}
     <p class="project-card-links">
       {%- if write_up %}
-      <a href="{{ write_up.url | relative_url }}">Read the write-up<span class="visually-hidden">: {{ p.headline | default: p.title }}</span> <span aria-hidden="true">→</span></a>
-      {%- else %}
-      <a href="{{ lab_url }}">Details in the Lab<span class="visually-hidden">: {{ p.headline | default: p.title }}</span> <span aria-hidden="true">→</span></a>
+      <a href="{{ write_up.url | relative_url }}">Read the write-up<span class="visually-hidden">: {{ name }}</span> <span aria-hidden="true">→</span></a>
+      {%- elsif full == false %}
+      <a href="{{ lab_url }}">Details in the Lab<span class="visually-hidden">: {{ name }}</span> <span aria-hidden="true">→</span></a>
       {%- endif %}
-      {%- if repo %}
-      <a href="{{ repo.url }}">Code<span class="visually-hidden"> for {{ p.headline | default: p.title }} on GitHub</span> <span aria-hidden="true">↗</span></a>
+      {%- if full %}
+        {%- for l in p.links %}
+          {%- if l.post %}
+            {%- unless l.post == p.post %}
+              {%- assign linked = site.posts | where: "slug", l.post | first %}
+              {%- if linked %}
+      <a href="{{ linked.url | relative_url }}">{{ l.label }} <span aria-hidden="true">→</span></a>
+              {%- endif %}
+            {%- endunless %}
+          {%- else %}
+      <a href="{{ l.url }}">{{ l.label }}<span class="visually-hidden"> for {{ name }}</span> <span aria-hidden="true">↗</span></a>
+          {%- endif %}
+        {%- endfor %}
+        {%- if p.figure %}
+          {%- if p.figure_link %}{% assign figure_href = p.figure_link | relative_url %}{% else %}{% assign figure_href = p.figure | relative_url %}{% endif %}
+      <a href="{{ figure_href }}">Figure<span class="visually-hidden">: {{ p.figure_caption | default: name }}</span> <span aria-hidden="true">↗</span></a>
+        {%- endif %}
+      {%- elsif repo %}
+      <a href="{{ repo.url }}">Code<span class="visually-hidden"> for {{ name }} on GitHub</span> <span aria-hidden="true">↗</span></a>
       {%- endif %}
     </p>
   </div>

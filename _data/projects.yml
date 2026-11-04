@@ -4,18 +4,20 @@
 # Fields
 #   id              stable slug; the anchor on /lab/#<id>
 #   title, date     date is YYYY-MM
-#   headline        optional, longer title for the homepage card (falls back to title)
+#   headline        optional, longer title for the homepage and Lab cards and the
+#                   Lab list (falls back to title)
 #   status          active | completed | archived
 #   track           research | tools | side   (groups the Lab)
-#   category        short label shown in the Lab row
+#   category        short label; the card meta line when there are no topics
 #   topics          2-3 research topics, from a shared vocabulary across projects;
 #                   the homepage card's meta line. Keep them comparable between
 #                   projects rather than precise about one
-#   result          { metric, note } for the homepage card: the single headline
+#   result          { metric, note } for the cards and the Lab list: the single headline
 #                   outcome. Every value is also in `specs`, which the Lab shows
 #                   in full
 #   featured        true puts it on the homepage, ordered by featured_order
-#   summary         one line; the Lab synopsis and the card blurb
+#   summary         one line; the card blurb and the Lab list's synopsis when
+#                   there is no `result`
 #   details         the Lab's expanded paragraph
 #   stack           list of tools, shown as chips
 #   specs           ordered list of { label, value }; cards show the first three
@@ -38,6 +40,7 @@
 
 - id: cyclospora-rat
   title: Cyclospora RAT Binders
+  headline: "Choosing the surface antigen for a Cyclospora rapid antigen test"
   date: "2026-10"
   status: active
   track: research
@@ -253,6 +256,7 @@
 
 - id: vici
   title: VICI
+  headline: "VICI: in silico controls for PPI variants"
   date: "2023-09"
   status: completed
   track: tools
@@ -288,6 +292,7 @@
 
 - id: damia
   title: DAMIA
+  headline: "DAMIA: disease-associated missense interactome analysis"
   date: "2023-04"
   status: completed
   track: tools
@@ -325,6 +330,7 @@
 
 - id: hyperjudge
   title: Hyperjudge
+  headline: "Hyperjudge: a source-checking tool for document validity"
   date: "2024-05"
   status: completed
   track: side
@@ -355,6 +361,7 @@
 
 - id: idiomics
   title: Idiomics
+  headline: "Idiomics: hand-drawn idiom illustrations"
   date: "2022-03"
   status: completed
   track: side

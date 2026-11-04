@@ -1,25 +1,25 @@
 {%- comment -%}
-  One Lab row for an entry of _data/projects.yml: a native <details> so it
-  opens without JavaScript, with id = project id for /lab/#<id> deep links.
+  One row of the Lab's list view for an entry of _data/projects.yml: a
+  native <details> so it opens without JavaScript. Its id is row-<project
+  id>; the bare project id belongs to the card, and assets/js/lab.js opens
+  the row for /lab/#<id> when the list view is showing.
   Param: project.
 {%- endcomment -%}
 {%- assign p = include.project -%}
 {%- assign write_up = nil -%}
 {%- if p.post -%}{%- assign write_up = site.posts | where: "slug", p.post | first -%}{%- endif -%}
-<details class="lab-row" id="{{ p.id }}" name="lab-projects" style="--project-color: {{ p.color }};">
+<details class="lab-row" id="row-{{ p.id }}" name="lab-projects" style="--project-color: {{ p.color }};">
   <summary class="lab-row-head">
     <span class="lab-row-date">
       <span class="lab-status lab-status-{{ p.status }}" aria-hidden="true"></span>
       <span class="visually-hidden">{{ p.status | capitalize }},</span>
       <time datetime="{{ p.date }}">{{ p.date | replace: "-", "." }}</time>
-      <span class="lab-row-cat lab-row-cat-inline">{{ p.category }}</span>
     </span>
     <span class="lab-row-title">
       {% include pixel-icon.html name=p.icon class="lab-row-icon" %}
-      <h3>{{ p.title }}</h3>
+      <h3>{{ p.headline | default: p.title }}</h3>
     </span>
-    <span class="lab-row-synopsis">{{ p.summary }}</span>
-    <span class="lab-row-cat lab-row-cat-column">{{ p.category }}</span>
+    <span class="lab-row-synopsis">{% if p.result %}<strong>{{ p.result.metric }}</strong> {{ p.result.note }}{% else %}{{ p.summary }}{% endif %}</span>
   </summary>
 
   <div class="lab-panel">

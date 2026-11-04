@@ -9,9 +9,13 @@ description: >-
   write-ups for each.
 ---
 {%- comment -%}
-  Every row is rendered here at build time from _data/projects.yml, so the
-  page works with JavaScript off. assets/js/lab.js only adds the extras:
-  the status clock, ASCII monitors, ticker, sound, and opening /lab/#<id>.
+  Two views of _data/projects.yml, both rendered here at build time: cards
+  (the default, and the only view without JavaScript) and a list of
+  expandable rows. assets/js/lab.js adds the Cards / List toggle and
+  remembers the choice, plus the extras: the status clock, ASCII monitors,
+  ticker, sound, and opening a row for /lab/#<id> in the list view.
+  The inline script applies a remembered "list" before first paint; it
+  can't use // comments (see the compress layout).
 {%- endcomment -%}
 <header class="lab-masthead">
   <div>
@@ -35,14 +39,18 @@ TIME: --:--:--</span>
   </div>
 </header>
 
-<div class="lab-columns" aria-hidden="true">
-  <span>Date / Status</span>
-  <span>Project Title</span>
-  <span>Synopsis</span>
-  <span>Category</span>
+<div class="lab-toolbar">
+  <div class="lab-view-toggle" role="group" aria-label="View" hidden>
+    <button type="button" data-view="cards" aria-pressed="true">Cards</button>
+    <button type="button" data-view="list" aria-pressed="false">List</button>
+  </div>
 </div>
 
 {%- assign tracks = "research:Research|tools:Tools|side:Side projects" | split: "|" %}
+<div class="lab-views" id="lab-views" data-view="cards">
+<script>try{if(localStorage.getItem('lab-view')==='list')document.getElementById('lab-views').setAttribute('data-view','list')}catch(e){}</script>
+
+<div class="lab-cards">
 {%- for t in tracks %}
   {%- assign track_key = t | split: ":" | first %}
   {%- assign track_label = t | split: ":" | last %}
@@ -50,9 +58,35 @@ TIME: --:--:--</span>
   {%- if group.size > 0 %}
 <section class="lab-group" aria-labelledby="track-{{ track_key }}">
   <h2 class="lab-group-title" id="track-{{ track_key }}"><span class="lab-group-num" aria-hidden="true">0{{ forloop.index }} //</span> <span class="lab-group-name">{{ track_label }}</span></h2>
+  <div class="project-grid">
+    {%- for p in group %}
+    {% include project-card.html project=p full=true %}
+    {%- endfor %}
+  </div>
+</section>
+  {%- endif %}
+{%- endfor %}
+</div>
+
+<div class="lab-list">
+<div class="lab-columns" aria-hidden="true">
+  <span>Date / Status</span>
+  <span>Project</span>
+  <span>Synopsis</span>
+</div>
+
+{%- for t in tracks %}
+  {%- assign track_key = t | split: ":" | first %}
+  {%- assign track_label = t | split: ":" | last %}
+  {%- assign group = site.data.projects | where: "track", track_key %}
+  {%- if group.size > 0 %}
+<section class="lab-group" aria-labelledby="list-track-{{ track_key }}">
+  <h2 class="lab-group-title" id="list-track-{{ track_key }}"><span class="lab-group-num" aria-hidden="true">0{{ forloop.index }} //</span> <span class="lab-group-name">{{ track_label }}</span></h2>
   {%- for p in group %}
   {% include project-row.html project=p %}
   {%- endfor %}
 </section>
   {%- endif %}
 {%- endfor %}
+</div>
+</div>
