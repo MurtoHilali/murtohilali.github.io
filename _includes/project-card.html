@@ -3,9 +3,9 @@
   "Selected work" grid, and the Lab's card view.
   Params:
     project  the entry
-    full     true on the Lab: the card also shows the details paragraph,
-             specs and every link, and carries id = project id so
-             /lab/#<id> lands on it
+    full     true on the Lab: the card shows the details paragraph in place
+             of the result line, plus specs and every link, and carries
+             id = project id so /lab/#<id> lands on it
 {%- endcomment -%}
 {%- assign p = include.project -%}
 {%- assign full = include.full | default: false -%}
@@ -44,11 +44,16 @@
     {%- else %}
     <h3 class="card-title"><a href="{{ lab_url }}">{{ name }}</a></h3>
     {%- endif %}
+    {%- comment -%}
+      The Lab card shows the details paragraph instead of the result line.
+    {%- endcomment -%}
+    {%- unless full %}
     {%- if p.result %}
     <p class="project-card-result"><strong>{{ p.result.metric }}</strong> {{ p.result.note }}</p>
-    {%- elsif full or p.headline == nil %}
+    {%- elsif p.headline == nil %}
     <p class="project-card-summary">{{ p.summary }}</p>
     {%- endif %}
+    {%- endunless %}
     {%- if full %}
     <p class="project-card-details">{{ p.details }}</p>
     {%- if p.specs.size > 0 %}
