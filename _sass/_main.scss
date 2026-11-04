@@ -436,4 +436,15 @@ main {
   display: block;
   max-width: 100%;
   overflow-x: auto;
+  border-collapse: collapse;
+  margin: 0 0 1.5rem;
+  font-size: 0.95em;
+  font-variant-numeric: tabular-nums;
 }
+.post th,
+.post td {
+  padding: 0.4rem 1rem 0.4rem 0;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+.post th { border-bottom-color: var(--border-hover); }

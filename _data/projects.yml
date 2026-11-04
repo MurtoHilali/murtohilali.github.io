@@ -81,23 +81,23 @@
   featured_order: 1
   summary: Protein architecture classification from CATH contact maps.
   result:
-    metric: 75.0% accuracy
-    note: across 14 CATH architectures, with whole superfamilies held out of training
+    metric: 74% balanced accuracy
+    note: across 14 CATH architectures on held-out superfamilies, level with Foldseek
   details: >-
     Classifies CATH architecture straight from structure. Each domain is
     rendered as an RGB contact map — red for inverted Cβ–Cβ distance, green for
     helix–helix pairs, blue for strand–strand pairs — and read by a dilated
     CoordConv residual CNN. Benchmarked out-of-distribution by vaulting whole
     superfamilies out of training, the way DockGen and Chainsaw do.
-  stack: [fastai, PyTorch, biotite, W&B]
+  stack: [fastai, PyTorch, biotite, Foldseek, W&B]
   specs:
-    - { label: Test Accuracy, value: "75.0%" }
-    - { label: Balanced Acc., value: "68.3%" }
+    - { label: Balanced Acc., value: "74 ± 4%" }
+    - { label: Foldseek, value: "75 ± 5%" }
     - { label: Classes, value: 14 Architectures }
     - { label: Benchmark, value: Held-out Superfamilies }
   links:
     - { label: GitHub Repo, url: "https://github.com/MurtoHilali/pac-maps" }
-  post: null
+  post: pac-maps
   thumb: /img/projects/pac-maps-card.webp   # three panels of figures/prediction_gallery.png
   thumb_alt: "Three RGB contact maps: a helix-rich orthogonal bundle (green blocks), a 7-bladed propeller (blue) and a beta barrel (purple)"
   thumb_width: 1000

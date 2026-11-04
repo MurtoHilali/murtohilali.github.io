@@ -34,7 +34,9 @@ no_anchors: true
       <p>I'm currently working on:</p>
       <ul>
         {%- for p in active %}
-        <li><a href="{{ '/lab/' | relative_url }}#{{ p.id }}">{{ p.title }}</a>: {{ p.summary }}</li>
+        {%- assign write_up = nil %}
+        {%- if p.post %}{% assign write_up = site.posts | where: "slug", p.post | first %}{% endif %}
+        <li><a href="{% if write_up %}{{ write_up.url | relative_url }}{% else %}{{ '/lab/' | relative_url }}#{{ p.id }}{% endif %}">{{ p.title }}</a>: {{ p.summary }}</li>
         {%- endfor %}
       </ul>
       {%- endif %}
