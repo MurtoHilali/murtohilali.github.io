@@ -213,15 +213,6 @@ a:hover { opacity: 1; }
 }
 .search-article input:focus { outline: none; border-color: var(--te-orange); }
 
-/* Active badge: a yellow tag with black text */
-.project-card-status {
-  border-radius: 2px;
-  border-color: var(--te-yellow);
-  background: var(--te-yellow);
-  color: #000;
-  font-size: 0.68rem;
-}
-
 /* ------------------------------------------------ specimens & plates */
 
 img { border-radius: 2px; }

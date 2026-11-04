@@ -190,19 +190,7 @@
   color: var(--text-muted);
 }
 
-/* The year and the badge wrap together, never apart */
 .project-card-when { white-space: nowrap; }
-
-.project-card-status {
-  display: inline-block;
-  margin-left: 0.4rem;
-  padding: 0 0.45rem;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  line-height: 1.5;
-  color: var(--status-active);
-}
 
 .card-title {
   font-size: 1.75rem;
