@@ -6,7 +6,8 @@
 
    After Teenage Engineering and industrial-lab minimalism:
    - things shown like specimens on flat grey (#F5F5F5 page, #E5E5E5 panels)
-   - small functional hits of signal orange and yellow, never colour fields
+   - small functional hits of signal orange, yellow and electric blue,
+     never colour fields
    - tiny, precise technical labels (mono, uppercase, tracked)
    - square-ish corners, hairline rules, no soft shadows
    Tokens live in _tokens.scss; this file only uses them.
@@ -115,7 +116,7 @@ main { counter-reset: te-section; }
 
 a:hover { opacity: 1; }
 
-/* Running-text links: black, underlined in signal orange */
+/* Running-text links: black, underlined in electric blue */
 .post p a,
 .post li a,
 .post td a,
@@ -125,7 +126,7 @@ a:hover { opacity: 1; }
 .hero-bio a {
   color: var(--text-main);
   text-decoration: underline;
-  text-decoration-color: var(--te-orange);
+  text-decoration-color: var(--te-blue);
   text-decoration-thickness: 2px;
   text-underline-offset: 0.2em;
 }
@@ -135,7 +136,7 @@ a:hover { opacity: 1; }
 .about p a:hover,
 .about li a:hover,
 .hero-bio a:hover {
-  color: var(--accent-strong);
+  color: var(--te-blue);
 }
 
 /* Arrows on action links are the orange bit */
@@ -144,7 +145,7 @@ a:hover { opacity: 1; }
   color: var(--te-orange);
 }
 
-:focus-visible { outline-color: var(--te-orange); }
+:focus-visible { outline-color: var(--te-blue); }
 
 /* ----------------------------------------------------------- header */
 

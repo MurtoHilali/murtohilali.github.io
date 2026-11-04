@@ -11,11 +11,12 @@ html[data-theme="light"] {
   --font-ui: var(--font-header);  /* nav, buttons, chips: Epilogue, not the body serif */
   --font-mono: 'Inconsolata', monospace;
 
-  /* Signal colours, the same in both themes. Small accents only: dots,
-     rules, focus rings, hover fills. Orange is 3:1 on the light background,
-     so text in it uses --accent-strong; yellow carries black text. */
+  /* Signal colours. Small accents only: dots, rules, focus rings, hover
+     fills. Orange is 3:1 on the light background, so text in it uses
+     --accent-strong; yellow carries black text; blue marks links. */
   --te-orange: #F05A24;
   --te-yellow: #FAB413;
+  --te-blue: #1F4BFF;    /* electric blue for link underlines; 4.7:1 on the panels */
 
   /* Palette: black on flat product grey */
   --bg-color: #F5F5F5;   /* product background */
@@ -118,6 +119,7 @@ html[data-theme="dark"] {
   --status-active: var(--te-yellow);
 
   --link-color: #F5F5F5;
+  --te-blue: #4D8DFF;    /* the light-theme blue is 3:1 on black; this is 5.8:1 */
 
   --code-bg: #141414;
 
