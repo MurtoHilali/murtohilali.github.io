@@ -155,17 +155,7 @@ a:hover { opacity: 1; }
   font-weight: 700;
   letter-spacing: -0.02em;
 }
-.site-name::before {
-  content: "";
-  display: inline-block;
-  width: 0.55em;
-  height: 0.55em;
-  margin-right: 0.5em;
-  background: var(--te-orange);
-  vertical-align: 0.05em;
-}
 .site-name:hover { color: var(--text-main); }
-.site-name:hover::before { background: var(--te-yellow); }
 
 .site-nav a {
   font-size: 0.78rem;
@@ -230,10 +220,14 @@ a:hover { opacity: 1; }
 img { border-radius: 2px; }
 pre { border-radius: 2px; }
 
-.project-card { border-radius: 4px; }
+/* Cards cast a hard black shadow, like a plate standing off the page */
+.project-card {
+  border-radius: 10px;
+  box-shadow: 4px 4px 0 0 #000;
+}
 .project-card:hover {
   border-color: var(--border-hover);
-  box-shadow: none;
+  box-shadow: 6px 6px 0 0 #000;
 }
 .project-card-result strong { font-family: var(--font-header); }
 
@@ -253,10 +247,11 @@ pre { border-radius: 2px; }
   background-color: var(--te-orange);
   border-radius: 4px;
 }
-.hero-img {
+.hero-img,
+.hero-image-wrapper:hover .hero-img {
   border-radius: 4px;
   box-shadow: none;
-  filter: grayscale(100%);
+  filter: none;
 }
 
 /* ------------------------------------------------------------ lab */
