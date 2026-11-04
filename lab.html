@@ -49,7 +49,7 @@ TIME: --:--:--</span>
   {%- assign group = site.data.projects | where: "track", track_key %}
   {%- if group.size > 0 %}
 <section class="lab-group" aria-labelledby="track-{{ track_key }}">
-  <h2 class="lab-group-title" id="track-{{ track_key }}"><span aria-hidden="true">0{{ forloop.index }} //</span> {{ track_label }}</h2>
+  <h2 class="lab-group-title" id="track-{{ track_key }}"><span class="lab-group-num" aria-hidden="true">0{{ forloop.index }} //</span> <span class="lab-group-name">{{ track_label }}</span></h2>
   {%- for p in group %}
   {% include project-row.html project=p %}
   {%- endfor %}

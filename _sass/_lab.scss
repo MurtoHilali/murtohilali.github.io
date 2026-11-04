@@ -151,7 +151,7 @@ body.lab {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 1rem;
-    padding: 0 0.75rem 0.75rem;
+    padding: 0 0.75rem 1.25rem;
     font-family: var(--font-mono);
     font-size: 0.8rem;
     letter-spacing: 0.08em;
@@ -159,9 +159,8 @@ body.lab {
     color: var(--text-light);
 
     span { grid-column: span 3; }
-    span:nth-child(3) { grid-column: span 5; }
-    span:first-child,
-    span:last-child { grid-column: span 2; }
+    span:nth-child(3) { grid-column: span 4; }
+    span:first-child { grid-column: span 2; }
     span:last-child { text-align: right; }
   }
 }
@@ -178,12 +177,28 @@ body.lab {
   font-size: 1.5rem;
   border-bottom: 1px solid var(--text-main);
 
-  span {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    color: var(--text-light);
+  /* On the wide table the heading sits on the rows' 12-column grid: the
+     number under Date / Status, the name under Project Title, in line
+     with the titles below it */
+  @media (min-width: $lg) {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: baseline;
   }
+}
+
+.lab-group-num {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--text-light);
+
+  @media (min-width: $lg) { grid-column: span 2; }
+}
+
+.lab-group-name {
+  @media (min-width: $lg) { grid-column: span 10; }
 }
 
 /* ------------------------------------------------------------------ rows */
@@ -304,7 +319,7 @@ body.lab {
   line-height: 1.45;
   color: var(--text-muted);
 
-  @media (min-width: $lg) { grid-column: span 5; padding-right: 0.5rem; }
+  @media (min-width: $lg) { grid-column: span 4; padding-right: 0.5rem; }
 }
 
 .lab-row-cat {
@@ -324,7 +339,7 @@ body.lab {
 
   @media (min-width: $lg) {
     display: block;
-    grid-column: span 2;
+    grid-column: span 3;   /* wide enough for "Bioinformatics Pipeline" on one line */
     text-align: right;
   }
 }
