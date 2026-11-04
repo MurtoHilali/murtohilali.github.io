@@ -1,0 +1,299 @@
+/* =========================================
+   PAINT (experiment/te-paint)
+   A coat of paint over the existing layout, loaded last by both the site
+   (_main.scss) and the Lab (_includes/lab-inline.scss). Nothing here moves
+   or restructures anything: it sets type, colour and finish.
+
+   After Teenage Engineering and industrial-lab minimalism:
+   - things shown like specimens on flat grey (#F5F5F5 page, #E5E5E5 panels)
+   - small functional hits of signal orange and yellow, never colour fields
+   - tiny, precise technical labels (mono, uppercase, tracked)
+   - square-ish corners, hairline rules, no soft shadows
+   Tokens live in _tokens.scss; this file only uses them.
+   ========================================= */
+
+/* ------------------------------------------------------------ type */
+
+body {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+p { font-size: 1rem; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.3rem; }
+h4 { font-size: 1.1rem; }
+
+.post > h1.title { font-size: 2.5rem; }
+
+.hero-title {
+  font-size: 3.25rem;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+.hero-lede {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+.hero-bio { font-size: 1rem; }
+
+.card-title { font-size: 1.35rem; }
+.blog-title { font-size: 1.3rem; }
+.pub-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.lab-title { font-size: 2.5rem; }
+
+blockquote { border-left-width: 2px; }
+
+::selection {
+  background: var(--te-yellow);
+  color: #000;
+}
+
+/* UI text is Epilogue, so the serif stays for reading */
+.site-header,
+.skip-link,
+.btn,
+.writing-filter,
+.search-article input,
+.section-more,
+.section-header-link,
+.project-card-links,
+.social-footer .footer-links,
+.post-nav-minimal,
+.lab-links,
+.lab-sound {
+  font-family: var(--font-ui);
+}
+
+/* ------------------------------------------------ technical labels */
+
+.project-card-meta,
+.post-date,
+.post-readtime,
+.blog-meta,
+.blog-tag,
+.post > .meta,
+.pub-role,
+.lab-label,
+.lab-row-date,
+.lab-row-cat,
+.social-footer p {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.post > .meta { color: var(--text-light); }
+
+/* Homepage sections are numbered like panels on a device: 01, 02 ... */
+main { counter-reset: te-section; }
+.home-section { counter-increment: te-section; }
+.home-section .section-header h2::before {
+  content: counter(te-section, decimal-leading-zero);
+  display: block;
+  margin-bottom: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--accent-strong);
+}
+
+/* ------------------------------------------------------------ links */
+
+a:hover { opacity: 1; }
+
+/* Running-text links: black, underlined in signal orange */
+.post p a,
+.post li a,
+.post td a,
+.post blockquote a,
+.about p a,
+.about li a,
+.hero-bio a {
+  color: var(--text-main);
+  text-decoration: underline;
+  text-decoration-color: var(--te-orange);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+.post p a:hover,
+.post li a:hover,
+.post td a:hover,
+.about p a:hover,
+.about li a:hover,
+.hero-bio a:hover {
+  color: var(--accent-strong);
+}
+
+/* Arrows on action links are the orange bit */
+.project-card-links a [aria-hidden="true"],
+.section-more a [aria-hidden="true"] {
+  color: var(--te-orange);
+}
+
+:focus-visible { outline-color: var(--te-orange); }
+
+/* ----------------------------------------------------------- header */
+
+.site-name {
+  font-family: var(--font-header);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.site-name::before {
+  content: "";
+  display: inline-block;
+  width: 0.55em;
+  height: 0.55em;
+  margin-right: 0.5em;
+  background: var(--te-orange);
+  vertical-align: 0.05em;
+}
+.site-name:hover { color: var(--text-main); }
+.site-name:hover::before { background: var(--te-yellow); }
+
+.site-nav a {
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.site-nav a[aria-current] {
+  text-decoration-color: var(--te-orange);
+  text-decoration-thickness: 2px;
+}
+
+/* ------------------------------------------------- controls & chips */
+
+.btn {
+  border-radius: 2px;
+  border-color: var(--text-main);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.btn:hover { transform: none; }
+.btn-primary:hover {
+  background-color: var(--te-orange);
+  border-color: var(--te-orange);
+  color: #000;
+}
+
+.chips li {
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.blog-tag { border-radius: 2px; }
+
+.writing-filters,
+.writing-filter,
+.search-article input {
+  border-radius: 2px;
+}
+.writing-filter {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.search-article input:focus { outline: none; border-color: var(--te-orange); }
+
+/* Active badge: a yellow tag with black text */
+.project-card-status {
+  border-radius: 2px;
+  border-color: var(--te-yellow);
+  background: var(--te-yellow);
+  color: #000;
+  font-size: 0.68rem;
+}
+
+/* ------------------------------------------------ specimens & plates */
+
+img { border-radius: 2px; }
+pre { border-radius: 2px; }
+
+.project-card { border-radius: 4px; }
+.project-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: none;
+}
+.project-card-result strong { font-family: var(--font-header); }
+
+/* Projects without a thumb sit on a grey plate, the icon in its own colour */
+.project-card-media:not(:has(img)) { background-color: var(--bg-color); }
+.project-card-tile {
+  color: var(--project-color);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+}
+.project-card-tile .pixel-icon { filter: none; }
+
+.blog-thumb { border-radius: 2px; }
+
+.hero-bg-tilt {
+  background-color: var(--te-orange);
+  border-radius: 4px;
+}
+.hero-img {
+  border-radius: 4px;
+  box-shadow: none;
+  filter: grayscale(100%);
+}
+
+/* ------------------------------------------------------------ lab */
+
+body.lab {
+  --lab-screen: #0d0d0d;
+  --lab-phosphor: var(--te-yellow);  /* amber readout instead of green */
+}
+.lab-readout-text { text-shadow: 0 0 8px rgba(250, 180, 19, 0.45); }
+
+.lab-readout-screen,
+.lab-readout-screen:hover,
+.lab-monitor-screen {
+  box-shadow: none;
+}
+.lab-readout-screen { border-radius: 4px; }
+.lab-sound { border-radius: 2px; }
+.lab-row-head { border-radius: 2px; }
+.lab-row[open] > .lab-row-head { border-radius: 2px 2px 0 0; }
+.lab-panel { border-radius: 0 0 2px 2px; }
+.lab-figure,
+.lab-monitor { border-radius: 4px; }
+.lab-monitor-screen,
+.lab-ticker-strip { border-radius: 2px; }
+
+/* Epilogue runs wider than the old display serif, so row titles are set
+   smaller and may wrap rather than being cut off with an ellipsis */
+.lab-row-title h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: normal;
+}
+
+.lab-monitor-leds i { background-color: var(--te-orange); }
+.lab-monitor-leds i + i { background-color: var(--te-yellow); }
+
+/* The pulsing active dot is yellow; a black ring keeps it visible on grey */
+.lab-status-active {
+  border-color: var(--text-main);
+}

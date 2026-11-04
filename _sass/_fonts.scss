@@ -3,30 +3,33 @@
    Self-hosted latin subsets in assets/google_fonts/ (all SIL OFL), fetched
    from Google Fonts. Root-relative URLs because this CSS is inlined into
    each page.
+
+   Epilogue (headlines and UI labels) and Libre Baskerville (body) are
+   variable fonts, so one file covers every weight.
    ========================================= */
 
 @font-face {
-  font-family: 'Inter';
+  font-family: 'Epilogue';
   font-style: normal;
-  font-weight: 300 600;
+  font-weight: 100 900;
   font-display: swap;
-  src: url('/assets/google_fonts/inter-latin.woff2') format('woff2');
+  src: url('/assets/google_fonts/epilogue-latin.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Instrument Serif';
+  font-family: 'Libre Baskerville';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 700;
   font-display: swap;
-  src: url('/assets/google_fonts/instrument-serif-latin.woff2') format('woff2');
+  src: url('/assets/google_fonts/libre-baskerville-latin.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Instrument Serif';
+  font-family: 'Libre Baskerville';
   font-style: italic;
-  font-weight: 400;
+  font-weight: 400 700;
   font-display: swap;
-  src: url('/assets/google_fonts/instrument-serif-italic-latin.woff2') format('woff2');
+  src: url('/assets/google_fonts/libre-baskerville-italic-latin.woff2') format('woff2');
 }
 
 @font-face {

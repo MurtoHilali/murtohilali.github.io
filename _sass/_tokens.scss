@@ -1,34 +1,40 @@
 /* =========================================
-   THEME TOKENS (STONE PALETTE + LEGACY MAPPING)
+   THEME TOKENS (TE GREYS + SIGNAL ACCENTS, LEGACY MAPPING)
    Shared by the site and the Lab. The Lab remaps some of them to its own
    palette in _sass/_lab.scss.
    ========================================= */
 html,
 html[data-theme="light"] {
   /* Fonts */
-  --font-body: 'Inter', sans-serif;
-  --font-header: 'Instrument Serif', serif;
+  --font-body: 'Libre Baskerville', Baskerville, 'Baskerville Old Face', Georgia, serif;
+  --font-header: 'Epilogue', 'Helvetica Neue', Arial, sans-serif;
+  --font-ui: var(--font-header);  /* nav, buttons, chips: Epilogue, not the body serif */
   --font-mono: 'Inconsolata', monospace;
 
-  /* NEW Palette (Stone-50) */
-  --bg-color: #fafaf9; 
-  --text-main: #292524; /* Stone-800 */
-  --text-muted: #57534e; /* Stone-600 - Darkened for better readability */
-  --text-light: #706a65; /* 5:1 on the page and code backgrounds (was Stone-400, 2.4:1) */
-  
-  --border-color: #e7e5e4; /* Stone-200 */
-  --line: #e7e5e4; /* Rules and outlines that sit on cards */
-  --border-hover: #a8a29e;
-  
-  --card-bg: #ffffff;
-  --accent-color: #ea580c; /* Orange-600 */
-  --accent-strong: #c2410c; /* Orange-700: accent text that passes 4.5:1 */
-  --status-active: #15803d; /* Green-700 */
-  
-  /* LINK COLOR FIX: Blue as requested */
-  --link-color: rgb(50, 87, 209); 
-  
-  --code-bg: #f5f5f4;
+  /* Signal colours, the same in both themes. Small accents only: dots,
+     rules, focus rings, hover fills. Orange is 3:1 on the light background,
+     so text in it uses --accent-strong; yellow carries black text. */
+  --te-orange: #F05A24;
+  --te-yellow: #FAB413;
+
+  /* Palette: black on flat product grey */
+  --bg-color: #F5F5F5;   /* product background */
+  --text-main: #000000;
+  --text-muted: #4a4a4a; /* 7:1 on the Grey 100 panels */
+  --text-light: #5e5e5e; /* 5:1 on the Grey 100 panels */
+
+  --border-color: #dcdcdc;
+  --line: #c6c6c6;       /* rules and outlines that sit on panels */
+  --border-hover: #000000;
+
+  --card-bg: #E5E5E5;    /* Grey 100: light panels */
+  --accent-color: var(--te-orange);
+  --accent-strong: #a8360b; /* orange text that passes 4.5:1 on the panels */
+  --status-active: var(--te-yellow);
+
+  --link-color: #000000; /* links are black, underlined in orange */
+
+  --code-bg: #E5E5E5;
 
   /* MAPPING LEGACY VARIABLES */
   --main-text-color: var(--text-main);
@@ -42,7 +48,7 @@ html[data-theme="light"] {
   --header-font: var(--font-header);
   --source-code-font: var(--font-mono);
   
-  --theme-ui-colors-toggleIcon: #2d3748;
+  --theme-ui-colors-toggleIcon: #000000;
   --theme-ui-colors-transparent: transparent;
 
   /* THEME TOGGLE STYLES (LIGHT MODE) */
@@ -96,25 +102,24 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-  /* NEW Palette (Dark Stone) */
-  --bg-color: #1c1917; /* Stone-900 */
-  --text-main: #e7e5e4; /* Stone-200 */
-  --text-muted: #a8a29e; /* Stone-400 */
-  --text-light: #9a938d; /* 5:1 on cards (was Stone-600, 2.3:1) */
-  
-  --border-color: #292524; /* Stone-800 */
-  --line: #44403c; /* Stone-700: visible on --card-bg, which is Stone-800 */
-  --border-hover: #57534e;
-  
-  --card-bg: #292524;
-  --accent-color: #fb923c; /* Orange-400 */
-  --accent-strong: #fdba74; /* Orange-300 */
-  --status-active: #4ade80; /* Green-400 */
-  
-  /* LINK COLOR FIX: Lighter Blue for Dark Mode */
-  --link-color: #60a5fa; 
+  /* Palette: the same instrument with the lights off */
+  --bg-color: #000000;
+  --text-main: #F5F5F5;
+  --text-muted: #b3b3b3;
+  --text-light: #959595; /* 5:1 on the panels */
 
-  --code-bg: #292524;
+  --border-color: #222222;
+  --line: #333333;
+  --border-hover: #F5F5F5;
+
+  --card-bg: #141414;
+  --accent-color: var(--te-orange);
+  --accent-strong: #ff7a45; /* orange text on black */
+  --status-active: var(--te-yellow);
+
+  --link-color: #F5F5F5;
+
+  --code-bg: #141414;
 
   /* MAPPING LEGACY VARIABLES */
   --main-text-color: var(--text-main);
@@ -128,7 +133,7 @@ html[data-theme="dark"] {
   --header-font: var(--font-header);
   --source-code-font: var(--font-mono);
 
-  --theme-ui-colors-toggleIcon: #cbd5e0;
+  --theme-ui-colors-toggleIcon: #F5F5F5;
 
   /* THEME TOGGLE STYLES (DARK MODE) */
   #theme-toggle span {
