@@ -29,6 +29,7 @@ html[data-theme="light"] {
   --border-hover: #000000;
 
   --card-bg: #E5E5E5;    /* Grey 100: light panels */
+  --card-shadow: #000000;
   --accent-color: var(--te-orange);
   --accent-strong: #a8360b; /* orange text that passes 4.5:1 on the panels */
   --status-active: var(--te-yellow);
@@ -103,25 +104,27 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-  /* Palette: the same instrument with the lights off */
-  --bg-color: #000000;
+  /* Palette: the same instrument with the lights dimmed, charcoal rather
+     than pure black */
+  --bg-color: #1c1c1c;
   --text-main: #F5F5F5;
   --text-muted: #b3b3b3;
-  --text-light: #959595; /* 5:1 on the panels */
+  --text-light: #9e9e9e; /* 5.6:1 on the panels */
 
-  --border-color: #222222;
-  --line: #333333;
+  --border-color: #2e2e2e;
+  --line: #3a3a3a;
   --border-hover: #F5F5F5;
 
-  --card-bg: #141414;
+  --card-bg: #272727;
+  --card-shadow: var(--te-orange); /* a black shadow would vanish here */
   --accent-color: var(--te-orange);
-  --accent-strong: #ff7a45; /* orange text on black */
+  --accent-strong: #ff7a45; /* orange text, 5.8:1 on the panels */
   --status-active: var(--te-yellow);
 
   --link-color: #F5F5F5;
-  --te-blue: #4D8DFF;    /* the light-theme blue is 3:1 on black; this is 5.8:1 */
+  --te-blue: #5c9aff;    /* the light-theme blue is too dark here; this is 5.3:1 on the panels */
 
-  --code-bg: #141414;
+  --code-bg: #272727;
 
   /* MAPPING LEGACY VARIABLES */
   --main-text-color: var(--text-main);

@@ -139,6 +139,13 @@ a:hover { opacity: 1; }
   color: var(--te-blue);
 }
 
+/* The profile icons under the hero turn orange on hover instead of
+   picking up the base underline */
+.hero-social a:hover {
+  color: var(--te-orange);
+  text-decoration: none;
+}
+
 /* Arrows on action links are the orange bit */
 .project-card-links a [aria-hidden="true"],
 .section-more a [aria-hidden="true"] {
@@ -220,14 +227,15 @@ a:hover { opacity: 1; }
 img { border-radius: 2px; }
 pre { border-radius: 2px; }
 
-/* Cards cast a hard black shadow, like a plate standing off the page */
+/* Cards cast a hard shadow, like a plate standing off the page: black in
+   light mode, orange in dark mode */
 .project-card {
   border-radius: 10px;
-  box-shadow: 4px 4px 0 0 #000;
+  box-shadow: 4px 4px 0 0 var(--card-shadow);
 }
 .project-card:hover {
   border-color: var(--border-hover);
-  box-shadow: 6px 6px 0 0 #000;
+  box-shadow: 6px 6px 0 0 var(--card-shadow);
 }
 .project-card-result strong { font-family: var(--font-header); }
 
