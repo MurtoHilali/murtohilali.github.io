@@ -24,19 +24,7 @@
     {%- endif %}
   </div>
   <div class="card-body">
-    {%- comment -%}
-      Topics, not the Lab's one-off category, so the cards line up and a
-      reader can compare them at a glance.
-    {%- endcomment -%}
-    {%- assign topics = p.topics | default: nil -%}
-    <p class="project-card-meta">
-      {%- if topics -%}
-        {%- for t in topics -%}{{ t }}<span aria-hidden="true"> · </span><span class="visually-hidden">, </span>{%- endfor -%}
-      {%- else -%}
-        {{ p.category }}<span aria-hidden="true"> · </span><span class="visually-hidden">, </span>
-      {%- endif -%}
-      <span class="project-card-when">{{ p.date | slice: 0, 4 }}</span>
-    </p>
+    <p class="project-card-meta"><time datetime="{{ p.date }}">{{ p.date | slice: 0, 4 }}</time></p>
     {%- if write_up %}
     <h3 class="card-title"><a href="{{ write_up.url | relative_url }}">{{ name }}</a></h3>
     {%- elsif full %}
@@ -49,9 +37,9 @@
     {%- endcomment -%}
     {%- unless full %}
     {%- if p.result %}
-    <p class="project-card-result"><strong>{{ p.result.metric }}</strong> {{ p.result.note }}</p>
+    <p class="project-card-result"><span><strong>{{ p.result.metric }}</strong> {{ p.result.note }}</span></p>
     {%- elsif p.headline == nil %}
-    <p class="project-card-summary">{{ p.summary }}</p>
+    <p class="project-card-summary"><span>{{ p.summary }}</span></p>
     {%- endif %}
     {%- endunless %}
     {%- if full %}
@@ -64,11 +52,27 @@
     </dl>
     {%- endif %}
     {%- endif %}
-    {%- if p.stack.size > 0 %}
-    <ul class="chips" aria-label="Tools">
-      {%- for t in p.stack %}<li>{{ t }}</li>{%- endfor %}
-    </ul>
-    {%- endif %}
+    {%- comment -%}
+      Topics (from the shared vocabulary, so cards are comparable at a
+      glance; the category if a project has none) beside the tools.
+    {%- endcomment -%}
+    {%- if p.topics %}{% assign topics = p.topics %}{% else %}{% assign topics = p.category | split: "|" %}{% endif %}
+    <div class="project-card-facets">
+      <div>
+        <p class="project-card-facet-label" id="{{ p.id }}-topics">Topics</p>
+        <ul class="project-card-topics" aria-labelledby="{{ p.id }}-topics">
+          {%- for t in topics %}<li>{{ t }}</li>{%- endfor %}
+        </ul>
+      </div>
+      {%- if p.stack.size > 0 %}
+      <div>
+        <p class="project-card-facet-label" id="{{ p.id }}-tools">Tools</p>
+        <ul class="chips" aria-labelledby="{{ p.id }}-tools">
+          {%- for t in p.stack %}<li>{{ t }}</li>{%- endfor %}
+        </ul>
+      </div>
+      {%- endif %}
+    </div>
     <p class="project-card-links">
       {%- if write_up %}
       <a href="{{ write_up.url | relative_url }}">Read the write-up<span class="visually-hidden">: {{ name }}</span> <span aria-hidden="true">→</span></a>

@@ -238,13 +238,11 @@ pre { border-radius: 2px; }
 }
 
 /* Every card gives each text block the same number of lines, so titles,
-   results and chips line up across a row: 2 lines for the topics, 3 for
-   the title, 3 for the result or summary. These are minimums in each
-   block's own line height, so a longer block grows instead of clipping. */
-.project-card-meta {
-  line-height: 1.5;
-  min-height: 3em;               /* 2 lines */
-}
+   results and the topics/tools columns line up across a row: 3 lines for
+   the title, 3 for the result or summary, which sits centred in its box.
+   These are minimums in each block's own line height, so a longer block
+   grows instead of clipping. */
+.project-card-meta { line-height: 1.5; }
 .card-title {
   line-height: 1.15;
   min-height: 3.45em;            /* 3 lines */
@@ -252,6 +250,8 @@ pre { border-radius: 2px; }
 }
 .project-card-result,
 .project-card-summary {
+  display: flex;
+  align-items: center;
   line-height: 1.5;
   min-height: calc(4.5em + 1.7rem + 2px); /* 3 lines, plus padding and rules */
 }
