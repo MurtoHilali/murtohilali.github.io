@@ -15,8 +15,8 @@ no_anchors: true
         {%- comment -%} Filters and search need JS; without it every post is listed. {%- endcomment %}
         <div class="writing-filters" role="group" aria-label="Show" hidden>
             <button type="button" class="writing-filter" data-filter="all" aria-pressed="true">All <span>{{ site.posts | size }}</span></button>
-            <button type="button" class="writing-filter" data-filter="writeup" aria-pressed="false">Write-ups <span>{{ writeups | size }}</span></button>
-            <button type="button" class="writing-filter" data-filter="news" aria-pressed="false">News <span>{{ news | size }}</span></button>
+            <button type="button" class="writing-filter" id="writeups" data-filter="writeup" aria-pressed="false">Write-ups <span>{{ writeups | size }}</span></button>
+            <button type="button" class="writing-filter" id="news" data-filter="news" aria-pressed="false">News <span>{{ news | size }}</span></button>
         </div>
 
         <div class="search-article" hidden>

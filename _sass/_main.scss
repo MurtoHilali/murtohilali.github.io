@@ -27,6 +27,48 @@ main {
   flex-direction: column;
 }
 
+/* Breadcrumbs above a post's title. The current post is the last crumb,
+   cut to one line, since the full title is the heading right below. */
+.breadcrumbs {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+
+  ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    display: flex;
+    align-items: baseline;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    color: var(--text-light);
+  }
+  li + li::before {
+    content: "/";
+    margin: 0 0.5rem;
+    color: var(--text-light);
+  }
+  li:last-child {
+    flex: 1 1 12rem;
+    min-width: 0;
+  }
+  a { color: var(--text-muted); }
+  a:hover { color: var(--text-main); }
+  [aria-current] {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
 .post > h1.title {
   font-family: var(--font-header);
   font-size: 3rem;

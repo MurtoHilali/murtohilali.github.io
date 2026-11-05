@@ -2,6 +2,38 @@
 layout: default
 ---
 
+{%- comment -%}
+  Breadcrumbs: Home / Writing / Write-ups or News / this post. The kind
+  step links to /blog/ with that filter applied (#writeups, #news are ids
+  on the filter buttons, read by assets/js/writing.js). The same trail is
+  in BreadcrumbList JSON-LD for search results.
+{%- endcomment -%}
+{%- if page.kind == "news" -%}
+  {%- assign crumb_kind = "News" -%}{%- assign crumb_hash = "#news" -%}
+{%- else -%}
+  {%- assign crumb_kind = "Write-ups" -%}{%- assign crumb_hash = "#writeups" -%}
+{%- endif %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ '/' | relative_url }}">Home</a></li>
+    <li><a href="{{ '/blog/' | relative_url }}">Writing</a></li>
+    <li><a href="{{ '/blog/' | relative_url }}{{ crumb_hash }}">{{ crumb_kind }}</a></li>
+    <li><span aria-current="page">{{ page.title }}</span></li>
+  </ol>
+</nav>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ '/' | absolute_url | jsonify }} },
+    { "@type": "ListItem", "position": 2, "name": "Writing", "item": {{ '/blog/' | absolute_url | jsonify }} },
+    { "@type": "ListItem", "position": 3, "name": {{ crumb_kind | jsonify }}, "item": {{ '/blog/' | absolute_url | append: crumb_hash | jsonify }} },
+    { "@type": "ListItem", "position": 4, "name": {{ page.title | jsonify }}, "item": {{ page.url | absolute_url | jsonify }} }
+  ]
+}
+</script>
+
 <div class="post">
   <h1 class="title">{{ page.title }}</h1>
   <p class="meta">

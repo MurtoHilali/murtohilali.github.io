@@ -332,3 +332,13 @@ body.lab {
 
 /* Post navigation titles are Ovo too, at its one weight */
 .minimal-title { font-weight: 400; }
+
+/* Breadcrumbs read as a technical label, with an orange separator */
+.breadcrumbs {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+
+  li + li::before { color: var(--te-orange); }
+}
