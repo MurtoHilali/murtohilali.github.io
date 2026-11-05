@@ -48,7 +48,7 @@
   topics: [Comparative genomics, Protein design, Diagnostics]
   featured: true
   featured_order: 1
-  summary: Designing protein biosensors for a Cyclospora rapid antigen test should target.
+  summary: Designing protein biosensors for a Cyclospora rapid antigen test.
   result:
     metric: 5,793 proteins screened
     note: for surface exposure, then ranked by abundance borrowed from relatives
@@ -76,7 +76,7 @@
 
 - id: pac-maps
   title: PAC-MAPS
-  headline: "PAC-MAPS: a protein architecture classifer CNN that matches Foldseek on unseen protein folds"
+  headline: "PAC-MAPS: a protein architecture classifier CNN that matches Foldseek on unseen protein folds"
   date: "2026-08"
   status: active
   track: research
