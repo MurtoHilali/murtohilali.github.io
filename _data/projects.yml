@@ -47,6 +47,7 @@
   category: Antigen Discovery
   topics: [Comparative genomics, Protein design, Diagnostics]
   featured: true
+  featured_order: 1
   summary: Designing protein biosensors for a Cyclospora rapid antigen test should target.
   result:
     metric: 5,793 proteins screened
@@ -75,24 +76,23 @@
 
 - id: pac-maps
   title: PAC-MAPS
-  headline: "PAC-MAPS: a contact-map CNN that matches Foldseek on unseen protein folds"
+  headline: "PAC-MAPS: a protein architecture classifer CNN that matches Foldseek on unseen protein folds"
   date: "2026-08"
   status: active
   track: research
   category: Deep Learning
   topics: [Deep learning, Protein structure, Benchmarking]
   featured: true
-  featured_order: 1
+  featured_order: 3
   summary: Protein architecture classification from CATH contact maps.
   result:
     metric: 74% balanced accuracy
     note: across 14 CATH architectures on held-out superfamilies, level with Foldseek
   details: >-
-    Classifies CATH architecture straight from structure. Each domain is
-    rendered as an RGB contact map — red for inverted Cβ–Cβ distance, green for
-    helix–helix pairs, blue for strand–strand pairs — and read by a dilated
-    CoordConv residual CNN. Benchmarked out-of-distribution by vaulting whole
-    superfamilies out of training, the way DockGen and Chainsaw do.
+    Classifies CATH architecture straight from contact map. Each domain is
+    rendered as an RGB contact map and read by a dilated CoordConv residual CNN. 
+    Benchmarked out-of-distribution by vaulting whole superfamilies out of training,
+    similarly to DockGen and Chainsaw.
   stack: [fastai, PyTorch, biotite, Foldseek, W&B]
   specs:
     - { label: Balanced Acc., value: "74 ± 4%" }
@@ -125,7 +125,7 @@
   category: Virtual Screening
   topics: [Virtual screening, Molecular docking, Drug discovery]
   featured: true
-  featured_order: 2
+  featured_order: 4
   summary: In silico drug discovery for Acarbose alternatives.
   result:
     metric: 71 candidates
@@ -133,10 +133,9 @@
   details: >-
     Identified 71 natural alternatives to a $200 million drug entirely in
     silico. Screened the COCONUT natural-products database by chemical
-    similarity to acarbose, then docked the survivors with GNINA — an AutoDock
-    Vina fork that scores poses with a CNN — and ranked them on CNN-VS. Decoys,
-    redocking replicates, and stability analysis stripped out the false
-    positives.
+    similarity to acarbose, then docked the survivors with GNINA and ranked 
+    them using CNN-VS. Used decoys, redocking replicates, and stability analysis 
+    to provide robustness.
   stack: [GNINA, RDKit, OpenBabel, ChimeraX]
   specs:
     - { label: Hits Identified, value: "71" }
@@ -171,7 +170,7 @@
   category: Machine Learning
   topics: [Machine learning, Dataset construction, Benchmarking]
   featured: true
-  featured_order: 4
+  featured_order: 5
   summary: ML vs CNN for Binding-Site Detection.
   result:
     metric: 79.3% sensitivity
@@ -218,7 +217,7 @@
   category: Bioinformatics Pipeline
   topics: [Machine learning, Protein interactions, Structure prediction]
   featured: true
-  featured_order: 3
+  featured_order: 2
   summary: Predicting missense mutation effects on PPIs.
   result:
     metric: 0.91 AUC
