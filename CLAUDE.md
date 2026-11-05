@@ -79,7 +79,10 @@ image loading hints at render time instead of editing them.
   because `_config.yml` defaults every page to `default`. It doesn't use the
   site header or theme.
 - The `compress` layout joins lines in inline `<script>`s, so inline JS must not
-  use `//` comments. Larger scripts live in `assets/js/`.
+  use `//` comments. Larger scripts live in `assets/js/`, linked with
+  `?v={{ site.time | date: '%s' }}` so each deploy fetches the script that
+  matches its HTML (Pages caches assets; a stale `lab.js` once hid the Lab's
+  Cards / List toggle). Keep that on any new script tag.
 - `llms.txt` is generated at build time (Projects from data, Write-ups, News,
   Publications). Edit the Liquid in `llms.txt`, not the output.
 - Redirects use `jekyll-redirect-from`. `/cv/` and the old resume URLs are stubs

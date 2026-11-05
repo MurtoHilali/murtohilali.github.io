@@ -23,7 +23,7 @@ layout: compress
   {% include footer.html %}
 
   {% if page.url == '/archive/' or page.url == '/notes/' %}
-   <script src="{{ '/assets/js/custom-search.js' | relative_url }}"></script>
+   <script src="{{ '/assets/js/custom-search.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
   {% endif %}
 
 </body>
