@@ -6,9 +6,9 @@
 html,
 html[data-theme="light"] {
   /* Fonts */
-  --font-body: 'Libre Baskerville', Baskerville, 'Baskerville Old Face', Georgia, serif;
-  --font-header: 'Epilogue', 'Helvetica Neue', Arial, sans-serif;
-  --font-ui: var(--font-header);  /* nav, buttons, chips: Epilogue, not the body serif */
+  --font-body: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-header: 'Ovo', Georgia, serif;
+  --font-ui: var(--font-body);  /* nav, buttons, labels: DM Sans, since Ovo has no bold */
   --font-mono: 'Inconsolata', monospace;
 
   /* Signal colours. Small accents only: dots, rules, focus rings, hover

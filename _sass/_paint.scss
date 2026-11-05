@@ -1,10 +1,11 @@
 /* =========================================
-   PAINT (experiment/te-paint)
+   PAINT (experiment/te-ovo)
    A coat of paint over the existing layout, loaded last by both the site
    (_main.scss) and the Lab (_includes/lab-inline.scss). Nothing here moves
    or restructures anything: it sets type, colour and finish.
 
-   After Teenage Engineering and industrial-lab minimalism:
+   After Teenage Engineering and industrial-lab minimalism, set in Ovo
+   (headlines) and DM Sans (body and UI):
    - things shown like specimens on flat grey (#F5F5F5 page, #E5E5E5 panels)
    - small functional hits of signal orange, yellow and electric blue,
      never colour fields
@@ -17,28 +18,31 @@
 
 body {
   font-size: 1rem;
-  line-height: 1.75;
+  line-height: 1.7;
 }
 
 p { font-size: 1rem; }
 
+/* Ovo has one weight, so headlines stay at 400 and the browser is told
+   not to fake a bold */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 650;
-  letter-spacing: -0.025em;
-  line-height: 1.1;
+  font-weight: 400;
+  font-synthesis: none;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 1.75rem; }
-h3 { font-size: 1.3rem; }
-h4 { font-size: 1.1rem; }
+h1 { font-size: 2.75rem; }
+h2 { font-size: 1.9rem; }
+h3 { font-size: 1.4rem; }
+h4 { font-size: 1.15rem; }
 
-.post > h1.title { font-size: 2.5rem; }
+.post > h1.title { font-size: 2.75rem; }
 
 .hero-title {
-  font-size: 3.25rem;
-  font-weight: 750;
-  letter-spacing: -0.04em;
+  font-size: 3.5rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 .hero-lede {
   font-size: 1.2rem;
@@ -46,14 +50,14 @@ h4 { font-size: 1.1rem; }
 }
 .hero-bio { font-size: 1rem; }
 
-.card-title { font-size: 1.35rem; }
-.blog-title { font-size: 1.3rem; }
+.card-title { font-size: 1.45rem; }
+.blog-title { font-size: 1.4rem; }
 .pub-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 1.2rem;
+  font-weight: 400;
+  font-synthesis: none;
 }
-.lab-title { font-size: 2.5rem; }
+.lab-title { font-size: 2.75rem; }
 
 blockquote { border-left-width: 2px; }
 
@@ -62,7 +66,7 @@ blockquote { border-left-width: 2px; }
   color: #000;
 }
 
-/* UI text is Epilogue, so the serif stays for reading */
+/* UI text is DM Sans: Ovo is for headlines only */
 .site-header,
 .skip-link,
 .btn,
@@ -157,9 +161,10 @@ a:hover { opacity: 1; }
 
 .site-name {
   font-family: var(--font-header);
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: 1.35rem;
+  font-weight: 400;
+  font-synthesis: none;
+  letter-spacing: -0.01em;
 }
 .site-name:hover { color: var(--text-main); }
 
@@ -227,7 +232,10 @@ pre { border-radius: 2px; }
   border-color: var(--border-hover);
   box-shadow: 6px 6px 0 0 var(--card-shadow);
 }
-.project-card-result strong { font-family: var(--font-header); }
+.project-card-result strong {
+  font-family: var(--font-body);
+  font-weight: 600;
+}
 
 /* Every card gives each text block the same number of lines, so titles,
    results and chips line up across a row: 2 lines for the topics, 3 for
@@ -240,6 +248,7 @@ pre { border-radius: 2px; }
 .card-title {
   line-height: 1.15;
   min-height: 3.45em;            /* 3 lines */
+  letter-spacing: 0;
 }
 .project-card-result,
 .project-card-summary {
@@ -296,9 +305,9 @@ body.lab {
 
 /* Row titles are the cards' headlines, so they're set smaller to fit */
 .lab-row-title h3 {
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
 .lab-monitor-leds i { background-color: var(--te-orange); }
@@ -320,3 +329,6 @@ body.lab {
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+
+/* Post navigation titles are Ovo too, at its one weight */
+.minimal-title { font-weight: 400; }

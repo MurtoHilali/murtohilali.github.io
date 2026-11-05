@@ -4,32 +4,32 @@
    from Google Fonts. Root-relative URLs because this CSS is inlined into
    each page.
 
-   Epilogue (headlines and UI labels) and Libre Baskerville (body) are
-   variable fonts, so one file covers every weight.
+   Ovo (headlines; one weight, 400) and DM Sans (body and UI labels; a
+   variable font, so one file covers every weight).
    ========================================= */
 
 @font-face {
-  font-family: 'Epilogue';
+  font-family: 'Ovo';
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 400;
   font-display: swap;
-  src: url('/assets/google_fonts/epilogue-latin.woff2') format('woff2');
+  src: url('/assets/google_fonts/ovo-latin.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Libre Baskerville';
+  font-family: 'DM Sans';
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 100 1000;
   font-display: swap;
-  src: url('/assets/google_fonts/libre-baskerville-latin.woff2') format('woff2');
+  src: url('/assets/google_fonts/dm-sans-latin.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Libre Baskerville';
+  font-family: 'DM Sans';
   font-style: italic;
-  font-weight: 400 700;
+  font-weight: 100 1000;
   font-display: swap;
-  src: url('/assets/google_fonts/libre-baskerville-italic-latin.woff2') format('woff2');
+  src: url('/assets/google_fonts/dm-sans-italic-latin.woff2') format('woff2');
 }
 
 @font-face {
