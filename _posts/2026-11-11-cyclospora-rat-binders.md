@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Computational Design of a de Novo Protein to Detect the Parasite That Gives You Explosive Diarrhea"
+title: "Computational Design of a de novo Protein to Detect Cyclospora cayetanensis"
 description: Screening the Cyclospora cayetanensis proteome for a rapid antigen test target, from 47 genome assemblies down to 9 candidates.
 kind: writeup
 tags: bioinformatics protein-design diagnostics

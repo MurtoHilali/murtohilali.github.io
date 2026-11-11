@@ -27,6 +27,57 @@ main {
   flex-direction: column;
 }
 
+/* Contents, above the body of a long write-up */
+.post-toc {
+  margin: 0 0 2.5rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background-color: var(--card-bg);
+
+  ol {
+    list-style: none;
+    counter-reset: toc;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    counter-increment: toc;
+    display: flex;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0.25rem 0;
+  }
+  li::before {
+    content: counter(toc, decimal-leading-zero);
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-light);
+  }
+}
+
+/* Beats the running-text link underline from _paint.scss */
+.post .post-toc li a {
+  color: var(--text-main);
+  text-decoration: none;
+}
+.post .post-toc li a:hover {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  opacity: 1;
+}
+
+.post-toc-title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+
 /* Breadcrumbs above a post's title. The current post is the last crumb,
    cut to one line, since the full title is the heading right below. */
 .breadcrumbs {

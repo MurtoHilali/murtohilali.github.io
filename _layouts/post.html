@@ -41,6 +41,32 @@ layout: default
   </p>
 
   {%- comment -%}
+    Contents, built at render time from the post's own h2 headings (kramdown
+    gives each one an id), so post bodies stay as written. Only for long
+    write-ups, and never for the three that carry a hand-written one. A post
+    can opt out with `toc: false` in its front matter.
+  {%- endcomment -%}
+  {%- assign h2_chunks = content | split: '<h2 id="' -%}
+  {%- assign h2_count = h2_chunks | size | minus: 1 -%}
+  {%- assign has_manual_toc = false -%}
+  {%- if content contains 'id="table-of-contents"' %}{% assign has_manual_toc = true %}{% endif -%}
+  {%- assign long_enough = false -%}
+  {%- assign word_count = content | number_of_words -%}
+  {%- if h2_count >= 4 and word_count >= 1000 %}{% assign long_enough = true %}{% endif -%}
+  {%- if page.kind == "writeup" and page.toc != false and long_enough and has_manual_toc == false %}
+  <nav class="post-toc" aria-label="Contents">
+    <p class="post-toc-title">Contents</p>
+    <ol>
+      {%- for chunk in h2_chunks offset: 1 %}
+      {%- assign heading_id = chunk | split: '"' | first -%}
+      {%- assign heading_text = chunk | split: '</h2>' | first | split: '">' | last | strip_html | strip -%}
+      <li><a href="#{{ heading_id }}">{{ heading_text }}</a></li>
+      {%- endfor %}
+    </ol>
+  </nav>
+  {%- endif %}
+
+  {%- comment -%}
     Image loading hints, added at render time so post sources stay as
     written: the first image (usually the cover, often the LCP element)
     loads with high priority, every later one lazily.
