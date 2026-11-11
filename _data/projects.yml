@@ -20,7 +20,17 @@
 #                   there is no `result`
 #   details         the Lab's expanded paragraph
 #   stack           list of tools, shown as chips
-#   specs           ordered list of { label, value }; cards show the first three
+#   specs           ordered list of { label, value }; cards show the first three,
+#                   the Lab shows all. Each track has fixed slots, in this order:
+#                     research  <metric> | Validation | Data | Method
+#                     tools     Input | Method | Output
+#                     side      Status | Build | Core
+#                   Only the first research label changes: it is the metric name.
+#                   Values: sentence case except proper nouns; units go in the
+#                   value; comparisons as "(+12 pts vs. published)"; ± only where
+#                   measured. The first research value must agree with
+#                   result.metric. No "Stage" or tool lists here: status and
+#                   stack already show them. Check with scripts/check_specs.py
 #   links           { label, url } for external links, or { label, post: <slug> }
 #                   for a post on this site
 #   post            slug of the main write-up, if there is one. Rendered first,
@@ -40,7 +50,7 @@
 
 - id: cyclospora-rat
   title: Cyclospora RAT Binders
-  headline: "Designing de novo binders for a Cyclospora rapid test from 5,793 screened proteins"
+  headline: "Designing de novo binders for a Cyclospora rapid test from 5,793 screened proteins [IN PROGRESS]"
   date: "2026-10"
   status: active
   track: research
@@ -50,26 +60,32 @@
   featured_order: 1
   summary: Designing protein biosensors for a Cyclospora rapid antigen test.
   result:
-    metric: 5,793 proteins screened
-    note: for surface exposure, then ranked by abundance borrowed from relatives
+    metric: 9 candidates
+    note: from 5,793 proteins screened for surface exposure and ranked by abundance borrowed from relatives; binder design next
   details: >-
-    Picking the surface protein a rapid antigen test for Cyclospora
-    cayetanensis should target, then designing de novo proteins against it. 
-    Public assemblies are QC'd and lifted onto one annotation, DeepLoc 2.1 
-    finds the proteins that reach the surface, and OrthoFinder borrows PaxDB 
-    abundances from relatives to rank what's left.
+    Screening the proteome of Cyclospora cayetanensis to find and prioritize an ideal rapid antigen
+    test target, then designing de novo protein binders against it. Public assemblies are QC'd
+    and clustered, DeepLoc 2.1 is used to find surface-localized proteins, and OrthoFinder & PaxDB 
+    are used in tandem to estimate proteome-level abundances from taxonomic relatives. Currently 9 
+    protein candidates are being studied.
   stack: [compleasm, sourmash, Liftoff, DeepLoc 2, OrthoFinder, PaxDB]
   specs:
-    - { label: Stage, value: Binder Design }
-    - { label: Proteome, value: "5,793 proteins" }
-    - { label: Outgroups, value: "T. gondii, P. falciparum, P. yoelii" }
-    - { label: Readout, value: Lateral Flow }
+    - { label: Candidates, value: "9" }
+    - { label: Validation, value: Assembly QC (compleasm) }
+    - { label: Data, value: "5,793 proteins" }
+    - { label: Method, value: DeepLoc 2.1 + OrthoFinder }
   links: []
-  post: null
-  thumb: null
-  thumb_alt: null
-  figure: null       # TODO(murto): a figure once there are results to show
-  figure_alt: null
+  post: cyclospora-rat-binders
+  thumb: /img/projects/cyclospora-assembly-timeline.webp
+  thumb_alt: "Scatter plot of Cyclospora cayetanensis assemblies by collection year and country, from 1995 to 2020"
+  thumb_width: 984
+  thumb_height: 584
+  thumb_fit: contain
+  figure: /img/articles/cyclospora-rat-binders/extracellular-predictions.webp
+  figure_alt: "Histogram of DeepLoc 2.1 extracellular scores for the proteome, falling steeply from zero, with a dashed threshold line at 0.7"
+  figure_width: 580
+  figure_height: 455
+  figure_caption: DeepLoc 2.1 extracellular scores
   color: "#00c5a7"
   ascii: scan
   icon: antibody
@@ -89,16 +105,16 @@
     metric: 74% balanced accuracy
     note: across 14 CATH architectures on held-out superfamilies, level with Foldseek
   details: >-
-    Classifies CATH architecture straight from contact map. Each domain is
+    Classifies protein CATH architecture from contact map. Each domain is
     rendered as an RGB contact map and read by a dilated CoordConv residual CNN. 
-    Benchmarked out-of-distribution by vaulting whole superfamilies out of training,
-    similarly to DockGen and Chainsaw.
+    Benchmarked on out-of-distribution contact maps by vaulting whole superfamilies 
+    out of training similarly to DockGen and Chainsaw.
   stack: [fastai, PyTorch, biotite, Foldseek, W&B]
   specs:
-    - { label: Balanced Acc., value: "74 ± 4%" }
-    - { label: Foldseek, value: "75 ± 5%" }
-    - { label: Classes, value: 14 Architectures }
-    - { label: Benchmark, value: Held-out Superfamilies }
+    - { label: Balanced acc., value: "74 ± 4% (Foldseek 75 ± 5%)" }
+    - { label: Validation, value: Held-out superfamilies }
+    - { label: Data, value: 14 CATH architectures }
+    - { label: Method, value: Dilated CoordConv ResNet }
   links:
     - { label: GitHub Repo, url: "https://github.com/MurtoHilali/pac-maps" }
   post: pac-maps
@@ -138,10 +154,10 @@
     to provide robustness.
   stack: [GNINA, RDKit, OpenBabel, ChimeraX]
   specs:
-    - { label: Hits Identified, value: "71" }
-    - { label: Target, value: A-Glucosidase }
-    - { label: Scoring, value: CNN-VS }
-    - { label: Library, value: COCONUT }
+    - { label: Hits, value: "71" }
+    - { label: Validation, value: Decoys + redocking }
+    - { label: Data, value: "~10k COCONUT × 3 targets" }
+    - { label: Method, value: GNINA CNN-VS }
   links:
     - { label: GitHub Repo, url: "https://github.com/MurtoHilali/Acarbose-Alternative-Drug-Discovery" }
     - { label: Pipeline Post, post: acarbose-alternative-drug-discovery }
@@ -182,10 +198,10 @@
     79.3% sensitivity, 12 points above the original paper's model.
   stack: [TensorFlow, Scikit-Learn, Pandas]
   specs:
-    - { label: Sensitivity, value: "79.3% (+12 pts)" }
-    - { label: Accuracy, value: "78.6%" }
-    - { label: Models, value: "RF, SVM, CNN, MLP" }
-    - { label: Dataset, value: PepBDB-Derived }
+    - { label: Sensitivity, value: "79.3% (+12 pts vs. published)" }
+    - { label: Validation, value: TODO }   # TODO(murto): test split or CV design
+    - { label: Data, value: PepBDB-derived }
+    - { label: Method, value: "CNN (vs. RF, SVM, MLP)" }
   links:
     - { label: PepBDB-ML Repo, url: "https://github.com/MurtoHilali/PepBDB-ML" }
     - { label: Visual-PepBDB Repo, url: "https://github.com/MurtoHilali/Visual-PepBDB" }
@@ -224,14 +240,15 @@
     note: predicting PPI disruption, from 47,000+ AlphaFold-Multimer jobs
   details: >-
     Utilized over 47,000 SLURM jobs to generate AlphaFold-Multimer predictions
-    for wild-type and mutant protein complexes. Structural features were
+    for wild-type and mutant protein complexes. Structural and sequence features were
     extracted to train an XGBoost classifier, achieving a 91% AUC for
     predicting PPI disruption.
   stack: [AlphaFold-M, XGBoost, Bash]
   specs:
-    - { label: AUC, value: "0.91" }
-    - { label: Jobs Run, value: "47,000+" }
-    - { label: Target, value: Missense Variants }
+    - { label: AUC, value: "0.91 (micro-average)" }
+    - { label: Validation, value: TODO }   # TODO(murto): held-out set or CV design
+    - { label: Data, value: "47,000+ AF-M runs" }
+    - { label: Method, value: XGBoost (structure + sequence) }
   links:
     - { label: Read Write-up, post: xgboost-ppi }
     - { label: "Related: Nature Genetics paper", url: "https://doi.org/10.1038/s41588-024-01686-x" }
@@ -274,9 +291,9 @@
     SickKids.
   stack: [Bash, ClinVar, PIONEER]
   specs:
-    - { label: Input, value: ClinVar Tables }
-    - { label: Filter, value: PIONEER PPI Sites }
-    - { label: Output, value: JSON Controls }
+    - { label: Input, value: ClinVar P/LP + B/LB }
+    - { label: Method, value: PIONEER interface filter }
+    - { label: Output, value: JSON controls }
   links:
     - { label: GitHub Repo, url: "https://github.com/MurtoHilali/vici" }
   post: vici
@@ -310,9 +327,9 @@
     interfaces, average PI-score features, and run a U-test between the two.
   stack: [Python, PyMOL, pandas, PI-score]
   specs:
-    - { label: Tools, value: 6 CLI Scripts }
-    - { label: Input, value: AF-M Complexes }
-    - { label: Test, value: Mann–Whitney U }
+    - { label: Input, value: AF-M complexes (WT + missense) }
+    - { label: Method, value: 6 interface-metric scripts }
+    - { label: Output, value: Mann–Whitney U tests }
   links:
     - { label: GitHub Repo, url: "https://github.com/MurtoHilali/damia" }
   post: damia
@@ -347,9 +364,9 @@
     step from editing work at a marketing agency.
   stack: [JavaScript, Moz API, GPT-4o]
   specs:
-    - { label: Scoring, value: Moz Domain Authority }
-    - { label: Build Time, value: Under a Day }
     - { label: Status, value: Live }
+    - { label: Build, value: Under a day }
+    - { label: Core, value: Moz Domain Authority }
   links:
     - { label: Live App, url: "https://hyperjudge.com" }
   post: hyperjudge
@@ -376,8 +393,9 @@
     released free to download and use. My first launch on Product Hunt.
   stack: []         # TODO(murto): tools used, if worth listing
   specs:
-    - { label: License, value: Free to Use }
-    - { label: Launch, value: Product Hunt }
+    - { label: Status, value: Launched on Product Hunt }
+    - { label: Build, value: Hand-drawn }   # TODO(murto): add a count, e.g. "<N> hand-drawn"
+    - { label: Core, value: Free to use }
   links:
     - { label: Product Hunt, url: "https://www.producthunt.com/posts/idiomics" }
   post: idiomics
