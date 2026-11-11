@@ -61,7 +61,7 @@
   summary: Designing protein biosensors for a Cyclospora rapid antigen test.
   result:
     metric: 9 candidates
-    note: from 5,793 proteins screened for surface exposure and ranked by abundance borrowed from relatives; binder design next
+    note: from 5,793 proteins screened for surface exposure, nucleotide diversity, and ranked by abundance; binder design next
   details: >-
     Screening the proteome of Cyclospora cayetanensis to find and prioritize an ideal rapid antigen
     test target, then designing de novo protein binders against it. Public assemblies are QC'd
