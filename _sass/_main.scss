@@ -69,13 +69,45 @@ main {
   opacity: 1;
 }
 
+/* The summary of a native <details>, so the list collapses without JS */
 .post-toc-title {
-  margin: 0 0 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
+  list-style: none;
+  cursor: pointer;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-light);
+}
+.post-toc-title::-webkit-details-marker { display: none; }
+.post-toc-title:hover { color: var(--text-main); }
+
+/* Chevron: points down when closed, up when open */
+.post-toc-title::after {
+  content: "";
+  flex-shrink: 0;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-bottom: 0.15rem;
+  border: solid currentColor;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.post-toc [open] > .post-toc-title::after {
+  transform: rotate(-135deg);
+  margin: 0.15rem 0 0;
+}
+
+.post-toc [open] > ol { margin-top: 0.75rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .post-toc-title::after { transition: none; }
 }
 
 /* Breadcrumbs above a post's title. The current post is the last crumb,

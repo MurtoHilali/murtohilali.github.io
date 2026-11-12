@@ -55,14 +55,16 @@ layout: default
   {%- if h2_count >= 4 and word_count >= 1000 %}{% assign long_enough = true %}{% endif -%}
   {%- if page.kind == "writeup" and page.toc != false and long_enough and has_manual_toc == false %}
   <nav class="post-toc" aria-label="Contents">
-    <p class="post-toc-title">Contents</p>
-    <ol>
+    <details open>
+      <summary class="post-toc-title">Contents</summary>
+      <ol>
       {%- for chunk in h2_chunks offset: 1 %}
       {%- assign heading_id = chunk | split: '"' | first -%}
       {%- assign heading_text = chunk | split: '</h2>' | first | split: '">' | last | strip_html | strip -%}
-      <li><a href="#{{ heading_id }}">{{ heading_text }}</a></li>
+        <li><a href="#{{ heading_id }}">{{ heading_text }}</a></li>
       {%- endfor %}
-    </ol>
+      </ol>
+    </details>
   </nav>
   {%- endif %}
 

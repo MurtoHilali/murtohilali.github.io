@@ -40,7 +40,7 @@ A rapid antigen test needs a target that is both invariant across strains and ph
 
 Typically, RATs might target surface-accessible antigens; however, since Ccay’s tend to be [highly variable](https://link.springer.com/article/10.1186/s12864-016-2632-3), I’m referring to our target proteins simply as candidates or targets.
 
-\* *Initially, I selected for for surface accessibility because it eliminates the need for any lysing agent to break down oocyst walls. However, further research into the Ccay life cycle made it clear that most non-oocyst-wall proteins still tagged for extracellular export are typically involved in oocyst wall formation and are localized to its inner layer—i.e., not accessible at the oocyst wall surface. However, I’m operating under the assumption that these proteins would at least be relatively more accessible after lysing an oocyst with something like glass beads.*
+>\* *Initially, I selected for for surface accessibility because it eliminates the need for any lysing agent to break down oocyst walls. However, further research into the Ccay life cycle made it clear that most non-oocyst-wall proteins still tagged for extracellular export are typically involved in oocyst wall formation and are localized to its inner layer—i.e., not accessible at the oocyst wall surface. However, I’m operating under the assumption that these proteins would at least be relatively more accessible after lysing an oocyst with something like glass beads.*
 
 ### Binder design
 
