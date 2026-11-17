@@ -8,6 +8,8 @@ image: /img/seo/cyclospora-rat-binders.jpg
 thumb: /img/thumb/cyclospora-rat-binders.webp
 ---
 
+[![GitHub Repo](https://img.shields.io/badge/GitHub-View%20Repository-blue?style=round-square&logo=github)](https://github.com/MurtoHilali/CCayBinder) | [![License](https://img.shields.io/github/license/MurtoHilali/PepBDB-ML)](https://github.com/MurtoHilali/CCayBinder/blob/main/LICENSE-CC)
+
 *This write-up is in progress: target discovery is written up below, binder design is still underway.*
 
 ## Rationale
@@ -124,28 +126,73 @@ Example table of Tier 1 orthologs:
 
 ## Step 4. Align candidate genes across all genomes to determine conservation.
 
-Finally, I needed to align candidate genes across my available genomes to determine how conserved they were. I chose to do the alignments once I had a shortlist from the intersection of Steps 2 and 3; otherwise, getting conservation metrics for the full proteome across more than 40 genomes would have been very computationally expensive. Using pal2nal to do codon-aware alignment and SNPGenie to identify and categorize polymorphism, I was able to estimate nucleotide diversity among my sample genomes:
+Finally, I needed to align candidate genes across my available genomes to determine how conserved they were. I chose to do the alignments once I had a shortlist from the intersection of Steps 2 and 3; otherwise, getting conservation metrics for the full proteome across more than 40 genomes would have been very computationally expensive. I set a coarse gate of 60% confidence in extracellular localization from DeepLoc2.1 and liftoff success rate of 0.85. This gave me 63 transcripts across 37 genomes.
 
-![Histogram of piN/piS for the shortlisted genes: most below 0.75, with a dashed line at 1.0 and a single gene above it.](/img/articles/cyclospora-rat-binders/pin-pis.webp)
+![Two histograms side by side: DeepLoc extracellular probability per gene with a dashed cut-off at 0.6, and liftover usable rate with a dashed cut-off at 0.85, where most genes sit near 1.0.](/img/articles/cyclospora-rat-binders/coarse-gate.webp)
 
-*piN/piS across the shortlist, with neutrality marked at 1.0.*
+*The coarse gate: extracellular probability at 0.6 and liftover usable rate at 0.85.*
+
+Using pal2nal to do codon-aware alignment and SNPGenie to identify and categorize polymorphism, I was able to estimate nucleotide diversity among my sample genomes.
+
+Some genes have no synonymous variation at all across all assemblies, meaning their πN/πS is undefined. These genes are the **most** conserved genes in the set, which is exactly what a diagnostic target needs.
+
+As such, each gene is categorically defined:
+
+| `diversity_class` | Condition | Meaning |
+| :-- | :-- | :-- |
+| `invariant` | no N and no S differences | identical in every assembly; the best case |
+| `synonymous_only` | πN = 0, πS > 0 | the protein is identical, the DNA is not; also excellent |
+| `no_synonymous` | πN > 0, πS = 0 | the ratio is undefined; judge on πN alone |
+| `ratio` | πN > 0, πS > 0 | πN/πS is meaningful |
+
+This gives us 22 `invariant` and 9 `synonymous_only` proteins, along with 15 to be judged on `ratio` and 17 classed as `no_synonymous`.
+
+![Horizontal bar chart of genes per diversity class: 22 invariant, 17 no_synonymous, 15 ratio and 9 synonymous_only.](/img/articles/cyclospora-rat-binders/diversity-classes.webp)
+
+*Genes per diversity class.*
+
+![Three histograms: nonsynonymous diversity (piN), synonymous diversity (piS), and piN/piS with a dashed neutral line at 1.0. Most genes sit close to zero in all three, with two above the neutral line.](/img/articles/cyclospora-rat-binders/nucleotide-diversity.webp)
+
+*Nucleotide diversity across the gated set, with neutrality marked at 1.0.*
 
 ## Step 5. Create candidate shortlist.
 
-Intersecting extracellular proteins with abundance estimates left me with a shortlist of 63 candidates. Filtering that down to log10 ppm > 1 and piN / piS < 1, we’re left with these 9 candidates (functional predictions come from InterProScan domain identification):
+Intersecting extracellular proteins with abundance estimates left me with a shortlist of 63 candidates. Filtering that down to log10 ppm > 1 and piN / piS < 1 (or piS = 0), we’re left with these 25 candidates, of which approximately 8 seemed to be high potential.
 
-| **#** | **Gene Name** | **Protein/Function** |
-|---|---|---|
-| 1 | LOC34622212 | uncharacterized, membrane attack complex/perforin (MACPF) domain profile |
-| 2 | LOC34621387 | uncharacterized, Venus Flytrap-like |
-| 3 | LOC34624131 | sporozoite developmental protein |
-| 4 | LOC34619802 | uncharacterized, S1/P1 nuclease |
-| 5 | LOC34617317 | uncharacterized, peptidase activity |
-| 6 | LOC34621487 | proteasome subunit beta type-2-A |
-| 7 | LOC34617670 | 3-ketoacyl-CoA thiolase |
-| 8 | LOC34619099 | uncharacterized, predicted peptidase M16 |
-| 9 | LOC34624017 | uncharacterized |
+By high potential, I mean:
 
-Some brief exploration of these genes/proteins:
+- Functional predictions (from InterProScan domain identification) seem to confirm or suggest a role in oocyst wall formation, or at the very least membrane localization.
+- For multi-domain proteins, AlphaFoldDB predicted structures have a low inter-domain predicted aligned error, or PAE (this is a measure of confidence of the relative positions of multiple domains). Since basically none of these proteins have crystal structures, we'll be relying on AFDB structures as our source of truth, so it's important they're as strong as possible.
+
+
+| Gene/Protein | Purported Function |
+| --- | --- |
+| gene-LOC34619099 | Metal-dependant peptidase, nardilysin, peptidase M16, LuxS |
+| gene-LOC34618830 | Possibly a leucine aminopeptidase, containing several disordered regions |
+| gene-LOC34624017 | N/A |
+| gene-LOC34619802 | S1/P1 nuclease, endonuclease 4, involved in phosphate ester hydrolysis, zinc-dependent |
+| gene-LOC34617317 | Peptidase M28 (metallopeptidase), zinc-dependent exopeptidase |
+| gene-LOC34623966 | Cyclophilin-type peptidyl-prolyl cis-trans isomerase |
+| gene-LOC34618374** | LCCL domain-containing protein, multidomain scavenger receptor-like protein PxSR, scavenger receptor cysteine rich (SPCR) domain |
+| gene-LOC34618352** | LCCL domain, fibronectin type II domain, cell adhesion and viral modulation |
+| gene-LOC34618516 | N/A |
+| gene-LOC34617670 | 3-ketoacyl-CoA thiolase, acyltransferase, peroxisomal-related |
+| gene-LOC34622979* | Fibronectin type II domain, anthrax protective antigen, PA14 |
+| gene-LOC113146716* | Ookinete related protein, concanavalin A-like lectin/glucanase, |
+| gene-LOC34617422 | LCCL domain-containing protein, ricin B lectin (sugar binding subunit), galactose binding domain, coagulation factors 5/8 type C domain (FA58C) profile (phosphatidylserine/phospholipid-binding), fibrinogen C-terminal domain-like, exo-inulinase |
+| gene-LOC34622326 | Stromal cell-derived factor 2-like (ER-resident) |
+| gene-LOC34618447 | LCCL domain-containing protein, anthrax protective antigen domain / PA14 |
+| gene-LOC34621493 | Cytochrome c, class IA/IB (mitochondria-resident) |
+| gene-LOC113147332 | Phosphoserine phosphatase, Haloacid Dehalogenase-IIB family hydrolase (cytosolic?) |
+| gene-LOC34622212* | Membrane attack complex component/perforin (MACPF) domain |
+| gene-LOC34622774 | CALCIUM/CALMODULIN-BINDING MEMBRANE PROTEIN PCM4-RELATED |
+| gene-LOC34621387 | Venus Flytrap-like protein, Periplasmic binding protein-like II |
+| gene-LOC34623625 | N/A |
+| gene-LOC34621487 | Proteasome subunit alpha/beta |
+| gene-LOC113146615* | Membrane attack complex component/perforin (MACPF) domain |
+| gene-LOC34619074 | Apical membrane antigen 1 |
+| gene-LOC3462413* | Metal-dependant peptidase, nardilysin, peptidase M16, LuxS |
+
+\* = high potential candidates
 
 [COMING SOON]
