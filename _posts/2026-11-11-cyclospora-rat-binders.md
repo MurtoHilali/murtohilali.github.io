@@ -157,13 +157,33 @@ This gives us 22 `invariant` and 9 `synonymous_only` proteins, along with 15 to 
 
 ## Step 5. Create candidate shortlist.
 
-Intersecting extracellular proteins with abundance estimates left me with a shortlist of 63 candidates. Filtering that down to log10 ppm > 1 and piN / piS < 1 (or piS = 0), we’re left with these 25 candidates, of which approximately 8 seemed to be high potential.
+Now it's time interesect and threshold, for which I used the following cutoffs:
+
+| Axis | Filter | Why |
+| :-- | :-- | :-- |
+| Exposure | `Extracellular >= 0.70` | The antibody has to reach the epitope on an intact oocyst. |
+| Gene model | `usable_rate >= 0.90` | A model that does not lift over cleanly is probably wrong in the reference too. |
+| Abundance | `log10_ppm >= 1.0` and a usable tier | Under about 10 ppm there is not enough antigen per oocyst for a visible line. |
+| Invariance | `piN_piS < 1`, **or** an undefined ratio with `piN <= 0.01` | The epitope must be the same in every isolate on the lettuce. |
+| Evidence depth | `n_aligned >= 20` | A diversity value from a few assemblies is not reliable. |
+
+After this filtering, we’re left with these 25 candidates, of which approximately 8 seemed to be high potential.
+
+| step | remaining | lost |
+| --- | --- | --- |
+| all predicted proteins | 5793 | 0 |
+| + exposed | 246 | 5547 |
+| + gene_model | 188 | 58 |
+| + depth | 63 | 125 |
+| + invariant | 61 | 2 |
+| + abundant | 25 | 36 |
 
 By high potential, I mean:
 
 - Functional predictions (from InterProScan domain identification) seem to confirm or suggest a role in oocyst wall formation, or at the very least membrane localization.
 - For multi-domain proteins, AlphaFoldDB predicted structures have a low inter-domain predicted aligned error, or PAE (this is a measure of confidence of the relative positions of multiple domains). Since basically none of these proteins have crystal structures, we'll be relying on AFDB structures as our source of truth, so it's important they're as strong as possible.
 
+Without further ado:
 
 | Gene/Protein | Purported Function |
 | --- | --- |
